@@ -10,8 +10,10 @@ function App() {
           </div>
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Startup Toolkit</h1>
-        <p className="text-gray-500 mb-8">Transform real-world problems into startup ideas through guided innovation.</p>
-        
+        <p className="text-gray-500 mb-8">
+          Transform real-world problems into startup ideas through guided innovation.
+        </p>
+
         <button className="w-full rounded-xl bg-[var(--primary)] px-6 py-3 text-white font-medium hover:bg-[var(--secondary)] transition-colors shadow-md hover:shadow-lg active:scale-95 duration-200">
           Get Started
         </button>
