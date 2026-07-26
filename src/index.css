@@ -1,9 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --primary: #6D5EF5;
-  --secondary: #4F8CFF;
-  --accent: #A855F7;
+  --primary: #6d5ef5;
+  --secondary: #4f8cff;
+  --accent: #a855f7;
 }
 
 body {
