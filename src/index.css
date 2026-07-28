@@ -1,14 +1,70 @@
 @import 'tailwindcss';
 
+@theme {
+  /* 
+   * DESIGN TOKENS
+   * We define our custom tokens here. Tailwind v4 automatically 
+   * creates utilities like `bg-primary`, `text-muted-foreground`, etc.
+   */
+
+  /* Brand Colors */
+  --color-primary: #6d5ef5;
+  --color-primary-hover: #5a4bde;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #4f8cff;
+  --color-secondary-hover: #3b74e6;
+  --color-secondary-foreground: #ffffff;
+
+  --color-accent: #a855f7;
+  --color-accent-foreground: #ffffff;
+
+  /* Backgrounds & Surfaces */
+  --color-background: #f8fafc; /* Light gray app background */
+  --color-foreground: #0f172a; /* Primary dark text */
+
+  --color-surface: #ffffff; /* White cards/panels */
+  --color-surface-foreground: #1e293b;
+
+  /* Muted & Borders */
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #6d5ef5;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
+/* Base Styles */
 :root {
-  --primary: #6d5ef5;
-  --secondary: #4f8cff;
-  --accent: #a855f7;
+  color-scheme: light;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-foreground);
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
