@@ -1,22 +1,28 @@
-import './App.css'
+import { Button } from '@/components/ui/Button'
 
 function App() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
-      <div className="rounded-2xl bg-white p-8 shadow-xl border border-gray-100 max-w-md w-full text-center">
-        <div className="mb-6 flex justify-center">
-          <div className="h-16 w-16 rounded-xl bg-[var(--primary)] flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-            ST
-          </div>
-        </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Startup Toolkit</h1>
-        <p className="text-gray-500 mb-8">
-          Transform real-world problems into startup ideas through guided innovation.
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-2xl w-full text-center">
+        <h1 className="text-4xl font-bold text-foreground mb-4">Button Component</h1>
+        <p className="text-muted-foreground mb-8 text-lg">
+          Testing all the variants of our base Button component.
         </p>
 
-        <button className="w-full rounded-xl bg-[var(--primary)] px-6 py-3 text-white font-medium hover:bg-[var(--secondary)] transition-colors shadow-md hover:shadow-lg active:scale-95 duration-200">
-          Get Started
-        </button>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+          <Button>Default</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="destructive">Destructive</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="link">Link</Button>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-4">
+          <Button size="sm">Small</Button>
+          <Button>Default Size</Button>
+          <Button size="lg">Large Size</Button>
+        </div>
       </div>
     </div>
   )
