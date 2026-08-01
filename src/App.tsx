@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/Button'
 import { H1, H2, H3, H4, P, Lead, Large, Small, Muted } from '@/components/ui/Typography'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
+import { Textarea } from '@/components/ui/Textarea'
+import { Select } from '@/components/ui/Select'
 
 function App() {
   return (
@@ -39,6 +41,21 @@ function App() {
                   defaultValue="Invalid data"
                 />
                 <p className="text-sm text-red-500 font-medium">Please enter a valid value.</p>
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <Label htmlFor="bio">Biography</Label>
+                <Textarea id="bio" placeholder="Tell us a little bit about yourself" />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <Label htmlFor="role">Role</Label>
+                <Select id="role" defaultValue="developer" aria-label="Select your role">
+                  <option value="" disabled>
+                    Select your role
+                  </option>
+                  <option value="developer">Software Developer</option>
+                  <option value="designer">Product Designer</option>
+                  <option value="manager">Product Manager</option>
+                </Select>
               </div>
             </div>
           </section>
