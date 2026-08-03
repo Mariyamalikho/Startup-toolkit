@@ -12,6 +12,7 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/Card'
+import { GlassPanel } from '@/components/ui/GlassPanel'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 function App() {
@@ -137,6 +138,31 @@ function App() {
                   </Button>
                 </CardFooter>
               </Card>
+            </div>
+          </section>
+
+          <section className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-secondary p-8 mt-8">
+            <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/20 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-black/10 rounded-full blur-xl"></div>
+
+            <H2 className="mb-6 text-white relative z-10 border-white/20">Glassmorphism</H2>
+
+            <div className="grid gap-6 md:grid-cols-2 relative z-10">
+              <GlassPanel variant="default" className="p-6">
+                <H3 className="text-white mb-2">Default Glass</H3>
+                <P className="text-white/80 text-sm">
+                  Medium blur with 40% white opacity. Perfect for overlay panels and sidebars over
+                  rich backgrounds.
+                </P>
+              </GlassPanel>
+
+              <GlassPanel variant="light" className="p-6">
+                <H3 className="text-white mb-2">Light Glass</H3>
+                <P className="text-white/80 text-sm">
+                  Subtle blur with 10% white opacity. Great for subtle emphasis over dark or highly
+                  saturated backgrounds.
+                </P>
+              </GlassPanel>
             </div>
           </section>
         </div>
