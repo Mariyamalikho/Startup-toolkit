@@ -4,6 +4,14 @@ import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from '@/components/ui/Card'
 
 function App() {
   return (
@@ -78,6 +86,53 @@ function App() {
             <div className="mt-4 flex gap-4 items-center">
               <Large>Large Text Element</Large>
               <Small>Small Text Element</Small>
+            </div>
+          </section>
+
+          <section>
+            <H2 className="mt-8 mb-6">Cards</H2>
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Project: Eco-Packaging</CardTitle>
+                  <CardDescription>Created 2 days ago</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <P className="text-sm">
+                    A sustainable alternative to plastic bubble wrap using biodegradable materials.
+                  </P>
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                  <Button variant="outline" size="sm">
+                    Cancel
+                  </Button>
+                  <Button size="sm">Deploy</Button>
+                </CardFooter>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Task Statistics</CardTitle>
+                  <CardDescription>Your weekly progress</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-sm font-medium">Completed</span>
+                      <span className="text-sm text-muted-foreground">12/15</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm font-medium">Pending</span>
+                      <span className="text-sm text-muted-foreground">3</span>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="ghost" size="sm" className="w-full">
+                    View Details
+                  </Button>
+                </CardFooter>
+              </Card>
             </div>
           </section>
         </div>
