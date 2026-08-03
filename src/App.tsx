@@ -14,6 +14,15 @@ import {
 } from '@/components/ui/Card'
 import { GlassPanel } from '@/components/ui/GlassPanel'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import {
+  Modal,
+  ModalTrigger,
+  ModalContent,
+  ModalHeader,
+  ModalTitle,
+  ModalDescription,
+  ModalFooter,
+} from '@/components/ui/Modal'
 
 function App() {
   return (
@@ -163,6 +172,36 @@ function App() {
                   saturated backgrounds.
                 </P>
               </GlassPanel>
+            </div>
+          </section>
+
+          <section>
+            <H2 className="mt-8 mb-6">Interactive Overlays</H2>
+            <div className="p-6 border border-dashed border-border rounded-xl flex justify-center items-center">
+              <Modal>
+                <ModalTrigger asChild>
+                  <Button size="lg">Open Animated Modal</Button>
+                </ModalTrigger>
+                <ModalContent>
+                  <ModalHeader>
+                    <ModalTitle>Create New Project</ModalTitle>
+                    <ModalDescription>
+                      Initialize a new startup project workspace. This will create a local storage
+                      record.
+                    </ModalDescription>
+                  </ModalHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="project-name">Project Name</Label>
+                      <Input id="project-name" placeholder="e.g. Eco-Packaging" />
+                    </div>
+                  </div>
+                  <ModalFooter>
+                    <Button variant="outline">Cancel</Button>
+                    <Button>Create Workspace</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </div>
           </section>
         </div>
