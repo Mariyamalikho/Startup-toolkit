@@ -13,12 +13,16 @@ import {
   CardContent,
 } from '@/components/ui/Card'
 import { GlassPanel } from '@/components/ui/GlassPanel'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 function App() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-start bg-gradient-to-br from-slate-100 to-slate-200 p-8 space-y-12">
+    <div className="flex min-h-screen flex-col items-center justify-start bg-background p-8 space-y-12 transition-colors duration-300">
       <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
-        <H1 className="mb-4">Component Sandbox</H1>
+        <div className="flex items-center justify-between mb-4">
+          <H1 className="m-0">Component Sandbox</H1>
+          <ThemeToggle />
+        </div>
         <Lead className="mb-8">
           Preview of all our base components and design tokens in action.
         </Lead>

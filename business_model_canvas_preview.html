@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startup Toolkit - Business Model Canvas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            primary: '#6d5ef5',
+            secondary: '#4f8cff',
+            background: '#0f172a',
+            surface: 'rgba(255, 255, 255, 0.05)',
+            border: 'rgba(255, 255, 255, 0.1)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+      color: #f8fafc;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
+    .glass-input {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: white;
+    }
+    .glass-input:focus {
+      outline: none;
+      border-color: #6d5ef5;
+      background: rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside class="w-64 glass-panel border-r-0 flex flex-col z-20">
+    <div class="h-16 flex items-center px-6 border-b border-border">
+      <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl mr-3 shadow-lg shadow-primary/30">S</div>
+      <span class="font-bold text-lg tracking-tight">Startup Toolkit</span>
+    </div>
+    
+    <div class="px-6 py-4 border-b border-border">
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Current Project</p>
+      <div class="flex items-center justify-between">
+        <span class="font-medium truncate text-white">Eco-Packaging...</span>
+        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </div>
+    </div>
+
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">UPSHIFT Methodology</p>
+      
+      <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-white/10 rounded-md font-medium text-sm transition-colors">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        Problem Statement
+      </a>
+      
+      <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-white/10 rounded-md font-medium text-sm transition-colors">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Empathy Map
+      </a>
+      
+      <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-white/10 rounded-md font-medium text-sm transition-colors">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+        Brainstorming Board
+      </a>
+      
+      <!-- Active State -->
+      <a href="#" class="flex items-center px-3 py-2.5 bg-primary/20 text-primary-300 rounded-md font-medium text-sm border border-primary/30">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
+        Business Model Canvas
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+    
+    <!-- Abstract Background Elements -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- Header -->
+    <header class="h-16 glass-panel border-b-0 flex items-center justify-between px-8 z-10 sticky top-0">
+      <div class="flex items-center">
+        <h1 class="text-xl font-bold tracking-tight">Business Model Canvas</h1>
+        <div class="ml-6 flex items-center text-xs font-medium text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full border border-emerald-400/20">
+          <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2 animate-pulse"></span>
+          Autosaved
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button class="bg-white/5 border border-white/10 hover:bg-white/10 px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center shadow-sm">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+          Shortcuts
+        </button>
+        <button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center shadow-lg shadow-primary/20">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          Export A4 PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Canvas Area -->
+    <div class="flex-1 overflow-y-auto p-8 z-10">
+      <div class="max-w-[1400px] mx-auto h-[800px] grid grid-cols-10 grid-rows-3 gap-4">
+        
+        <!-- Key Partners -->
+        <div class="col-span-2 row-span-2 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Key Partners</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto pr-1">
+            <div class="glass-input p-3 rounded-md text-sm">Local Recycling Centers</div>
+            <div class="glass-input p-3 rounded-md text-sm">Biodegradable Material Suppliers</div>
+          </div>
+        </div>
+
+        <!-- Key Activities -->
+        <div class="col-span-2 row-span-1 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Key Activities</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto pr-1">
+            <div class="glass-input p-2 rounded-md text-sm">R&D on Materials</div>
+          </div>
+        </div>
+
+        <!-- Value Propositions -->
+        <div class="col-span-2 row-span-2 glass-panel rounded-xl p-5 flex flex-col group bg-primary/5 border-primary/20">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-primary-200">Value Propositions</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto pr-1">
+            <div class="bg-primary/20 border border-primary/30 p-3 rounded-md text-sm text-white font-medium">100% Compostable Packaging that performs like plastic</div>
+            <div class="bg-primary/20 border border-primary/30 p-3 rounded-md text-sm text-white font-medium">Reduced carbon footprint for e-commerce brands</div>
+          </div>
+        </div>
+
+        <!-- Customer Relationships -->
+        <div class="col-span-2 row-span-1 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Customer Relationships</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto pr-1">
+            <div class="glass-input p-2 rounded-md text-sm">B2B Dedicated Account Managers</div>
+          </div>
+        </div>
+
+        <!-- Customer Segments -->
+        <div class="col-span-2 row-span-2 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Customer Segments</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto pr-1">
+            <div class="glass-input p-3 rounded-md text-sm">Mid-sized E-commerce Brands</div>
+            <div class="glass-input p-3 rounded-md text-sm">Eco-conscious Subscription Boxes</div>
+          </div>
+        </div>
+
+        <!-- Key Resources (under Activities) -->
+        <div class="col-span-2 row-span-1 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Key Resources</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto pr-1">
+            <div class="glass-input p-2 rounded-md text-sm">Manufacturing Facility</div>
+          </div>
+        </div>
+
+        <!-- Channels (under Relationships) -->
+        <div class="col-span-2 row-span-1 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Channels</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto pr-1">
+            <div class="glass-input p-2 rounded-md text-sm">Direct Sales / Website</div>
+          </div>
+        </div>
+
+        <!-- Cost Structure -->
+        <div class="col-span-5 row-span-1 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Cost Structure</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 grid grid-cols-2 gap-4 overflow-y-auto">
+            <div class="glass-input p-2 rounded-md text-sm flex items-center justify-between">
+              <span>Raw Materials (Algae/Cornstarch)</span>
+              <span class="text-slate-400 text-xs">40%</span>
+            </div>
+            <div class="glass-input p-2 rounded-md text-sm flex items-center justify-between">
+              <span>Manufacturing Overhead</span>
+              <span class="text-slate-400 text-xs">30%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue Streams -->
+        <div class="col-span-5 row-span-1 glass-panel rounded-xl p-5 flex flex-col group">
+          <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+            <h2 class="font-bold text-sm tracking-wide text-slate-200">Revenue Streams</h2>
+            <button class="text-xs text-primary hover:text-white transition-colors opacity-0 group-hover:opacity-100">+ Add</button>
+          </div>
+          <div class="flex-1 grid grid-cols-2 gap-4 overflow-y-auto">
+            <div class="bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-md text-sm text-emerald-100 flex items-center justify-between">
+              <span>Bulk B2B Subscriptions</span>
+              <span class="font-bold">75%</span>
+            </div>
+            <div class="glass-input p-2 rounded-md text-sm flex items-center justify-between">
+              <span>One-off Wholesale</span>
+              <span class="text-slate-400 text-xs">25%</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
