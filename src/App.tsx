@@ -23,6 +23,7 @@ import {
   ModalDescription,
   ModalFooter,
 } from '@/components/ui/Modal'
+import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/Dialog'
 
 function App() {
   return (
@@ -202,6 +203,73 @@ function App() {
                   </ModalFooter>
                 </ModalContent>
               </Modal>
+            </div>
+          </section>
+
+          <section>
+            <H2 className="mt-8 mb-2">Confirmation Dialogs</H2>
+            <P className="text-sm text-muted-foreground mb-6">
+              Reusable dialog component with four semantic variants for different confirmation
+              contexts.
+            </P>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    Info Dialog
+                  </Button>
+                </DialogTrigger>
+                <DialogContent
+                  variant="default"
+                  title="Update Available"
+                  description="A new version of Startup Toolkit is ready. Would you like to apply the update now?"
+                  confirmLabel="Update Now"
+                />
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="destructive" size="sm">
+                    Delete Dialog
+                  </Button>
+                </DialogTrigger>
+                <DialogContent
+                  variant="destructive"
+                  title="Delete Project?"
+                  description="This will permanently delete &ldquo;Eco-Packaging&rdquo; and all its data. This action cannot be undone."
+                  confirmLabel="Yes, Delete"
+                />
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    Warning Dialog
+                  </Button>
+                </DialogTrigger>
+                <DialogContent
+                  variant="warning"
+                  title="Unsaved Changes"
+                  description="You have unsaved changes to your Business Model Canvas. Leaving now will discard them."
+                  confirmLabel="Leave Anyway"
+                  cancelLabel="Stay"
+                />
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    Success Dialog
+                  </Button>
+                </DialogTrigger>
+                <DialogContent
+                  variant="success"
+                  title="Export Complete"
+                  description="Your Business Model Canvas has been exported as a PDF and is ready to download."
+                  confirmLabel="Download PDF"
+                  cancelLabel="Close"
+                />
+              </Dialog>
             </div>
           </section>
         </div>
