@@ -24,8 +24,11 @@ import {
   ModalFooter,
 } from '@/components/ui/Modal'
 import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/Dialog'
+import { useToast } from '@/components/ui/Toast'
 
 function App() {
+  const { toast } = useToast()
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-start bg-background p-8 space-y-12 transition-colors duration-300">
       <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
@@ -270,6 +273,67 @@ function App() {
                   cancelLabel="Close"
                 />
               </Dialog>
+            </div>
+          </section>
+
+          <section>
+            <H2 className="mt-8 mb-2">Toast Notifications</H2>
+            <P className="text-sm text-muted-foreground mb-6">
+              Trigger global toast notifications from anywhere in the app. Auto-dismisses after 4s.
+            </P>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  toast({
+                    variant: 'success',
+                    title: 'Project saved',
+                    description: 'Your changes have been saved automatically.',
+                  })
+                }
+              >
+                Success Toast
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  toast({
+                    variant: 'error',
+                    title: 'Something went wrong',
+                    description: 'Could not connect to Supabase. Please retry.',
+                  })
+                }
+              >
+                Error Toast
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  toast({
+                    variant: 'warning',
+                    title: 'Unsaved changes',
+                    description: 'Navigate away to discard your current edits.',
+                  })
+                }
+              >
+                Warning Toast
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  toast({
+                    variant: 'info',
+                    title: 'New milestone reached',
+                    description: 'You completed Day 14 of your 90-day plan!',
+                  })
+                }
+              >
+                Info Toast
+              </Button>
             </div>
           </section>
         </div>
