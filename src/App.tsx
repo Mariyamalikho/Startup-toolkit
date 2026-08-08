@@ -27,7 +27,7 @@ import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/Dialog'
 import { useToast } from '@/components/ui/Toast'
 
 function App() {
-  const { toast } = useToast()
+  const { toast, dismissAll, promise } = useToast()
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-start bg-background p-8 space-y-12 transition-colors duration-300">
@@ -333,6 +333,25 @@ function App() {
                 }
               >
                 Info Toast
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const fakeAsync = new Promise<string>((resolve) =>
+                    setTimeout(() => resolve('done'), 2000),
+                  )
+                  promise(fakeAsync, {
+                    loading: 'Saving to Supabase…',
+                    success: 'Project synced successfully!',
+                    error: 'Failed to sync. Please retry.',
+                  })
+                }}
+              >
+                Promise Toast
+              </Button>
+              <Button variant="ghost" size="sm" onClick={dismissAll}>
+                Dismiss All
               </Button>
             </div>
           </section>
