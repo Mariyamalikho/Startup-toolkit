@@ -25,6 +25,13 @@ import {
 } from '@/components/ui/Modal'
 import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/Dialog'
 import { useToast } from '@/components/ui/Toast'
+import {
+  SkeletonCard,
+  SkeletonText,
+  SkeletonAvatar,
+  SkeletonDashboard,
+  SkeletonEmpathyMap,
+} from '@/components/ui/Skeleton'
 
 function App() {
   const { toast, dismissAll, promise } = useToast()
@@ -354,6 +361,48 @@ function App() {
                 Dismiss All
               </Button>
             </div>
+          </section>
+        </div>
+      </div>
+
+      {/* ── Skeleton Section ─────────────────────────────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1">Loading Skeletons</H1>
+        <Lead className="mb-8">Placeholder UI shown while data is being fetched.</Lead>
+
+        <div className="space-y-10">
+          {/* Base skeleton shapes */}
+          <section>
+            <H2 className="mb-4">Base Shapes</H2>
+            <div className="flex flex-wrap items-center gap-4">
+              <SkeletonAvatar size={10} />
+              <SkeletonAvatar size={8} />
+              <SkeletonAvatar size={6} />
+              <div className="space-y-2 flex-1">
+                <SkeletonText lines={2} />
+              </div>
+            </div>
+          </section>
+
+          {/* Project card skeletons */}
+          <section>
+            <H2 className="mb-4">Project Cards</H2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          </section>
+
+          {/* Dashboard skeleton */}
+          <section>
+            <H2 className="mb-4">Dashboard Grid</H2>
+            <SkeletonDashboard count={3} />
+          </section>
+
+          {/* Empathy map skeleton */}
+          <section>
+            <H2 className="mb-4">Empathy Map Tool</H2>
+            <SkeletonEmpathyMap />
           </section>
         </div>
       </div>
