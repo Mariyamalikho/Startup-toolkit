@@ -1,3 +1,4 @@
+import React from 'react'
 import { Button } from '@/components/ui/Button'
 import { H1, H2, H3, H4, P, Lead, Large, Small, Muted } from '@/components/ui/Typography'
 import { Input } from '@/components/ui/Input'
@@ -32,9 +33,18 @@ import {
   SkeletonDashboard,
   SkeletonEmpathyMap,
 } from '@/components/ui/Skeleton'
+import {
+  Spinner,
+  LoadingDots,
+  LoadingOverlay,
+  InlineLoader,
+  LoadingButton,
+} from '@/components/ui/Spinner'
 
 function App() {
   const { toast, dismissAll, promise } = useToast()
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [showOverlay, setShowOverlay] = React.useState(false)
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-start bg-background p-8 space-y-12 transition-colors duration-300">
@@ -403,6 +413,117 @@ function App() {
           <section>
             <H2 className="mb-4">Empathy Map Tool</H2>
             <SkeletonEmpathyMap />
+          </section>
+        </div>
+      </div>
+
+      {/* ── Spinners & Inline Loading Section ─────────────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1">Spinners & Loading States</H1>
+        <Lead className="mb-8">Inline loading indicators for async actions and data fetching.</Lead>
+
+        <div className="space-y-10">
+          {/* Spinner sizes */}
+          <section>
+            <H2 className="mb-4">Spinner Sizes</H2>
+            <div className="flex items-center gap-6 flex-wrap">
+              <div className="flex flex-col items-center gap-2">
+                <Spinner size="xs" variant="default" />
+                <Muted className="text-xs">xs</Muted>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <Spinner size="sm" variant="default" />
+                <Muted className="text-xs">sm</Muted>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <Spinner size="md" variant="default" />
+                <Muted className="text-xs">md</Muted>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <Spinner size="lg" variant="default" />
+                <Muted className="text-xs">lg</Muted>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <Spinner size="xl" variant="default" />
+                <Muted className="text-xs">xl</Muted>
+              </div>
+            </div>
+          </section>
+
+          {/* Loading Dots */}
+          <section>
+            <H2 className="mb-4">Loading Dots</H2>
+            <div className="flex items-center gap-8">
+              <div className="flex flex-col items-center gap-2">
+                <LoadingDots variant="default" />
+                <Muted className="text-xs">default</Muted>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <LoadingDots variant="muted" />
+                <Muted className="text-xs">muted</Muted>
+              </div>
+              <div className="bg-foreground rounded-lg px-4 py-2 flex flex-col items-center gap-2">
+                <LoadingDots variant="white" />
+                <Muted className="text-xs text-white/60">white</Muted>
+              </div>
+            </div>
+          </section>
+
+          {/* Inline Loader */}
+          <section>
+            <H2 className="mb-4">Inline Loader</H2>
+            <div className="flex flex-col gap-3">
+              <InlineLoader message="Saving your project…" />
+              <InlineLoader message="Syncing to Supabase…" size="md" />
+              <InlineLoader message="Exporting to PDF…" size="lg" />
+            </div>
+          </section>
+
+          {/* Loading Button */}
+          <section>
+            <H2 className="mb-4">Loading Button</H2>
+            <div className="flex flex-wrap gap-3">
+              <LoadingButton
+                isLoading={isLoading}
+                loadingText="Saving…"
+                onClick={() => {
+                  setIsLoading(true)
+                  setTimeout(() => {
+                    setIsLoading(false)
+                    toast({ variant: 'success', title: 'Project saved!' })
+                  }, 2000)
+                }}
+              >
+                Save Project
+              </LoadingButton>
+              <LoadingButton isLoading={false}>Create Workspace</LoadingButton>
+              <LoadingButton isLoading={true} loadingText="Processing…">
+                Submit
+              </LoadingButton>
+            </div>
+          </section>
+
+          {/* Loading Overlay */}
+          <section>
+            <H2 className="mb-4">Loading Overlay</H2>
+            <div className="relative rounded-xl border border-dashed border-border p-8 min-h-[120px] flex items-center justify-center">
+              {showOverlay ? (
+                <LoadingOverlay visible message="Loading project data…" className="rounded-xl" />
+              ) : (
+                <P className="text-center text-muted-foreground">Content area</P>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                className="absolute bottom-3 right-3"
+                onClick={() => {
+                  setShowOverlay(true)
+                  setTimeout(() => setShowOverlay(false), 2500)
+                }}
+              >
+                Trigger Overlay
+              </Button>
+            </div>
           </section>
         </div>
       </div>
