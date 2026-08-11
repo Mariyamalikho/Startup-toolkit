@@ -40,6 +40,13 @@ import {
   InlineLoader,
   LoadingButton,
 } from '@/components/ui/Spinner'
+import {
+  EmptyState,
+  EmptyProjects,
+  EmptySearchResults,
+  EmptyTool,
+  EmptyError,
+} from '@/components/ui/EmptyState'
 
 function App() {
   const { toast, dismissAll, promise } = useToast()
@@ -523,6 +530,64 @@ function App() {
               >
                 Trigger Overlay
               </Button>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* ── Empty States Section ────────────────────────────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1">Empty States</H1>
+        <Lead className="mb-8">Shown when lists, canvases, or searches have no data.</Lead>
+        <div className="space-y-6">
+          <section>
+            <H2 className="mb-3">No Projects</H2>
+            <div className="rounded-xl border border-border">
+              <EmptyProjects onCreateProject={() => {}} />
+            </div>
+          </section>
+          <section>
+            <H2 className="mb-3">No Search Results</H2>
+            <div className="rounded-xl border border-border">
+              <EmptySearchResults query="Eco packaging startup" onClear={() => {}} />
+            </div>
+          </section>
+          <section>
+            <H2 className="mb-3">Tool Canvas (Compact)</H2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-border">
+                <EmptyTool toolName="Empathy Map" size="sm" />
+              </div>
+              <div className="rounded-xl border border-border">
+                <EmptyTool
+                  toolName="Business Model Canvas"
+                  hint="Click any section to start."
+                  size="sm"
+                />
+              </div>
+            </div>
+          </section>
+          <section>
+            <H2 className="mb-3">Error State</H2>
+            <div className="rounded-xl border border-border">
+              <EmptyError
+                message="Could not load your projects. Check your connection and try again."
+                onRetry={() => {}}
+              />
+            </div>
+          </section>
+          <section>
+            <H2 className="mb-3">Custom Empty State</H2>
+            <div className="rounded-xl border border-border">
+              <EmptyState
+                title="No collaborators yet"
+                description="Invite teammates to work on this project together."
+                actions={[
+                  { label: 'Invite teammate', onClick: () => {}, variant: 'default' },
+                  { label: 'Learn more', onClick: () => {}, variant: 'ghost' },
+                ]}
+                size="md"
+              />
             </div>
           </section>
         </div>
