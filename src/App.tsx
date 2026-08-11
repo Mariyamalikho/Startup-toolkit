@@ -47,6 +47,29 @@ import {
   EmptyTool,
   EmptyError,
 } from '@/components/ui/EmptyState'
+import { InlineErrorBoundary, useErrorBoundary } from '@/components/ui/ErrorBoundary'
+
+// CrashTester — sandbox demo component that simulates a render error
+function CrashTester() {
+  const { throwError } = useErrorBoundary()
+  return (
+    <div className="flex items-center justify-between rounded-xl border border-border bg-muted/30 p-4">
+      <div>
+        <p className="text-sm font-medium text-foreground">Crash test component</p>
+        <p className="text-xs text-muted-foreground mt-0.5">
+          Click to simulate a render error caught by the boundary.
+        </p>
+      </div>
+      <Button
+        variant="destructive"
+        size="sm"
+        onClick={() => throwError(new Error('Simulated render crash for testing'))}
+      >
+        Trigger Error
+      </Button>
+    </div>
+  )
+}
 
 function App() {
   const { toast, dismissAll, promise } = useToast()
@@ -589,6 +612,26 @@ function App() {
                 size="md"
               />
             </div>
+          </section>
+        </div>
+      </div>
+
+      {/* ── Error Boundary Section ────────────────────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1">Error Boundary</H1>
+        <Lead className="mb-8">
+          Catches render errors in subtrees and shows a graceful fallback instead of a white screen.
+        </Lead>
+        <div className="space-y-6">
+          <section>
+            <H2 className="mb-3">Inline Error Boundary</H2>
+            <P className="text-sm text-muted-foreground mb-4">
+              Wraps a specific section. Errors are contained — the rest of the page stays
+              functional.
+            </P>
+            <InlineErrorBoundary>
+              <CrashTester />
+            </InlineErrorBoundary>
           </section>
         </div>
       </div>
