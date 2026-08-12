@@ -48,6 +48,8 @@ import {
   EmptyError,
 } from '@/components/ui/EmptyState'
 import { InlineErrorBoundary, useErrorBoundary } from '@/components/ui/ErrorBoundary'
+import { isSupabaseConfigured, checkSupabaseConnection } from '@/lib/supabase'
+import { Database, CheckCircle2, XCircle } from 'lucide-react'
 
 // CrashTester — sandbox demo component that simulates a render error
 function CrashTester() {
@@ -633,6 +635,57 @@ function App() {
               <CrashTester />
             </InlineErrorBoundary>
           </section>
+        </div>
+      </div>
+
+      {/* ── Supabase Backend Status ──────────────────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1 flex items-center gap-3">
+          <Database className="h-6 w-6 text-primary" />
+          Supabase Backend Client
+        </H1>
+        <Lead className="mb-6">
+          Phase 2 backend integration status and credential verification.
+        </Lead>
+
+        <div className="rounded-xl border border-border bg-muted/20 p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Client Config Status</span>
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border border-border bg-surface">
+              {isSupabaseConfigured ? (
+                <>
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                  Configured (.env.local)
+                </>
+              ) : (
+                <>
+                  <XCircle className="h-3.5 w-3.5 text-amber-500" />
+                  Unconfigured (Using Fallback)
+                </>
+              )}
+            </span>
+          </div>
+
+          <P className="text-xs text-muted-foreground">
+            {isSupabaseConfigured
+              ? 'VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are present.'
+              : 'Add your Supabase credentials to .env.local (copied from .env.example) to connect.'}
+          </P>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={async () => {
+              const res = await checkSupabaseConnection()
+              toast({
+                variant: res.connected ? 'success' : 'warning',
+                title: res.connected ? 'Supabase Connected' : 'Supabase Connection Check',
+                description: res.message,
+              })
+            }}
+          >
+            Test Connection
+          </Button>
         </div>
       </div>
 
