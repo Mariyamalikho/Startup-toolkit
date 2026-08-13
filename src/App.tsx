@@ -49,7 +49,10 @@ import {
 } from '@/components/ui/EmptyState'
 import { InlineErrorBoundary, useErrorBoundary } from '@/components/ui/ErrorBoundary'
 import { isSupabaseConfigured, checkSupabaseConnection } from '@/lib/supabase'
-import { Database, CheckCircle2, XCircle } from 'lucide-react'
+import { Database, CheckCircle2, XCircle, LogIn, UserPlus, KeyRound } from 'lucide-react'
+import { AuthForm } from '@/components/auth/AuthForm'
+import { AuthModal } from '@/components/auth/AuthModal'
+
 
 // CrashTester — sandbox demo component that simulates a render error
 function CrashTester() {
@@ -686,6 +689,52 @@ function App() {
           >
             Test Connection
           </Button>
+        </div>
+      </div>
+
+      {/* ── Supabase Auth UI Section ─────────────────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1 flex items-center gap-3">
+          <KeyRound className="h-6 w-6 text-primary" />
+          Authentication UI
+        </H1>
+        <Lead className="mb-8">
+          Login & Signup screens with form validation, password visibility toggle, and Supabase integration.
+        </Lead>
+
+        <div className="space-y-8">
+          {/* Modal Triggers */}
+          <section>
+            <H2 className="mb-4">Auth Modal Triggers</H2>
+            <div className="flex flex-wrap gap-4">
+              <AuthModal
+                initialMode="login"
+                trigger={
+                  <Button variant="default">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Open Sign In Modal
+                  </Button>
+                }
+              />
+              <AuthModal
+                initialMode="signup"
+                trigger={
+                  <Button variant="outline">
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Open Create Account Modal
+                  </Button>
+                }
+              />
+            </div>
+          </section>
+
+          {/* Embedded Auth Form */}
+          <section>
+            <H2 className="mb-4">Inline Auth Form</H2>
+            <div className="max-w-md rounded-2xl border border-border bg-muted/20 p-6 shadow-sm">
+              <AuthForm />
+            </div>
+          </section>
         </div>
       </div>
 
