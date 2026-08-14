@@ -52,6 +52,9 @@ import { isSupabaseConfigured, checkSupabaseConnection } from '@/lib/supabase'
 import { Database, CheckCircle2, XCircle, LogIn, UserPlus, KeyRound } from 'lucide-react'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { AuthModal } from '@/components/auth/AuthModal'
+import { useAuth } from '@/context/AuthContext'
+import { UserCheck, LogOut } from 'lucide-react'
+
 
 
 // CrashTester — sandbox demo component that simulates a render error
@@ -72,6 +75,50 @@ function CrashTester() {
       >
         Trigger Error
       </Button>
+    </div>
+  )
+}
+
+
+// AuthStatusCard — sandbox component demonstrating useAuth() hook state
+function AuthStatusCard() {
+  const { user, loading, isConfigured, signOut } = useAuth()
+
+  return (
+    <div className="rounded-xl border border-border bg-muted/20 p-5 space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium text-foreground flex items-center gap-2">
+          <UserCheck className="h-4 w-4 text-primary" />
+          Active Session Status
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border border-border bg-surface">
+          {loading ? (
+            <span className="text-muted-foreground">Checking session…</span>
+          ) : user ? (
+            <span className="text-emerald-500 font-medium">Authenticated</span>
+          ) : (
+            <span className="text-muted-foreground">Guest (Unauthenticated)</span>
+          )}
+        </span>
+      </div>
+
+      <div className="text-xs space-y-1 text-muted-foreground">
+        <p>
+          <strong className="text-foreground">Configured:</strong>{' '}
+          {isConfigured ? 'Yes (.env.local)' : 'No (Demo mode active)'}
+        </p>
+        <p>
+          <strong className="text-foreground">User Email:</strong>{' '}
+          {user ? user.email : 'None'}
+        </p>
+      </div>
+
+      {user && (
+        <Button variant="outline" size="sm" onClick={signOut}>
+          <LogOut className="mr-1.5 h-3.5 w-3.5" />
+          Sign Out
+        </Button>
+      )}
     </div>
   )
 }
@@ -734,6 +781,12 @@ function App() {
             <div className="max-w-md rounded-2xl border border-border bg-muted/20 p-6 shadow-sm">
               <AuthForm />
             </div>
+          </section>
+
+          {/* Live Auth Context State Monitor */}
+          <section>
+            <H2 className="mb-4">useAuth() Hook State</H2>
+            <AuthStatusCard />
           </section>
         </div>
       </div>
