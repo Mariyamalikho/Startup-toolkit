@@ -49,11 +49,12 @@ import {
 } from '@/components/ui/EmptyState'
 import { InlineErrorBoundary, useErrorBoundary } from '@/components/ui/ErrorBoundary'
 import { isSupabaseConfigured, checkSupabaseConnection } from '@/lib/supabase'
-import { Database, CheckCircle2, XCircle, LogIn, UserPlus, KeyRound } from 'lucide-react'
+import { Database, CheckCircle2, XCircle, LogIn, UserPlus, KeyRound, Table, Copy } from 'lucide-react'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { AuthModal } from '@/components/auth/AuthModal'
 import { useAuth } from '@/context/AuthContext'
 import { UserCheck, LogOut } from 'lucide-react'
+
 
 
 
@@ -788,6 +789,54 @@ function App() {
             <H2 className="mb-4">useAuth() Hook State</H2>
             <AuthStatusCard />
           </section>
+        </div>
+      </div>
+
+      {/* ── Database Schema & Migration Section ───────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1 flex items-center gap-3">
+          <Table className="h-6 w-6 text-primary" />
+          PostgreSQL Database Schema
+        </H1>
+        <Lead className="mb-6">
+          Relational tables, foreign keys, and Row Level Security (RLS) policies defined in supabase/schema.sql.
+        </Lead>
+
+        <div className="rounded-xl border border-border bg-muted/20 p-5 space-y-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {[
+              { name: 'public.profiles', desc: 'User profiles & preferences' },
+              { name: 'public.projects', desc: 'Startup project workspaces' },
+              { name: 'public.empathy_maps', desc: 'Empathy map quadrants' },
+              { name: 'public.business_model_canvases', desc: '9-grid BMC canvases' },
+              { name: 'public.brainstorm_notes', desc: 'Sticky notes & board' },
+            ].map((table) => (
+              <div key={table.name} className="rounded-lg border border-border bg-surface p-3 text-left">
+                <p className="text-xs font-mono font-semibold text-primary">{table.name}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{table.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between pt-2 border-t border-border">
+            <span className="text-xs text-muted-foreground">
+              Run <code className="font-mono text-foreground">supabase/schema.sql</code> in your Supabase SQL Editor.
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                toast({
+                  variant: 'info',
+                  title: 'Schema File',
+                  description: 'File located at supabase/schema.sql in the project root.',
+                })
+              }}
+            >
+              <Copy className="mr-1.5 h-3.5 w-3.5" />
+              SQL Schema
+            </Button>
+          </div>
         </div>
       </div>
 
