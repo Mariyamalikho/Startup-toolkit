@@ -150,7 +150,9 @@ export function InlineLoader({ message = 'Loading…', size = 'sm', className }:
 // ─── Loading Button (wrapper) ─────────────────────────────────────────────────
 // A utility wrapper that adds a spinner to any button-like element when loading.
 
-interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import { Button, type ButtonProps } from '@/components/ui/Button'
+
+interface LoadingButtonProps extends ButtonProps {
   isLoading?: boolean
   loadingText?: string
   children: React.ReactNode
@@ -163,25 +165,22 @@ export function LoadingButton({
   children,
   className,
   disabled,
+  variant,
+  size,
   ...props
 }: LoadingButtonProps) {
   return (
-    <button
-      {...props}
+    <Button
+      variant={variant}
+      size={size}
       disabled={disabled || isLoading}
       aria-disabled={disabled || isLoading}
       aria-busy={isLoading}
-      className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2',
-        'text-sm font-medium transition-all',
-        'bg-primary text-primary-foreground',
-        'hover:opacity-90 active:scale-[0.98]',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
-        className,
-      )}
+      className={cn('gap-2', className)}
+      {...props}
     >
-      {isLoading && <Spinner size="sm" variant="white" />}
+      {isLoading && <Spinner size="sm" variant={variant === 'default' ? 'white' : 'default'} />}
       {isLoading && loadingText ? loadingText : children}
-    </button>
+    </Button>
   )
 }
