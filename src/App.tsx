@@ -53,7 +53,9 @@ import { Database, CheckCircle2, XCircle, LogIn, UserPlus, KeyRound } from 'luci
 import { AuthForm } from '@/components/auth/AuthForm'
 import { AuthModal } from '@/components/auth/AuthModal'
 import { useAuth } from '@/context/AuthContext'
-import { UserCheck, LogOut } from 'lucide-react'
+import { UserCheck, LogOut, Layers, Plus, Trash2, RotateCcw } from 'lucide-react'
+import { useProjectStore } from '@/store/projectStore'
+
 
 
 
@@ -119,6 +121,99 @@ function AuthStatusCard() {
           Sign Out
         </Button>
       )}
+    </div>
+  )
+}
+
+// ProjectStoreDemo — sandbox component for Zustand projectStore
+function ProjectStoreDemo() {
+  const { projects, activeProject, setActiveProject, addProject, deleteProject, reset } =
+    useProjectStore()
+
+  return (
+    <div className="space-y-4">
+      {/* Active Project Highlight */}
+      <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 flex items-center justify-between">
+        <div>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-primary">
+            Active Workspace Project
+          </span>
+          <p className="text-sm font-bold text-foreground mt-0.5">
+            {activeProject ? activeProject.title : 'No active project selected'}
+          </p>
+          {activeProject?.description && (
+            <p className="text-xs text-muted-foreground mt-0.5">{activeProject.description}</p>
+          )}
+        </div>
+        {activeProject && (
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-surface border border-border">
+            Progress: {activeProject.progress}%
+          </span>
+        )}
+      </div>
+
+      {/* Project Collection List */}
+      <div className="space-y-2">
+        <span className="text-xs font-medium text-muted-foreground">Projects in Store ({projects.length})</span>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {projects.map((proj) => (
+            <div
+              key={proj.id}
+              onClick={() => setActiveProject(proj)}
+              className={`cursor-pointer rounded-xl border p-3 text-left transition-all ${
+                activeProject?.id === proj.id
+                  ? 'border-primary bg-surface shadow-sm ring-1 ring-primary'
+                  : 'border-border bg-muted/20 hover:border-muted-foreground/40'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-semibold text-foreground">{proj.title}</p>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    deleteProject(proj.id)
+                  }}
+                  className="text-muted-foreground hover:text-red-500 p-1"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              </div>
+              <p className="text-[11px] text-muted-foreground line-clamp-1 mt-1">{proj.industry}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Store Actions */}
+      <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const id = `proj-${Date.now().toString().slice(-4)}`
+            addProject({
+              id,
+              user_id: 'demo-user',
+              title: `New Venture ${projects.length + 1}`,
+              description: 'Created via Zustand store action.',
+              industry: 'FinTech',
+              status: 'active',
+              progress: 10,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            })
+          }}
+        >
+          <Plus className="mr-1.5 h-3.5 w-3.5" />
+          Add Demo Project
+        </Button>
+
+        <Button variant="ghost" size="sm" onClick={reset}>
+          <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
+          Reset Store
+        </Button>
+      </div>
     </div>
   )
 }
@@ -789,6 +884,19 @@ function App() {
             <AuthStatusCard />
           </section>
         </div>
+      </div>
+
+      {/* ── Zustand Global Project Store Section ──────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1 flex items-center gap-3">
+          <Layers className="h-6 w-6 text-primary" />
+          Zustand Global Project Store
+        </H1>
+        <Lead className="mb-6">
+          Centralized client-side state management for startup projects and active selection.
+        </Lead>
+
+        <ProjectStoreDemo />
       </div>
 
       <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full text-center">
