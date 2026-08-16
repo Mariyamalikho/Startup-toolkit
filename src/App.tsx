@@ -55,6 +55,9 @@ import { AuthModal } from '@/components/auth/AuthModal'
 import { useAuth } from '@/context/AuthContext'
 import { UserCheck, LogOut, Layers, Plus, Trash2, RotateCcw } from 'lucide-react'
 import { useProjectStore } from '@/store/projectStore'
+import { projectService } from '@/services/projectService'
+import { Cloud, RefreshCw, Send } from 'lucide-react'
+
 
 
 
@@ -214,6 +217,107 @@ function ProjectStoreDemo() {
           Reset Store
         </Button>
       </div>
+    </div>
+  )
+}
+
+
+// ProjectServiceDemo — sandbox component demonstrating projectService API wrapper
+function ProjectServiceDemo() {
+  const [fetching, setFetching] = React.useState(false)
+  const [creating, setCreating] = React.useState(false)
+  const [apiProjects, setApiProjects] = React.useState<any[]>([])
+  const { toast } = useToast()
+
+  const handleFetch = async () => {
+    setFetching(true)
+    try {
+      const data = await projectService.fetchProjects()
+      setApiProjects(data)
+      toast({
+        variant: 'success',
+        title: 'API Query Successful',
+        description: `Retrieved ${data.length} projects via projectService.fetchProjects()`,
+      })
+    } catch (err: any) {
+      toast({
+        variant: 'error',
+        title: 'API Query Failed',
+        description: err.message,
+      })
+    } finally {
+      setFetching(false)
+    }
+  }
+
+  const handleCreate = async () => {
+    setCreating(true)
+    try {
+      const newProj = await projectService.createProject({
+        title: `Venture ${Math.floor(Math.random() * 1000)}`,
+        description: 'Created via projectService.createProject() API call.',
+        industry: 'CleanTech',
+      })
+      setApiProjects((prev) => [newProj, ...prev])
+      toast({
+        variant: 'success',
+        title: 'Project Created via API',
+        description: `Inserted "${newProj.title}"`,
+      })
+    } catch (err: any) {
+      toast({
+        variant: 'error',
+        title: 'Project Creation Failed',
+        description: err.message,
+      })
+    } finally {
+      setCreating(false)
+    }
+  }
+
+  return (
+    <div className="space-y-4 text-left">
+      <div className="flex flex-wrap gap-2">
+        <LoadingButton
+          variant="default"
+          size="sm"
+          isLoading={fetching}
+          loadingText="Fetching Database…"
+          onClick={handleFetch}
+        >
+          <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+          Fetch Projects API
+        </LoadingButton>
+
+        <LoadingButton
+          variant="outline"
+          size="sm"
+          isLoading={creating}
+          loadingText="Creating Record…"
+          onClick={handleCreate}
+        >
+          <Send className="mr-1.5 h-3.5 w-3.5" />
+          Create Project API
+        </LoadingButton>
+      </div>
+
+      {apiProjects.length > 0 ? (
+        <div className="rounded-xl border border-border bg-muted/20 p-4 space-y-2">
+          <p className="text-xs font-semibold text-foreground">API Result Records ({apiProjects.length})</p>
+          <div className="space-y-1.5">
+            {apiProjects.map((p) => (
+              <div key={p.id} className="flex items-center justify-between text-xs bg-surface p-2 rounded-lg border border-border">
+                <span className="font-medium text-foreground">{p.title}</span>
+                <span className="text-[11px] text-muted-foreground font-mono">{p.industry} • {p.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p className="text-xs text-muted-foreground italic">
+          Click "Fetch Projects API" or "Create Project API" to test service methods.
+        </p>
+      )}
     </div>
   )
 }
@@ -897,6 +1001,19 @@ function App() {
         </Lead>
 
         <ProjectStoreDemo />
+      </div>
+
+      {/* ── Supabase Project API Service Section ───────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1 flex items-center gap-3">
+          <Cloud className="h-6 w-6 text-primary" />
+          Supabase Project API Service
+        </H1>
+        <Lead className="mb-6">
+          Encapsulated database service wrapper (fetch, create, update, delete) with auto-fallback.
+        </Lead>
+
+        <ProjectServiceDemo />
       </div>
 
       <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full text-center">
