@@ -130,11 +130,28 @@ function AuthStatusCard() {
 
 // ProjectStoreDemo — sandbox component for Zustand projectStore
 function ProjectStoreDemo() {
-  const { projects, activeProject, setActiveProject, addProject, deleteProject, reset } =
-    useProjectStore()
+  const {
+    projects,
+    activeProject,
+    loading,
+    error,
+    setActiveProject,
+    reset,
+    fetchUserProjects,
+    createNewProject,
+    deleteUserProject,
+  } = useProjectStore()
 
   return (
     <div className="space-y-4">
+      {/* Error alert banner if error occurs */}
+      {error && (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-400">
+          <p className="font-semibold">Sync Error:</p>
+          <p>{error}</p>
+        </div>
+      )}
+
       {/* Active Project Highlight */}
       <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 flex items-center justify-between">
         <div>
@@ -157,7 +174,10 @@ function ProjectStoreDemo() {
 
       {/* Project Collection List */}
       <div className="space-y-2">
-        <span className="text-xs font-medium text-muted-foreground">Projects in Store ({projects.length})</span>
+        <div className="flex items-center justify-between text-xs text-muted-foreground">
+          <span>Projects in Store ({projects.length})</span>
+          {loading && <span className="font-mono text-primary animate-pulse">Syncing with Supabase…</span>}
+        </div>
         <div className="grid gap-2 sm:grid-cols-2">
           {projects.map((proj) => (
             <div
@@ -175,7 +195,7 @@ function ProjectStoreDemo() {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation()
-                    deleteProject(proj.id)
+                    deleteUserProject(proj.id)
                   }}
                   className="text-muted-foreground hover:text-red-500 p-1"
                 >
@@ -190,36 +210,43 @@ function ProjectStoreDemo() {
 
       {/* Store Actions */}
       <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
-        <Button
+        <LoadingButton
+          variant="default"
+          size="sm"
+          isLoading={loading}
+          loadingText="Fetching…"
+          onClick={() => fetchUserProjects()}
+        >
+          <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+          Fetch Supabase Data
+        </LoadingButton>
+
+        <LoadingButton
           variant="outline"
           size="sm"
-          onClick={() => {
-            const id = `proj-${Date.now().toString().slice(-4)}`
-            addProject({
-              id,
-              user_id: 'demo-user',
-              title: `New Venture ${projects.length + 1}`,
-              description: 'Created via Zustand store action.',
-              industry: 'FinTech',
-              status: 'active',
-              progress: 10,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
+          isLoading={loading}
+          loadingText="Creating…"
+          onClick={() =>
+            createNewProject({
+              title: `Venture ${Math.floor(Math.random() * 1000)}`,
+              description: 'Created via Zustand store async action.',
+              industry: 'AI & Data',
             })
-          }}
+          }
         >
           <Plus className="mr-1.5 h-3.5 w-3.5" />
-          Add Demo Project
-        </Button>
+          Create via Async Store
+        </LoadingButton>
 
         <Button variant="ghost" size="sm" onClick={reset}>
           <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-          Reset Store
+          Reset Local Seed
         </Button>
       </div>
     </div>
   )
 }
+
 
 
 // ProjectServiceDemo — sandbox component demonstrating projectService API wrapper

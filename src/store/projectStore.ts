@@ -3,11 +3,13 @@
  *
  * Global state store for Startup Toolkit projects built with Zustand.
  * Manages active project selection, project collections, loading states,
- * and client-side CRUD operations.
+ * and async sync actions with Supabase via projectService.
  */
 
 import { create } from 'zustand'
 import type { Project } from '@/types/database.types'
+import { projectService, type CreateProjectInput, type UpdateProjectInput } from '@/services/projectService'
+import { toastStore } from '@/store/toastStore'
 
 interface ProjectState {
   projects: Project[]
@@ -15,7 +17,7 @@ interface ProjectState {
   loading: boolean
   error: string | null
 
-  // Actions
+  // Synchronous State Mutations
   setProjects: (projects: Project[]) => void
   setActiveProject: (project: Project | null) => void
   addProject: (project: Project) => void
@@ -24,6 +26,12 @@ interface ProjectState {
   setLoading: (loading: boolean) => void
   setError: (error: string | null) => void
   reset: () => void
+
+  // Async Database Sync Actions (Supabase + projectService)
+  fetchUserProjects: () => Promise<Project[]>
+  createNewProject: (input: CreateProjectInput) => Promise<Project | null>
+  updateUserProject: (id: string, patch: UpdateProjectInput) => Promise<Project | null>
+  deleteUserProject: (id: string) => Promise<boolean>
 }
 
 const initialProjects: Project[] = [
@@ -51,7 +59,7 @@ const initialProjects: Project[] = [
   },
 ]
 
-export const useProjectStore = create<ProjectState>((set) => ({
+export const useProjectStore = create<ProjectState>((set, get) => ({
   projects: initialProjects,
   activeProject: initialProjects[0],
   loading: false,
@@ -105,4 +113,104 @@ export const useProjectStore = create<ProjectState>((set) => ({
       loading: false,
       error: null,
     }),
+
+  // ─── Async Database Actions ────────────────────────────────────────────────
+
+  fetchUserProjects: async () => {
+    set({ loading: true, error: null })
+    try {
+      const fetchedProjects = await projectService.fetchProjects()
+      set({
+        projects: fetchedProjects,
+        activeProject: fetchedProjects.length > 0 ? fetchedProjects[0] : null,
+        loading: false,
+      })
+      return fetchedProjects
+    } catch (err: any) {
+      const errMsg = err?.message || 'Failed to fetch projects from database.'
+      set({ error: errMsg, loading: false })
+      toastStore.add({
+        variant: 'error',
+        title: 'Database Fetch Error',
+        description: errMsg,
+      })
+      return []
+    }
+  },
+
+  createNewProject: async (input: CreateProjectInput) => {
+    set({ loading: true, error: null })
+    try {
+      const created = await projectService.createProject(input)
+      set((state) => ({
+        projects: [created, ...state.projects],
+        activeProject: created,
+        loading: false,
+      }))
+      toastStore.add({
+        variant: 'success',
+        title: 'Project Created',
+        description: `Successfully initialized "${created.title}".`,
+      })
+      return created
+    } catch (err: any) {
+      const errMsg = err?.message || 'Failed to create new project.'
+      set({ error: errMsg, loading: false })
+      toastStore.add({
+        variant: 'error',
+        title: 'Project Creation Failed',
+        description: errMsg,
+      })
+      return null
+    }
+  },
+
+  updateUserProject: async (id: string, patch: UpdateProjectInput) => {
+    // Optimistic local update
+    const previousProjects = get().projects
+    const previousActive = get().activeProject
+
+    get().updateProject(id, patch)
+
+    try {
+      const updated = await projectService.updateProject(id, patch)
+      set({ error: null })
+      return updated
+    } catch (err: any) {
+      // Rollback on error
+      set({ projects: previousProjects, activeProject: previousActive, error: err?.message })
+      toastStore.add({
+        variant: 'error',
+        title: 'Update Sync Error',
+        description: err?.message || 'Could not save changes to database.',
+      })
+      return null
+    }
+  },
+
+  deleteUserProject: async (id: string) => {
+    const previousProjects = get().projects
+    const previousActive = get().activeProject
+
+    get().deleteProject(id)
+
+    try {
+      await projectService.deleteProject(id)
+      toastStore.add({
+        variant: 'info',
+        title: 'Project Deleted',
+        description: 'Project was removed from your workspace.',
+      })
+      return true
+    } catch (err: any) {
+      // Rollback on error
+      set({ projects: previousProjects, activeProject: previousActive, error: err?.message })
+      toastStore.add({
+        variant: 'error',
+        title: 'Deletion Failed',
+        description: err?.message || 'Could not delete project from database.',
+      })
+      return false
+    }
+  },
 }))
