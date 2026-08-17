@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startup Toolkit — Pixel-Perfect Workspace Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #12161f;
+      color: #e2e8f0;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #12161f;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #252d3d;
+      border-radius: 4px;
+    }
+
+    /* REALISTIC STICKY NOTE STYLING */
+    .real-sticky-note {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      padding: 8px 9px;
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 600;
+      color: #0f172a;
+      border-radius: 2px;
+      box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.4), inset 0 -3px 6px rgba(0,0,0,0.08);
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      word-break: break-word;
+      cursor: grab;
+    }
+    .real-sticky-note:hover {
+      transform: scale(1.08) rotate(0deg) !important;
+      z-index: 20;
+      box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.5);
+    }
+    /* Tape / Curl effect */
+    .real-sticky-note::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 0 0 2px 0;
+    }
+
+    /* CHEVRON STEPPER BAR STYLING */
+    .stepper-bar-container {
+      background: #181d27;
+      border: 1px solid #252d3d;
+      border-radius: 10px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 48px;
+    }
+    .chevron-step {
+      position: relative;
+      flex: 1;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #8b96a8;
+      background: #202634;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+      margin-right: -8px;
+      padding: 0 16px;
+      transition: all 0.2s ease;
+    }
+    .chevron-step-first {
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+    .chevron-step-last {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%);
+      margin-right: 0;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+    .chevron-step.active {
+      background: #182435;
+      color: #ffffff;
+      font-weight: 700;
+      border: 1.5px solid #38bdf8;
+      box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.25), 0 0 10px rgba(56, 189, 248, 0.3);
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+      z-index: 10;
+    }
+
+    /* PLUS BAR BUTTON AT BOTTOM OF QUADRANTS */
+    .quadrant-plus-bar {
+      width: 100%;
+      height: 28px;
+      background-color: #12161f;
+      border: 1px solid #252d3d;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .quadrant-plus-bar:hover {
+      background-color: #1b212d;
+      border-color: #475569;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+  <!-- TOP NAVBAR -->
+  <header class="h-16 bg-[#181d27] border-b border-[#252d3d] px-6 flex items-center justify-between sticky top-0 z-40">
+    <div class="flex items-center space-x-3">
+      <div class="h-8 w-8 rounded-lg bg-sky-500 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+      </div>
+      <span class="font-bold text-base tracking-tight text-white">Startup Toolkit</span>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <button class="px-4 py-1.5 text-xs font-semibold rounded-lg bg-sky-200 text-sky-950 hover:bg-sky-100 transition-colors shadow-sm">
+        Upgrade
+      </button>
+
+      <button class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-[#232936] transition-colors relative">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        <span class="h-2 w-2 rounded-full bg-red-500 absolute top-1.5 right-1.5"></span>
+      </button>
+
+      <div class="flex items-center space-x-2 bg-[#12161f] border border-[#252d3d] px-2 py-1 rounded-full">
+        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        <div class="w-8 h-4 bg-sky-500 rounded-full flex items-center p-0.5 cursor-pointer">
+          <div class="w-3 h-3 bg-white rounded-full translate-x-4 transition-transform"></div>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2 border-l border-[#252d3d] pl-4">
+        <span class="text-xs font-medium text-slate-300">Alex Rivera</span>
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="w-7 h-7 rounded-full object-cover border border-[#252d3d]">
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-60 bg-[#181d27] border-r border-[#252d3d] flex flex-col justify-between p-4 custom-scroll overflow-y-auto">
+      <div class="space-y-6 text-left">
+        <div>
+          <a href="#" class="flex items-center gap-3 px-3 py-2 text-xs font-medium text-slate-400 hover:text-white rounded-lg hover:bg-[#232936] transition-colors">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            DASHBOARD
+          </a>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between px-3 mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <span>METHODOLOGY TOOLS</span>
+            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <nav class="space-y-1">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 text-xs font-medium text-slate-400 hover:text-white rounded-lg hover:bg-[#232936] transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              Empathy Map
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 text-xs font-semibold text-white bg-[#242c3b] border border-sky-500/40 rounded-lg shadow-sm">
+              <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+              Business Model Canvas
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 text-xs font-medium text-slate-400 hover:text-white rounded-lg hover:bg-[#232936] transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-4a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+              Brainstorm Sticky Notes
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 text-xs font-medium text-slate-400 hover:text-white rounded-lg hover:bg-[#232936] transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              Value Proposition
+            </a>
+          </nav>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-center justify-between px-3 text-xs font-medium text-slate-400 hover:text-white cursor-pointer">
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              TEAM
+            </span>
+            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="flex items-center justify-between px-3 text-xs font-medium text-slate-400 hover:text-white cursor-pointer">
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+              PROJECTS
+            </span>
+            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="flex items-center justify-between px-3 text-xs font-medium text-slate-400 hover:text-white cursor-pointer">
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
+              SETTINGS
+            </span>
+            <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-[#252d3d] space-y-2 text-left">
+        <a href="#" class="flex items-center gap-3 px-3 py-1.5 text-xs text-slate-400 hover:text-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          KNOWLEDGE BASE
+        </a>
+        <a href="#" class="flex items-center gap-3 px-3 py-1.5 text-xs text-slate-400 hover:text-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          SUPPORT
+        </a>
+      </div>
+    </aside>
+
+    <!-- RIGHT CONTENT VIEWPORT -->
+    <main class="flex-1 overflow-y-auto p-6 space-y-6 custom-scroll">
+
+      <!-- CURRENT PHASE HEADER + EXACT CHEVRON STEPPER BAR -->
+      <div class="space-y-3 text-left">
+        <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase font-mono">CURRENT PHASE: STRATEGY & PLANNING</span>
+        
+        <!-- Continuous Interlocking Chevron Bar -->
+        <div class="stepper-bar-container">
+          <!-- 1. IDEATION -->
+          <div class="chevron-step chevron-step-first">
+            1. IDEATION
+          </div>
+
+          <!-- 2. EMPATHY MAP (DONE) -->
+          <div class="chevron-step flex gap-1.5">
+            <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            2. EMPATHY MAP
+          </div>
+
+          <!-- 3. BUSINESS MODEL CANVAS (ACTIVE GLOWING STEPPER) -->
+          <div class="chevron-step active">
+            3. BUSINESS MODEL CANVAS
+          </div>
+
+          <!-- 4. PROTOTYPE -->
+          <div class="chevron-step">
+            4. PROTOTYPE
+          </div>
+
+          <!-- 5. PITCH DECK -->
+          <div class="chevron-step chevron-step-last">
+            5. PITCH DECK
+          </div>
+        </div>
+      </div>
+
+      <!-- BUSINESS MODEL CANVAS (9-QUADRANT GRID WITH REALISTIC STICKY POST-ITS) -->
+      <div class="grid grid-cols-5 gap-3.5 text-left">
+
+        <!-- 1. KEY PARTNERS -->
+        <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-3.5 flex flex-col justify-between min-h-[360px]">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">KEY PARTNERS</h3>
+              <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-tight">Example inputs run your founder inputs.</p>
+
+            <!-- Organic Sticky Notes Container -->
+            <div class="flex flex-wrap gap-2.5 pt-1">
+              <div class="real-sticky-note bg-[#f87171] rotate-[-2deg]">
+                Cloud Hosting Providers
+              </div>
+              <div class="real-sticky-note bg-[#fde047] rotate-[1.5deg]">
+                Private Networking Providers
+              </div>
+            </div>
+          </div>
+
+          <!-- Exact Plus Bar -->
+          <button class="quadrant-plus-bar mt-3">
+            +
+          </button>
+        </div>
+
+        <!-- 2. KEY ACTIVITIES & RESOURCES (STACKED) -->
+        <div class="space-y-3.5 flex flex-col justify-between">
+          <!-- Key Activities -->
+          <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-3.5 flex flex-col justify-between flex-1 min-h-[170px]">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">KEY ACTIVITIES</h3>
+                <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+              </div>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <div class="real-sticky-note bg-[#86efac] rotate-[1deg]">
+                  Market to niche developers
+                </div>
+              </div>
+            </div>
+            <button class="quadrant-plus-bar mt-2">
+              +
+            </button>
+          </div>
+
+          <!-- Key Resources -->
+          <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-3.5 flex flex-col justify-between flex-1 min-h-[170px]">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">KEY RESOURCES</h3>
+                <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+              </div>
+              <p class="text-[10px] text-slate-400 leading-tight">Example inputs your business model canvas.</p>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <div class="real-sticky-note bg-[#7dd3fc] rotate-[-1.5deg]">
+                  Freelance designers
+                </div>
+              </div>
+            </div>
+            <button class="quadrant-plus-bar mt-2">
+              +
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. VALUE PROPOSITIONS -->
+        <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-3.5 flex flex-col justify-between min-h-[360px]">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">VALUE PROPOSITIONS</h3>
+              <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-tight">Example inputs customer proposition value drawing needs.</p>
+
+            <div class="flex flex-wrap gap-2.5 pt-1">
+              <div class="real-sticky-note bg-[#fde047] rotate-[-1deg]">
+                Market to niche developers
+              </div>
+              <div class="real-sticky-note bg-[#c084fc] rotate-[2deg]">
+                Freelance designers
+              </div>
+              <div class="real-sticky-note bg-[#86efac] rotate-[-1.8deg]">
+                Freelance designers
+              </div>
+            </div>
+          </div>
+
+          <button class="quadrant-plus-bar mt-3">
+            +
+          </button>
+        </div>
+
+        <!-- 4. CUSTOMER RELATIONSHIPS & CHANNELS (STACKED) -->
+        <div class="space-y-3.5 flex flex-col justify-between">
+          <!-- Relationships -->
+          <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-3.5 flex flex-col justify-between flex-1 min-h-[170px]">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">CUSTOMER RELATIONSHIPS</h3>
+                <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+              </div>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <div class="real-sticky-note bg-[#a5b4fc] rotate-[1.2deg]">
+                  Subscription model
+                </div>
+              </div>
+            </div>
+            <button class="quadrant-plus-bar mt-2">
+              +
+            </button>
+          </div>
+
+          <!-- Channels -->
+          <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-3.5 flex flex-col justify-between flex-1 min-h-[170px]">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">CHANNELS</h3>
+                <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+              </div>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <div class="real-sticky-note bg-[#7dd3fc] rotate-[-2deg]">
+                  Subscription model
+                </div>
+                <div class="real-sticky-note bg-[#f87171] rotate-[1.5deg]">
+                  Freelance designers
+                </div>
+              </div>
+            </div>
+            <button class="quadrant-plus-bar mt-2">
+              +
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. CUSTOMER SEGMENTS -->
+        <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-3.5 flex flex-col justify-between min-h-[360px]">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">CUSTOMER SEGMENTS</h3>
+              <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-tight">Example inputs: viewer customer segments suits all needs.</p>
+
+            <div class="flex flex-wrap gap-2.5 pt-1">
+              <div class="real-sticky-note bg-[#86efac] rotate-[1deg]">
+                Cloud Hosting Providers
+              </div>
+              <div class="real-sticky-note bg-[#fde047] rotate-[-2deg]">
+                Market to niche developers
+              </div>
+            </div>
+          </div>
+
+          <button class="quadrant-plus-bar mt-3">
+            +
+          </button>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM FINANCIAL ROW (COST STRUCTURE & REVENUE STREAMS) -->
+      <div class="grid grid-cols-2 gap-4 text-left">
+        <!-- Cost Structure -->
+        <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">COST STRUCTURE</h3>
+            <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+          </div>
+          <p class="text-[10px] text-slate-400">Example inputs cost structures and enter cost.</p>
+          <div class="flex flex-wrap gap-2.5">
+            <div class="real-sticky-note bg-[#a5b4fc] rotate-[-1deg]">
+              Cloud Hosting Providers
+            </div>
+            <div class="real-sticky-note bg-[#c084fc] rotate-[1.5deg]">
+              Freelance designers
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue Streams -->
+        <div class="bg-[#1c222e] border border-[#252d3d] rounded-xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">REVENUE STREAMS</h3>
+            <span class="text-slate-500 font-bold text-sm cursor-pointer hover:text-white">•••</span>
+          </div>
+          <p class="text-[10px] text-slate-400">Example input: for revenue and retail streams.</p>
+          <div class="flex flex-wrap gap-2.5">
+            <div class="real-sticky-note bg-[#86efac] rotate-[1deg]">
+              Freelance designers
+            </div>
+            <div class="real-sticky-note bg-[#fde047] rotate-[-1.5deg]">
+              Freelance designers
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>
