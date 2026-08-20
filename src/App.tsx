@@ -56,7 +56,8 @@ import { useAuth } from '@/context/AuthContext'
 import { UserCheck, LogOut, Layers, Plus, Trash2, RotateCcw } from 'lucide-react'
 import { useProjectStore } from '@/store/projectStore'
 import { projectService } from '@/services/projectService'
-import { Cloud, RefreshCw, Send } from 'lucide-react'
+import { Cloud, RefreshCw, Send, Save, Clock } from 'lucide-react'
+import { useAutosave } from '@/hooks/useAutosave'
 
 
 
@@ -345,6 +346,101 @@ function ProjectServiceDemo() {
           Click "Fetch Projects API" or "Create Project API" to test service methods.
         </p>
       )}
+    </div>
+  )
+}
+
+// AutosaveHookDemo — sandbox component demonstrating useAutosave hook
+function AutosaveHookDemo() {
+  const [formData, setFormData] = React.useState({
+    title: 'EcoPack Innovation',
+    description: 'Biodegradable packaging startup for local food delivery.',
+  })
+
+  const { status, isSaving, error, lastSavedAt, saveNow } = useAutosave({
+    data: formData,
+    delay: 1000, // 1000ms debounce
+    onSave: async (dataToSave) => {
+      // Simulate database save API call
+      await new Promise((resolve) => setTimeout(resolve, 600))
+      console.log('[AutosaveHookDemo] Saved data to database:', dataToSave)
+    },
+  })
+
+  return (
+    <div className="space-y-4 text-left">
+      {/* Real-time Status Indicator Banner */}
+      <div className="rounded-xl border border-border bg-muted/20 p-4 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Clock className="h-4 w-4 text-muted-foreground" />
+          <span className="text-xs font-medium text-foreground">Autosave Status:</span>
+          {status === 'idle' && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-muted text-muted-foreground">
+              Idle (Ready)
+            </span>
+          )}
+          {status === 'saving' && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-500/20 text-amber-500 animate-pulse">
+              Saving to Database…
+            </span>
+          )}
+          {status === 'saved' && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-500">
+              Saved ✓
+            </span>
+          )}
+          {status === 'error' && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-red-500/20 text-red-500">
+              Save Error ✖ ({error})
+            </span>
+          )}
+        </div>
+
+        {lastSavedAt && (
+          <span className="text-[11px] font-mono text-muted-foreground">
+            Last saved: {lastSavedAt.toLocaleTimeString()}
+          </span>
+        )}
+      </div>
+
+      {/* Editable Form Fields */}
+      <div className="space-y-3">
+        <div>
+          <label className="text-xs font-medium text-muted-foreground">Project Title (Type to test 1000ms debounce)</label>
+          <Input
+            value={formData.title}
+            onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label className="text-xs font-medium text-muted-foreground">Description</label>
+          <Textarea
+            value={formData.description}
+            onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+            rows={2}
+            className="mt-1"
+          />
+        </div>
+      </div>
+
+      {/* Manual Immediate Save Trigger */}
+      <div className="flex items-center justify-between pt-2 border-t border-border">
+        <span className="text-xs text-muted-foreground">
+          Type above to test automatic save after 1s of inactivity.
+        </span>
+        <LoadingButton
+          variant="outline"
+          size="sm"
+          isLoading={isSaving}
+          loadingText="Saving Now…"
+          onClick={saveNow}
+        >
+          <Save className="mr-1.5 h-3.5 w-3.5" />
+          Save Now (Instant)
+        </LoadingButton>
+      </div>
     </div>
   )
 }
@@ -1041,6 +1137,19 @@ function App() {
         </Lead>
 
         <ProjectServiceDemo />
+      </div>
+
+      {/* ── Debounced Autosave Hook Section ──────────────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1 flex items-center gap-3">
+          <Save className="h-6 w-6 text-primary" />
+          Debounced `useAutosave` Hook
+        </H1>
+        <Lead className="mb-6">
+          Automatic background save trigger that debounces 1000ms after user typing stops.
+        </Lead>
+
+        <AutosaveHookDemo />
       </div>
 
       <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full text-center">
