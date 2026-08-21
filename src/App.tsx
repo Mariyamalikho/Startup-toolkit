@@ -56,8 +56,9 @@ import { useAuth } from '@/context/AuthContext'
 import { UserCheck, LogOut, Layers, Plus, Trash2, RotateCcw } from 'lucide-react'
 import { useProjectStore } from '@/store/projectStore'
 import { projectService } from '@/services/projectService'
-import { Cloud, RefreshCw, Send, Save, Clock } from 'lucide-react'
+import { Cloud, RefreshCw, Send, Save, Clock, Compass, Lock, Link as LinkIcon } from 'lucide-react'
 import { useAutosave } from '@/hooks/useAutosave'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 
@@ -473,6 +474,78 @@ function AutosaveHookDemo() {
           <Save className="mr-1.5 h-3.5 w-3.5" />
           Save Now (Force Sync)
         </LoadingButton>
+      </div>
+    </div>
+  )
+}
+
+// RouterDemo — sandbox component for React Router navigation and route protection
+function RouterDemo() {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { user } = useAuth()
+  const { toast } = useToast()
+
+  const routesList = [
+    { path: '/', label: 'Home Sandbox (Public)', public: true },
+    { path: '/login', label: 'Login View (Public)', public: true },
+    { path: '/signup', label: 'Signup View (Public)', public: true },
+    { path: '/dashboard', label: 'Dashboard Hub (Protected 🔒)', public: false },
+    { path: '/workspace/demo-proj-1', label: 'Canvas Workspace (Protected 🔒)', public: false },
+    { path: '/settings', label: 'Settings Page (Protected 🔒)', public: false },
+  ]
+
+  return (
+    <div className="space-y-4 text-left">
+      {/* Current Location & Auth State Monitor */}
+      <div className="rounded-xl border border-border bg-muted/20 p-4 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Compass className="h-4 w-4 text-primary" />
+          <span className="text-xs font-medium text-foreground">Current Route:</span>
+          <span className="font-mono text-xs font-bold text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
+            {location.pathname}
+          </span>
+        </div>
+
+        <div className="flex items-center space-x-2 text-xs">
+          <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+          <span className="text-muted-foreground">Session Guard:</span>
+          <span className={`font-semibold ${user ? 'text-emerald-500' : 'text-amber-500'}`}>
+            {user ? 'Authenticated ✓' : 'Guest Mode (Protected routes redirect to /login)'}
+          </span>
+        </div>
+      </div>
+
+      {/* Navigation Route Buttons */}
+      <div className="space-y-2">
+        <span className="text-xs font-medium text-muted-foreground">Test Client-Side Route Transitions</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {routesList.map((route) => (
+            <button
+              key={route.path}
+              type="button"
+              onClick={() => {
+                navigate(route.path)
+                toast({
+                  variant: 'info',
+                  title: 'Navigating Route',
+                  description: `Transitioned to ${route.path}`,
+                })
+              }}
+              className={`flex items-center justify-between p-3 rounded-xl border text-xs font-medium text-left transition-all ${
+                location.pathname === route.path
+                  ? 'border-primary bg-primary/10 text-primary font-bold shadow-sm'
+                  : 'border-border bg-surface hover:border-primary/40 text-foreground'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <LinkIcon className="h-3.5 w-3.5 text-muted-foreground" />
+                {route.label}
+              </span>
+              <span className="font-mono text-[10px] text-muted-foreground">{route.path}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -1183,6 +1256,19 @@ function App() {
         </Lead>
 
         <AutosaveHookDemo />
+      </div>
+
+      {/* ── React Router & Route Protection Section ───────────── */}
+      <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full">
+        <H1 className="mb-1 flex items-center gap-3">
+          <Compass className="h-6 w-6 text-primary" />
+          React Router & Route Protection
+        </H1>
+        <Lead className="mb-6">
+          Multi-page client-side navigation with ProtectedRoute guards for private workspace routes.
+        </Lead>
+
+        <RouterDemo />
       </div>
 
       <div className="rounded-2xl bg-surface p-8 shadow-xl border border-border max-w-3xl w-full text-center">
