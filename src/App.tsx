@@ -350,48 +350,66 @@ function ProjectServiceDemo() {
   )
 }
 
-// AutosaveHookDemo — sandbox component demonstrating useAutosave hook
+// AutosaveHookDemo — sandbox component demonstrating useAutosave hook connected to Supabase update API
 function AutosaveHookDemo() {
+  const { activeProject, updateUserProject } = useProjectStore()
+
   const [formData, setFormData] = React.useState({
-    title: 'EcoPack Innovation',
-    description: 'Biodegradable packaging startup for local food delivery.',
+    title: activeProject?.title || 'EcoPack Innovation',
+    description: activeProject?.description || 'Biodegradable packaging startup for local food delivery.',
+    industry: activeProject?.industry || 'Sustainability',
   })
+
+  // Sync form data whenever active project changes
+  React.useEffect(() => {
+    if (activeProject) {
+      setFormData({
+        title: activeProject.title,
+        description: activeProject.description || '',
+        industry: activeProject.industry || '',
+      })
+    }
+  }, [activeProject?.id])
 
   const { status, isSaving, error, lastSavedAt, saveNow } = useAutosave({
     data: formData,
-    delay: 1000, // 1000ms debounce
+    delay: 1000, // 1000ms debounce delay
     onSave: async (dataToSave) => {
-      // Simulate database save API call
-      await new Promise((resolve) => setTimeout(resolve, 600))
-      console.log('[AutosaveHookDemo] Saved data to database:', dataToSave)
+      if (activeProject) {
+        await updateUserProject(activeProject.id, {
+          title: dataToSave.title,
+          description: dataToSave.description,
+          industry: dataToSave.industry,
+        })
+      }
     },
   })
 
   return (
     <div className="space-y-4 text-left">
-      {/* Real-time Status Indicator Banner */}
+      {/* Real-time Supabase Autosave Status Banner */}
       <div className="rounded-xl border border-border bg-muted/20 p-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Clock className="h-4 w-4 text-muted-foreground" />
-          <span className="text-xs font-medium text-foreground">Autosave Status:</span>
+          <span className="text-xs font-medium text-foreground">Database Sync Status:</span>
           {status === 'idle' && (
             <span className="text-xs font-semibold px-2 py-0.5 rounded bg-muted text-muted-foreground">
-              Idle (Ready)
+              Idle (Listening for changes)
             </span>
           )}
           {status === 'saving' && (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-500/20 text-amber-500 animate-pulse">
-              Saving to Database…
-            </span>
+            <InlineLoader message="Saving to Supabase Database…" size="sm" />
           )}
           {status === 'saved' && (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-500">
-              Saved ✓
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-500">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Saved to Supabase ✓
             </span>
           )}
           {status === 'error' && (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-red-500/20 text-red-500">
-              Save Error ✖ ({error})
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded bg-red-500/20 text-red-500">
+              <XCircle className="h-3.5 w-3.5" />
+              Save Error ({error})
             </span>
           )}
         </div>
@@ -403,13 +421,28 @@ function AutosaveHookDemo() {
         )}
       </div>
 
+      {/* Target Active Project Banner */}
+      <div className="rounded-lg bg-surface border border-border p-3 text-xs flex items-center justify-between">
+        <span className="text-muted-foreground">Target Project:</span>
+        <span className="font-semibold text-primary">{activeProject?.title ?? 'Default Demo Project'}</span>
+      </div>
+
       {/* Editable Form Fields */}
       <div className="space-y-3">
         <div>
-          <label className="text-xs font-medium text-muted-foreground">Project Title (Type to test 1000ms debounce)</label>
+          <label className="text-xs font-medium text-muted-foreground">Project Title (Debounced 1000ms Auto-Sync)</label>
           <Input
             value={formData.title}
             onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label className="text-xs font-medium text-muted-foreground">Industry Sector</label>
+          <Input
+            value={formData.industry}
+            onChange={(e) => setFormData((prev) => ({ ...prev, industry: e.target.value }))}
             className="mt-1"
           />
         </div>
@@ -428,17 +461,17 @@ function AutosaveHookDemo() {
       {/* Manual Immediate Save Trigger */}
       <div className="flex items-center justify-between pt-2 border-t border-border">
         <span className="text-xs text-muted-foreground">
-          Type above to test automatic save after 1s of inactivity.
+          Type into any field above to automatically sync changes to Supabase database after 1s.
         </span>
         <LoadingButton
           variant="outline"
           size="sm"
           isLoading={isSaving}
-          loadingText="Saving Now…"
+          loadingText="Syncing Database…"
           onClick={saveNow}
         >
           <Save className="mr-1.5 h-3.5 w-3.5" />
-          Save Now (Instant)
+          Save Now (Force Sync)
         </LoadingButton>
       </div>
     </div>
