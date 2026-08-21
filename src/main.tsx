@@ -7,13 +7,17 @@ import { ToastProvider } from '@/components/ui/Toast'
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
 import { AuthProvider } from '@/context/AuthContext'
 
+import { BrowserRouter } from 'react-router-dom'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
       <ThemeProvider defaultTheme="system" storageKey="startup-toolkit-theme">
         <AuthProvider>
           <ToastProvider>
-            <App />
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
           </ToastProvider>
         </AuthProvider>
       </ThemeProvider>
