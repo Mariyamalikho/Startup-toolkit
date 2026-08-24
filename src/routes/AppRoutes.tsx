@@ -7,10 +7,11 @@
 
 import { Routes, Route } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute'
+import { AppLayout } from '@/components/layout/AppLayout'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { EmptyError } from '@/components/ui/EmptyState'
 
-// Placeholder Page views (will be expanded in Phase 2 Days 32-40)
+// Placeholder Page views (will be expanded in Phase 2 Days 33-40)
 function LoginPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -51,11 +52,18 @@ export function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
 
-      {/* Protected Private Routes */}
-      <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<div className="p-8 font-bold text-foreground">Dashboard View (Phase 2)</div>} />
-        <Route path="/workspace/:projectId" element={<div className="p-8 font-bold text-foreground">Workspace View (Phase 2)</div>} />
-        <Route path="/settings" element={<div className="p-8 font-bold text-foreground">Settings View (Phase 2)</div>} />
+      {/* Protected Private Workspace Routes wrapped in AppLayout */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/dashboard" element={<div className="font-bold text-foreground">Dashboard View (Phase 2)</div>} />
+        <Route path="/workspace/:projectId" element={<div className="font-bold text-foreground">Workspace View (Phase 2)</div>} />
+        <Route path="/pitch-deck" element={<div className="font-bold text-foreground">Pitch Deck View (Phase 2)</div>} />
+        <Route path="/settings" element={<div className="font-bold text-foreground">Settings View (Phase 2)</div>} />
       </Route>
 
       {/* Catch-all 404 Route */}
