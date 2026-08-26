@@ -10,6 +10,7 @@ import * as React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar'
+import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibbon'
 
 interface AppLayoutProps {
   children?: React.ReactNode
@@ -40,7 +41,12 @@ export function AppLayout({ children }: AppLayoutProps) {
         />
 
         {/* Scrollable Main Content Viewport Container */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#12161f]">
+        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#12161f] space-y-6">
+          {/* Interlocking Chevron Stepper Ribbon */}
+          <div className="bg-[#181d27]/60 border border-border/40 p-2.5 rounded-2xl backdrop-blur shadow-sm">
+            <ChevronStepperRibbon />
+          </div>
+
           {children ? children : <Outlet />}
         </main>
       </div>
