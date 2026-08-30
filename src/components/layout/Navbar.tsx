@@ -25,7 +25,7 @@ import {
   Menu,
   X,
   CheckCircle2,
-  Sparkles,
+  Zap,
 } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 
@@ -178,7 +178,7 @@ export function Navbar({
             <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-border/60 bg-[#1c222e] p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95">
               <div className="flex items-center justify-between pb-3 border-b border-border/40">
                 <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                  <Sparkles className="h-3.5 w-3.5 text-sky-400" />
+                  <Zap className="h-3.5 w-3.5 text-sky-400" />
                   Notifications
                 </span>
                 <span className="text-[10px] font-semibold text-sky-400 bg-sky-400/10 px-2 py-0.5 rounded-full">

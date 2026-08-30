@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import {
   Rocket,
   ArrowRight,
-  Sparkles,
+  Zap,
   Kanban,
   Users,
   Grid,
@@ -61,7 +61,7 @@ export function LandingPage() {
         <div className="text-center space-y-6 max-w-3xl mx-auto">
           {/* Announcement Pill Badge */}
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-300 text-xs font-semibold shadow-sm">
-            <Sparkles className="h-3.5 w-3.5 text-sky-400 animate-pulse" />
+            <Zap className="h-3.5 w-3.5 text-sky-400 animate-pulse" />
             <span>All-in-One Founder Methodology Suite • Powered by Supabase</span>
           </div>
 

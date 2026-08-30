@@ -18,7 +18,7 @@ import {
   Layers,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
+  Zap,
 } from 'lucide-react'
 
 export interface SidebarProps {
@@ -142,7 +142,7 @@ export function Sidebar({
           <div className="bg-[#181d27] border-b border-border/40 p-4 space-y-2 flex-1">
             <div className="pb-3 mb-2 border-b border-border/40 flex items-center justify-between">
               <span className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-sky-400" />
+                <Zap className="h-3.5 w-3.5 text-sky-400" />
                 Workspace Navigation
               </span>
             </div>
