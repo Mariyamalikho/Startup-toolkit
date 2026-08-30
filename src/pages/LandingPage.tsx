@@ -18,7 +18,10 @@ import {
   Database,
   Lock,
   CheckCircle2,
+  Globe,
+  ShieldCheck,
 } from 'lucide-react'
+import { GithubIcon, LinkedinIcon } from '@/components/ui/SocialIcons'
 import { Button } from '@/components/ui/Button'
 import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibbon'
 
@@ -213,18 +216,59 @@ export function LandingPage() {
       </main>
 
       {/* ── Public Footer ────────────────────────────────────────────── */}
-      <footer className="border-t border-border/40 bg-[#181d27] py-8 px-4 sm:px-8 text-center text-xs text-muted-foreground">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2">
-            <Rocket className="h-4 w-4 text-sky-400" />
-            <span className="font-bold text-white">Startup Toolkit</span>
-            <span>© {new Date().getFullYear()}</span>
+      <footer className="border-t border-border/40 bg-[#181d27] py-10 px-4 sm:px-8 text-xs text-muted-foreground space-y-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Brand & Copyright */}
+          <div className="space-y-1 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start space-x-2">
+              <Rocket className="h-4 w-4 text-sky-400" />
+              <span className="font-bold text-white text-sm">Startup Toolkit</span>
+              <span className="text-muted-foreground">© {new Date().getFullYear()}</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground">
+              Built with precision by <span className="font-semibold text-slate-200">Mariyam Ali Khokhar</span>
+            </p>
           </div>
 
-          <div className="flex items-center space-x-6">
-            <Link to="/login" className="hover:text-white transition-colors">Sign In</Link>
-            <Link to="/signup" className="hover:text-white transition-colors">Create Account</Link>
-            <Link to="/workspace/demo-proj-1" className="hover:text-white transition-colors">Live Canvas</Link>
+          {/* Founder Social Links & Privacy Policy */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="https://mariyamalikhokhar.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+            >
+              <Globe className="h-3.5 w-3.5 text-sky-400" />
+              <span>Website</span>
+            </a>
+
+            <a
+              href="https://github.com/Mariyamalikho"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+            >
+              <GithubIcon className="h-3.5 w-3.5 text-indigo-400" />
+              <span>GitHub</span>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mariyamali-khokhar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+            >
+              <LinkedinIcon className="h-3.5 w-3.5 text-sky-400" />
+              <span>LinkedIn</span>
+            </a>
+
+            <Link
+              to="/privacy-policy"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+            >
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+              <span>Privacy Policy</span>
+            </Link>
           </div>
         </div>
       </footer>
