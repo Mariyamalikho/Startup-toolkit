@@ -11,6 +11,7 @@ import { AppLayout } from '@/components/layout/AppLayout'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { EmptyError } from '@/components/ui/EmptyState'
 import { LandingPage } from '@/pages/LandingPage'
+import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage'
 
 // Placeholder Page views (will be expanded in Phase 2 Days 33-40)
 function LoginPage() {
@@ -51,6 +52,7 @@ export function AppRoutes() {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
 
