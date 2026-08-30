@@ -1,14 +1,7 @@
-/**
- * DashboardPage.tsx
- *
- * Pixel-Perfect Founder Workspace Dashboard Page for Startup Toolkit.
- * Features stat cards summary, search & industry filter controls,
- * ProjectGrid supporting Grid and List view modes, and new project action triggers.
- */
-
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProjectStore } from '@/store/projectStore'
+import { useProjectFilter, type SortOption, type StatusFilter } from '@/hooks/useProjectFilter'
 import type { Project } from '@/types/database.types'
 import {
   Rocket,
@@ -20,6 +13,8 @@ import {
   ShieldCheck,
   CheckCircle2,
   TrendingUp,
+  ArrowUpDown,
+  RotateCcw,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -29,33 +24,24 @@ export function DashboardPage() {
   const navigate = useNavigate()
   const { projects, activeProject, loading, fetchUserProjects } = useProjectStore()
 
-  const [searchQuery, setSearchQuery] = React.useState('')
-  const [selectedIndustry, setSelectedIndustry] = React.useState<string>('all')
-
   React.useEffect(() => {
     fetchUserProjects()
   }, [])
 
-  // Filter projects by search query and selected industry
-  const filteredProjects = React.useMemo(() => {
-    return projects.filter((p) => {
-      const matchesSearch =
-        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase()))
-      const matchesIndustry =
-        selectedIndustry === 'all' || (p.industry && p.industry.toLowerCase() === selectedIndustry.toLowerCase())
-      return matchesSearch && matchesIndustry
-    })
-  }, [projects, searchQuery, selectedIndustry])
-
-  // Extract unique industries for filter dropdown
-  const industries = React.useMemo(() => {
-    const set = new Set<string>()
-    projects.forEach((p) => {
-      if (p.industry) set.add(p.industry)
-    })
-    return Array.from(set)
-  }, [projects])
+  const {
+    filteredProjects,
+    searchQuery,
+    setSearchQuery,
+    selectedIndustry,
+    setSelectedIndustry,
+    selectedStatus,
+    setSelectedStatus,
+    sortBy,
+    setSortBy,
+    industries,
+    resetFilters,
+    hasActiveFilters,
+  } = useProjectFilter(projects)
 
   const handleCreateNewVenture = () => {
     const id = `proj-${Date.now()}`
@@ -162,34 +148,84 @@ export function DashboardPage() {
       </div>
 
       {/* ── Search & Filter Controls Toolbar ──────────────────────────── */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#181d27]/60 p-3 rounded-2xl border border-border/40">
-        {/* Search Input */}
-        <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search ventures by name or keyword..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-10 text-xs bg-[#1c222e] border-border/60 focus:border-sky-400"
-          />
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-[#181d27]/70 p-3.5 rounded-2xl border border-border/40">
+        {/* Left: Search Input & Reset Button */}
+        <div className="flex items-center space-x-2 w-full lg:w-auto">
+          <div className="relative flex-1 sm:w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search ventures by title or keywords..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-10 text-xs bg-[#1c222e] border-border/60 focus:border-sky-400"
+            />
+          </div>
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="px-3 h-10 rounded-xl bg-sky-400/10 border border-sky-400/30 text-sky-400 hover:bg-sky-400/20 text-xs font-semibold flex items-center space-x-1.5 transition-colors shrink-0"
+              title="Reset Filters"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              <span>Reset</span>
+            </button>
+          )}
         </div>
 
-        {/* Industry Filter Dropdown */}
-        <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <select
-            value={selectedIndustry}
-            onChange={(e) => setSelectedIndustry(e.target.value)}
-            className="h-10 bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-sky-400 cursor-pointer"
-          >
-            <option value="all">All Industries ({projects.length})</option>
-            {industries.map((ind) => (
-              <option key={ind} value={ind}>
-                {ind}
-              </option>
+        {/* Right: Status Tabs, Industry Filter, & Sort Dropdown */}
+        <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-end">
+          {/* Status Tabs */}
+          <div className="flex items-center space-x-1 bg-[#1c222e] p-1 rounded-xl border border-border/60">
+            {(['all', 'active', 'archived'] as StatusFilter[]).map((st) => (
+              <button
+                key={st}
+                type="button"
+                onClick={() => setSelectedStatus(st)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold capitalize transition-all ${
+                  selectedStatus === st
+                    ? 'bg-sky-400 text-slate-950 shadow-sm'
+                    : 'text-muted-foreground hover:text-white'
+                }`}
+              >
+                {st}
+              </button>
             ))}
-          </select>
+          </div>
+
+          {/* Industry Dropdown */}
+          <div className="flex items-center space-x-1.5 bg-[#1c222e] border border-border/60 px-2.5 rounded-xl">
+            <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+            <select
+              value={selectedIndustry}
+              onChange={(e) => setSelectedIndustry(e.target.value)}
+              className="h-10 bg-transparent text-xs font-semibold text-foreground focus:outline-none cursor-pointer pr-1"
+            >
+              <option value="all" className="bg-[#1c222e]">All Industries</option>
+              {industries.map((ind) => (
+                <option key={ind} value={ind} className="bg-[#1c222e]">
+                  {ind}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className="flex items-center space-x-1.5 bg-[#1c222e] border border-border/60 px-2.5 rounded-xl">
+            <ArrowUpDown className="h-3.5 w-3.5 text-sky-400" />
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortOption)}
+              className="h-10 bg-transparent text-xs font-semibold text-foreground focus:outline-none cursor-pointer pr-1"
+            >
+              <option value="newest" className="bg-[#1c222e]">Sort: Newest</option>
+              <option value="oldest" className="bg-[#1c222e]">Sort: Oldest</option>
+              <option value="title" className="bg-[#1c222e]">Sort: Title (A-Z)</option>
+              <option value="progress" className="bg-[#1c222e]">Sort: Progress</option>
+            </select>
+          </div>
         </div>
       </div>
 

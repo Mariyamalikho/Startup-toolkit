@@ -8,3 +8,10 @@ export type {
   UseAutosaveOptions,
   UseAutosaveReturn,
 } from './useAutosave'
+
+export { useProjectFilter } from './useProjectFilter'
+export type {
+  SortOption,
+  StatusFilter,
+  UseProjectFilterOptions,
+} from './useProjectFilter'
