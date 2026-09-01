@@ -13,6 +13,7 @@ import { EmptyError } from '@/components/ui/EmptyState'
 import { LandingPage } from '@/pages/LandingPage'
 import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage'
 import { DashboardPage } from '@/pages/DashboardPage'
+import { WorkspacePage } from '@/pages/WorkspacePage'
 
 // Placeholder Page views (will be expanded in Phase 2 Days 33-40)
 function LoginPage() {
@@ -66,7 +67,7 @@ export function AppRoutes() {
         }
       >
         <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/workspace/:projectId" element={<div className="font-bold text-foreground">Workspace View (Phase 2)</div>} />
+        <Route path="/workspace/:projectId" element={<WorkspacePage />} />
         <Route path="/pitch-deck" element={<div className="font-bold text-foreground">Pitch Deck View (Phase 2)</div>} />
         <Route path="/settings" element={<div className="font-bold text-foreground">Settings View (Phase 2)</div>} />
       </Route>
