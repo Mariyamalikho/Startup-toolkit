@@ -10,7 +10,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProjectStore } from '@/store/projectStore'
 import type { Project } from '@/types/database.types'
-import { Layers, ArrowRight, Clock, Tag, MoreVertical } from 'lucide-react'
+import { Layers, ArrowRight, Clock, Tag, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 interface ProjectListItemProps {
@@ -19,7 +19,7 @@ interface ProjectListItemProps {
   onDelete?: (project: Project) => void
 }
 
-export function ProjectListItem({ project, onEdit }: ProjectListItemProps) {
+export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
   const navigate = useNavigate()
   const { activeProject, setActiveProject } = useProjectStore()
 
@@ -98,11 +98,12 @@ export function ProjectListItem({ project, onEdit }: ProjectListItemProps) {
           type="button"
           onClick={(e) => {
             e.stopPropagation()
-            onEdit && onEdit(project)
+            onDelete && onDelete(project)
           }}
-          className="p-1.5 rounded-lg text-muted-foreground hover:text-white hover:bg-muted/40"
+          className="p-1.5 rounded-lg text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-colors"
+          title="Delete Venture"
         >
-          <MoreVertical className="h-4 w-4" />
+          <Trash2 className="h-4 w-4" />
         </button>
       </div>
     </div>

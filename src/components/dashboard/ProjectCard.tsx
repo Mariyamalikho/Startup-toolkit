@@ -10,7 +10,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProjectStore } from '@/store/projectStore'
 import type { Project } from '@/types/database.types'
-import { Layers, ArrowRight, Clock, Tag, MoreVertical } from 'lucide-react'
+import { Layers, ArrowRight, Clock, Tag, Trash2 } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 
@@ -20,7 +20,7 @@ interface ProjectCardProps {
   onDelete?: (project: Project) => void
 }
 
-export function ProjectCard({ project, onEdit }: ProjectCardProps) {
+export function ProjectCard({ project, onDelete }: ProjectCardProps) {
   const navigate = useNavigate()
   const { activeProject, setActiveProject } = useProjectStore()
 
@@ -74,15 +74,15 @@ export function ProjectCard({ project, onEdit }: ProjectCardProps) {
           </h3>
         </div>
 
-        {/* Action Menu */}
+        {/* Delete Trigger */}
         <div className="relative" onClick={(e) => e.stopPropagation()}>
           <button
             type="button"
-            onClick={() => onEdit && onEdit(project)}
-            className="p-1.5 rounded-lg text-muted-foreground hover:text-white hover:bg-muted/40 transition-colors"
-            title="Options"
+            onClick={() => onDelete && onDelete(project)}
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-colors"
+            title="Delete Venture"
           >
-            <MoreVertical className="h-4 w-4" />
+            <Trash2 className="h-4 w-4" />
           </button>
         </div>
       </div>
