@@ -1,5 +1,4 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import { useProjectStore } from '@/store/projectStore'
 import { useProjectFilter, type SortOption, type StatusFilter } from '@/hooks/useProjectFilter'
 import type { Project } from '@/types/database.types'
@@ -19,10 +18,15 @@ import {
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { ProjectGrid } from '@/components/dashboard/ProjectGrid'
+import { CreateProjectModal } from '@/components/dashboard/CreateProjectModal'
+import { DeleteProjectDialog } from '@/components/dashboard/DeleteProjectDialog'
 
 export function DashboardPage() {
-  const navigate = useNavigate()
   const { projects, activeProject, loading, fetchUserProjects } = useProjectStore()
+
+  const [createModalOpen, setCreateModalOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
 
   React.useEffect(() => {
     fetchUserProjects()
@@ -43,21 +47,9 @@ export function DashboardPage() {
     hasActiveFilters,
   } = useProjectFilter(projects)
 
-  const handleCreateNewVenture = () => {
-    const id = `proj-${Date.now()}`
-    const newProj: Project = {
-      id,
-      user_id: 'demo-user',
-      title: 'New Startup Venture',
-      description: 'Define your problem statement, empathy mapping, and business model canvas.',
-      industry: 'Tech',
-      status: 'active',
-      progress: 20,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }
-    useProjectStore.getState().addProject(newProj)
-    navigate(`/workspace/${id}`)
+  const handleOpenDelete = (project: Project) => {
+    setProjectToDelete(project)
+    setDeleteDialogOpen(true)
   }
 
   return (
@@ -78,7 +70,7 @@ export function DashboardPage() {
         </div>
 
         <Button
-          onClick={handleCreateNewVenture}
+          onClick={() => setCreateModalOpen(true)}
           className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold px-5 h-11 text-xs shadow-lg shadow-sky-500/20"
         >
           <Plus className="mr-2 h-4 w-4 stroke-[3]" />
@@ -233,7 +225,21 @@ export function DashboardPage() {
       <ProjectGrid
         projects={filteredProjects}
         isLoading={loading}
-        onCreateProject={handleCreateNewVenture}
+        onCreateProject={() => setCreateModalOpen(true)}
+        onDeleteProject={handleOpenDelete}
+      />
+
+      {/* ── Create Project Modal ─────────────────────────────────────── */}
+      <CreateProjectModal
+        open={createModalOpen}
+        onOpenChange={setCreateModalOpen}
+      />
+
+      {/* ── Delete Project Dialog ────────────────────────────────────── */}
+      <DeleteProjectDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        project={projectToDelete}
       />
     </div>
   )
