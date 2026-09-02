@@ -22,6 +22,8 @@ export interface UpdateProjectInput {
   industry?: string
   status?: ProjectStatus
   progress?: number
+  empathy_map?: Record<string, any>
+  canvas?: Record<string, any>
 }
 
 // Fallback mock dataset for unconfigured environment
