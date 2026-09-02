@@ -28,6 +28,8 @@ export interface Project {
   industry?: string
   status: ProjectStatus
   progress: number // 0 - 100
+  empathy_map?: Record<string, any>
+  canvas?: Record<string, any>
   created_at: string
   updated_at: string
 }
