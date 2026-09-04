@@ -11,6 +11,7 @@ import { StickyNote, type NoteItem } from './StickyNote'
 import { Plus, MessageSquare, Brain, Activity, Heart, AlertOctagon, Trophy } from 'lucide-react'
 import type { NoteColor, Project } from '@/types/database.types'
 import { useProjectStore } from '@/store/projectStore'
+import { useDragAndDrop } from '@/hooks/useDragAndDrop'
 
 export type QuadrantKey = 'says' | 'thinks' | 'does' | 'feels' | 'pains' | 'gains'
 
@@ -104,6 +105,14 @@ const QUADRANT_CONFIG: Record<
 
 export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
   const { updateUserProject } = useProjectStore()
+  const {
+    activeDropzone,
+    handleDragStart,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleDragEnd,
+  } = useDragAndDrop()
 
   // Initialize empathy state from project object or fallback to defaults
   const [empathyData, setEmpathyData] = useState<EmpathyMapState>(() => {
@@ -118,6 +127,22 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
     updateUserProject(project.id, {
       empathy_map: newState,
     })
+  }
+
+  const handleMoveNote = (id: string, from: string, to: string) => {
+    if (from === to) return
+    const fromKey = from as QuadrantKey
+    const toKey = to as QuadrantKey
+
+    const itemToMove = empathyData[fromKey]?.find((n) => n.id === id)
+    if (!itemToMove) return
+
+    const updated = {
+      ...empathyData,
+      [fromKey]: empathyData[fromKey].filter((n) => n.id !== id),
+      [toKey]: [...empathyData[toKey], itemToMove],
+    }
+    saveEmpathyMap(updated)
   }
 
   const handleAddNote = (quadrant: QuadrantKey) => {
@@ -162,9 +187,19 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
   const renderQuadrant = (key: QuadrantKey) => {
     const config = QUADRANT_CONFIG[key]
     const notes = empathyData[key] || []
+    const isOver = activeDropzone === key
 
     return (
-      <div className="bg-[#181d27] border border-border/60 rounded-2xl p-5 shadow-lg space-y-4 flex flex-col justify-between min-h-[280px]">
+      <div
+        onDragOver={(e) => handleDragOver(e, key)}
+        onDragLeave={handleDragLeave}
+        onDrop={(e) => handleDrop(e, key, handleMoveNote)}
+        className={`bg-[#181d27] border rounded-2xl p-5 shadow-lg space-y-4 flex flex-col justify-between min-h-[280px] transition-all duration-200 ${
+          isOver
+            ? 'border-sky-400 bg-sky-400/10 shadow-[0_0_20px_rgba(56,189,248,0.25)] ring-2 ring-sky-400/40 scale-[1.01]'
+            : 'border-border/60'
+        }`}
+      >
         {/* Quadrant Header */}
         <div className="space-y-2">
           <div className="flex items-center justify-between border-b border-border/40 pb-3">
@@ -196,10 +231,13 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
             <StickyNote
               key={note.id}
               note={note}
+              containerId={key}
               rotationDeg={idx % 2 === 0 ? -1.5 : 1.5}
               onChangeContent={(id, content) => handleContentChange(key, id, content)}
               onChangeColor={(id, color) => handleColorChange(key, id, color)}
               onDelete={(id) => handleDeleteNote(key, id)}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
             />
           ))}
 

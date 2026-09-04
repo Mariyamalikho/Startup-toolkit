@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 import type { NoteColor, Project } from '@/types/database.types'
 import { useProjectStore } from '@/store/projectStore'
+import { useDragAndDrop } from '@/hooks/useDragAndDrop'
 
 export type BMCKey =
   | 'key_partners'
@@ -161,6 +162,14 @@ const BMC_BLOCK_CONFIG: Record<
 
 export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
   const { updateUserProject } = useProjectStore()
+  const {
+    activeDropzone,
+    handleDragStart,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleDragEnd,
+  } = useDragAndDrop()
 
   const [bmcData, setBmcData] = useState<BMCState>(() => {
     if (project.canvas && typeof project.canvas === 'object') {
@@ -174,6 +183,22 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
     updateUserProject(project.id, {
       canvas: newState,
     })
+  }
+
+  const handleMoveNote = (id: string, from: string, to: string) => {
+    if (from === to) return
+    const fromKey = from as BMCKey
+    const toKey = to as BMCKey
+
+    const itemToMove = bmcData[fromKey]?.find((n) => n.id === id)
+    if (!itemToMove) return
+
+    const updated = {
+      ...bmcData,
+      [fromKey]: bmcData[fromKey].filter((n) => n.id !== id),
+      [toKey]: [...bmcData[toKey], itemToMove],
+    }
+    saveBMC(updated)
   }
 
   const handleAddNote = (key: BMCKey) => {
@@ -218,10 +243,18 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
   const renderBlock = (key: BMCKey, extraClasses = '') => {
     const config = BMC_BLOCK_CONFIG[key]
     const notes = bmcData[key] || []
+    const isOver = activeDropzone === key
 
     return (
       <div
-        className={`bg-[#181d27] border border-border/60 rounded-2xl p-4 shadow-lg space-y-3 flex flex-col justify-between min-h-[220px] ${extraClasses}`}
+        onDragOver={(e) => handleDragOver(e, key)}
+        onDragLeave={handleDragLeave}
+        onDrop={(e) => handleDrop(e, key, handleMoveNote)}
+        className={`bg-[#181d27] border rounded-2xl p-4 shadow-lg space-y-3 flex flex-col justify-between min-h-[220px] transition-all duration-200 ${
+          isOver
+            ? 'border-emerald-400 bg-emerald-400/10 shadow-[0_0_20px_rgba(52,211,153,0.25)] ring-2 ring-emerald-400/40 scale-[1.01]'
+            : 'border-border/60'
+        } ${extraClasses}`}
       >
         <div className="space-y-2">
           <div className="flex items-center justify-between border-b border-border/40 pb-2.5">
@@ -252,10 +285,13 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
             <StickyNote
               key={note.id}
               note={note}
+              containerId={key}
               rotationDeg={idx % 2 === 0 ? -1 : 1}
               onChangeContent={(id, content) => handleContentChange(key, id, content)}
               onChangeColor={(id, color) => handleColorChange(key, id, color)}
               onDelete={(id) => handleDeleteNote(key, id)}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
             />
           ))}
 

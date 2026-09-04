@@ -15,3 +15,6 @@ export type {
   StatusFilter,
   UseProjectFilterOptions,
 } from './useProjectFilter'
+
+export { useDragAndDrop } from './useDragAndDrop'
+export type { DraggedItemPayload } from './useDragAndDrop'
