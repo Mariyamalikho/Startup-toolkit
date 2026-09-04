@@ -6,7 +6,7 @@
  * methodology progress percentage bar, and quick export/share action triggers.
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import { type Project } from '@/types/database.types'
 import {
   Layers,
@@ -17,9 +17,11 @@ import {
   Settings,
   ArrowLeft,
   TrendingUp,
+  Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Link } from 'react-router-dom'
+import { AIGeneratorModal } from '@/components/tools/AIGeneratorModal'
 
 interface WorkspaceHeaderProps {
   project: Project
@@ -34,6 +36,7 @@ export function WorkspaceHeader({
   onShare,
   onSettings,
 }: WorkspaceHeaderProps) {
+  const [aiModalOpen, setAiModalOpen] = useState(false)
   const progress = project.progress || 35
 
   const formattedDate = React.useMemo(() => {
@@ -87,6 +90,15 @@ export function WorkspaceHeader({
 
         {/* Right Action Triggers */}
         <div className="flex items-center space-x-2 shrink-0">
+          <Button
+            size="sm"
+            onClick={() => setAiModalOpen(true)}
+            className="h-9 px-3.5 text-xs font-extrabold bg-sky-400 text-slate-950 hover:bg-sky-300 shadow-md shadow-sky-500/20"
+          >
+            <Zap className="mr-1.5 h-3.5 w-3.5 fill-slate-950" />
+            AI Co-Pilot
+          </Button>
+
           {onShare && (
             <Button
               variant="outline"
@@ -124,6 +136,13 @@ export function WorkspaceHeader({
           )}
         </div>
       </div>
+
+      {/* AI Generator Modal Trigger */}
+      <AIGeneratorModal
+        open={aiModalOpen}
+        onOpenChange={setAiModalOpen}
+        project={project}
+      />
 
       {/* Description & Progress Bar Footer */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
