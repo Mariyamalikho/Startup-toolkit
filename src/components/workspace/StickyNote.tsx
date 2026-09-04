@@ -7,7 +7,7 @@
  */
 
 import { useState } from 'react'
-import { Trash2, Palette, Check } from 'lucide-react'
+import { Trash2, Palette, Check, GripVertical } from 'lucide-react'
 import type { NoteColor } from '@/types/database.types'
 
 export interface NoteItem {
@@ -20,9 +20,12 @@ export interface NoteItem {
 interface StickyNoteProps {
   note: NoteItem
   rotationDeg?: number
+  containerId?: string
   onChangeContent?: (id: string, content: string) => void
   onChangeColor?: (id: string, color: NoteColor) => void
   onDelete?: (id: string) => void
+  onDragStart?: (e: React.DragEvent, id: string, containerId: string) => void
+  onDragEnd?: (e: React.DragEvent) => void
 }
 
 const COLOR_CLASSES: Record<NoteColor, { bg: string; text: string; border: string; dot: string }> = {
@@ -61,9 +64,12 @@ const COLOR_CLASSES: Record<NoteColor, { bg: string; text: string; border: strin
 export function StickyNote({
   note,
   rotationDeg = -1,
+  containerId = '',
   onChangeContent,
   onChangeColor,
   onDelete,
+  onDragStart,
+  onDragEnd,
 }: StickyNoteProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [showPalette, setShowPalette] = useState(false)
@@ -80,14 +86,20 @@ export function StickyNote({
 
   return (
     <div
+      draggable={!isEditing}
+      onDragStart={(e) => onDragStart && onDragStart(e, note.id, containerId)}
+      onDragEnd={(e) => onDragEnd && onDragEnd(e)}
       style={{ transform: `rotate(${rotationDeg}deg)` }}
-      className={`group relative p-3.5 rounded-xl border shadow-lg transition-all duration-200 ${theme.bg} ${theme.text} ${theme.border} space-y-2 hover:shadow-xl hover:scale-[1.02] hover:z-10`}
+      className={`group relative p-3.5 rounded-xl border shadow-lg transition-all duration-200 ${theme.bg} ${theme.text} ${theme.border} space-y-2 hover:shadow-xl hover:scale-[1.02] hover:z-10 cursor-grab active:cursor-grabbing`}
     >
       {/* Note Header Toolbar */}
       <div className="flex items-center justify-between opacity-80 group-hover:opacity-100 transition-opacity pb-1 border-b border-black/10">
-        <span className="text-[10px] font-bold uppercase tracking-wider font-mono opacity-60">
-          Note
-        </span>
+        <div className="flex items-center space-x-1 cursor-grab">
+          <GripVertical className="h-3 w-3 opacity-40 group-hover:opacity-80" />
+          <span className="text-[10px] font-bold uppercase tracking-wider font-mono opacity-60">
+            Note
+          </span>
+        </div>
 
         <div className="flex items-center space-x-1">
           {/* Color Palette Toggle */}
