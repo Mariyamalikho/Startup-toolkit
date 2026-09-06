@@ -5,14 +5,15 @@ import { WorkspaceHeader } from '@/components/workspace/WorkspaceHeader'
 import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibbon'
 import { EmpathyMapCanvas } from '@/components/workspace/EmpathyMapCanvas'
 import { BusinessModelCanvas } from '@/components/workspace/BusinessModelCanvas'
-import { Heart, Grid } from 'lucide-react'
+import { BrainstormBoard } from '@/components/workspace/BrainstormBoard'
+import { Heart, Grid, Lightbulb } from 'lucide-react'
 import { EmptyError } from '@/components/ui/EmptyState'
 
 export function WorkspacePage() {
   const { projectId } = useParams<{ projectId: string }>()
   const navigate = useNavigate()
   const { projects, activeProject, setActiveProject } = useProjectStore()
-  const [activeTab, setActiveTab] = useState<'empathy' | 'canvas'>('empathy')
+  const [activeTab, setActiveTab] = useState<'brainstorm' | 'empathy' | 'canvas'>('brainstorm')
 
   // Find project by param or fallback to active project
   const project = React.useMemo(() => {
@@ -49,7 +50,20 @@ export function WorkspacePage() {
         <ChevronStepperRibbon />
 
         {/* Tab Buttons */}
-        <div className="flex items-center space-x-2 border-t border-border/40 pt-3">
+        <div className="flex flex-wrap items-center gap-2 border-t border-border/40 pt-3">
+          <button
+            type="button"
+            onClick={() => setActiveTab('brainstorm')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
+              activeTab === 'brainstorm'
+                ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-500/20'
+                : 'bg-[#1c222e] text-muted-foreground hover:text-white'
+            }`}
+          >
+            <Lightbulb className="h-3.5 w-3.5" />
+            <span>Brainstorming Board</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveTab('empathy')}
@@ -79,7 +93,9 @@ export function WorkspacePage() {
       </div>
 
       {/* ── Active Methodology Canvas Tool ──────────────────────────── */}
-      {activeTab === 'empathy' ? (
+      {activeTab === 'brainstorm' ? (
+        <BrainstormBoard project={project} />
+      ) : activeTab === 'empathy' ? (
         <EmpathyMapCanvas project={project} />
       ) : (
         <BusinessModelCanvas project={project} />
