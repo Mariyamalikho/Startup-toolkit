@@ -25,6 +25,7 @@ export interface UpdateProjectInput {
   empathy_map?: Record<string, any>
   canvas?: Record<string, any>
   brainstorm_notes?: Record<string, any>[]
+  experiments?: Record<string, any>[]
 }
 
 // Fallback mock dataset for unconfigured environment
