@@ -6,14 +6,15 @@ import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibb
 import { EmpathyMapCanvas } from '@/components/workspace/EmpathyMapCanvas'
 import { BusinessModelCanvas } from '@/components/workspace/BusinessModelCanvas'
 import { BrainstormBoard } from '@/components/workspace/BrainstormBoard'
-import { Heart, Grid, Lightbulb } from 'lucide-react'
+import { ExperimentTracker } from '@/components/workspace/ExperimentTracker'
+import { Heart, Grid, Lightbulb, FlaskConical } from 'lucide-react'
 import { EmptyError } from '@/components/ui/EmptyState'
 
 export function WorkspacePage() {
   const { projectId } = useParams<{ projectId: string }>()
   const navigate = useNavigate()
   const { projects, activeProject, setActiveProject } = useProjectStore()
-  const [activeTab, setActiveTab] = useState<'brainstorm' | 'empathy' | 'canvas'>('brainstorm')
+  const [activeTab, setActiveTab] = useState<'brainstorm' | 'empathy' | 'canvas' | 'experiments'>('brainstorm')
 
   // Find project by param or fallback to active project
   const project = React.useMemo(() => {
@@ -89,6 +90,19 @@ export function WorkspacePage() {
             <Grid className="h-3.5 w-3.5" />
             <span>Business Model Canvas (9-Box)</span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('experiments')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
+              activeTab === 'experiments'
+                ? 'bg-purple-400 text-slate-950 shadow-md shadow-purple-500/20'
+                : 'bg-[#1c222e] text-muted-foreground hover:text-white'
+            }`}
+          >
+            <FlaskConical className="h-3.5 w-3.5" />
+            <span>Experiment Tracker</span>
+          </button>
         </div>
       </div>
 
@@ -97,8 +111,10 @@ export function WorkspacePage() {
         <BrainstormBoard project={project} />
       ) : activeTab === 'empathy' ? (
         <EmpathyMapCanvas project={project} />
-      ) : (
+      ) : activeTab === 'canvas' ? (
         <BusinessModelCanvas project={project} />
+      ) : (
+        <ExperimentTracker project={project} />
       )}
     </div>
   )
