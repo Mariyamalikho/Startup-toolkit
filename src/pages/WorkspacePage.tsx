@@ -8,6 +8,7 @@ import { BusinessModelCanvas } from '@/components/workspace/BusinessModelCanvas'
 import { BrainstormBoard } from '@/components/workspace/BrainstormBoard'
 import { ExperimentTracker } from '@/components/workspace/ExperimentTracker'
 import { MilestoneTimeline } from '@/components/workspace/MilestoneTimeline'
+import { PrintableReportModal } from '@/components/export/PrintableReportModal'
 import { Heart, Grid, Lightbulb, FlaskConical, Calendar } from 'lucide-react'
 import { EmptyError } from '@/components/ui/EmptyState'
 
@@ -16,6 +17,7 @@ export function WorkspacePage() {
   const navigate = useNavigate()
   const { projects, activeProject, setActiveProject } = useProjectStore()
   const [activeTab, setActiveTab] = useState<'brainstorm' | 'empathy' | 'canvas' | 'experiments' | 'roadmap'>('brainstorm')
+  const [isPrintReportOpen, setIsPrintReportOpen] = useState(false)
 
   // Find project by param or fallback to active project
   const project = React.useMemo(() => {
@@ -43,8 +45,15 @@ export function WorkspacePage() {
       {/* ── Active Workspace Header Banner ──────────────────────────── */}
       <WorkspaceHeader
         project={project}
-        onExport={() => navigate('/pitch-deck')}
+        onExport={() => setIsPrintReportOpen(true)}
         onShare={() => alert(`Share link: ${window.location.href}`)}
+      />
+
+      {/* ── Printable Report Modal Exporter ─────────────────────────── */}
+      <PrintableReportModal
+        open={isPrintReportOpen}
+        onOpenChange={setIsPrintReportOpen}
+        project={project}
       />
 
       {/* ── Interlocking Chevron Stage Stepper Ribbon & Tab Switcher ─ */}
@@ -135,4 +144,5 @@ export function WorkspacePage() {
     </div>
   )
 }
+
 
