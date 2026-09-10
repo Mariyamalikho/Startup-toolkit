@@ -21,7 +21,7 @@ import { Label } from '@/components/ui/Label'
 import { Button } from '@/components/ui/Button'
 import { LoadingButton } from '@/components/ui/Spinner'
 import type { Project } from '@/types/database.types'
-import { useProjectStore } from '@/store/projectStore'
+import { useInterconnectedSync } from '@/hooks/useInterconnectedSync'
 
 interface AIGeneratorModalProps {
   open: boolean
@@ -76,7 +76,17 @@ const AI_PRESETS: Record<
 }
 
 export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorModalProps) {
-  const { updateUserProject } = useProjectStore()
+  const { syncAIGeneratorToCanvases } = useInterconnectedSync(
+    project || {
+      id: '',
+      user_id: '',
+      title: '',
+      status: 'active',
+      progress: 0,
+      created_at: '',
+      updated_at: '',
+    },
+  )
 
   const [industry, setIndustry] = useState(project?.industry || 'SaaS')
   const [targetAudience, setTargetAudience] = useState(
@@ -119,10 +129,8 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
     if (!project) return
     setInserted(true)
 
-    // Insert into project description / canvas
-    await updateUserProject(project.id, {
-      description: generatedProblem,
-    })
+    // Sync across project description, Empathy Map, and Business Model Canvas
+    await syncAIGeneratorToCanvases(targetAudience, generatedProblem, generatedValueProps)
 
     setTimeout(() => {
       setInserted(false)
