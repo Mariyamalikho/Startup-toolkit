@@ -9,6 +9,7 @@ import { BrainstormBoard } from '@/components/workspace/BrainstormBoard'
 import { ExperimentTracker } from '@/components/workspace/ExperimentTracker'
 import { MilestoneTimeline } from '@/components/workspace/MilestoneTimeline'
 import { PrintableReportModal } from '@/components/export/PrintableReportModal'
+import { DataSyncBanner } from '@/components/workspace/DataSyncBanner'
 import { Heart, Grid, Lightbulb, FlaskConical, Calendar } from 'lucide-react'
 import { EmptyError } from '@/components/ui/EmptyState'
 
@@ -48,6 +49,9 @@ export function WorkspacePage() {
         onExport={() => setIsPrintReportOpen(true)}
         onShare={() => alert(`Share link: ${window.location.href}`)}
       />
+
+      {/* ── Interconnected Cross-Tool Data Sync Banner ──────────────── */}
+      <DataSyncBanner project={project} />
 
       {/* ── Printable Report Modal Exporter ─────────────────────────── */}
       <PrintableReportModal
