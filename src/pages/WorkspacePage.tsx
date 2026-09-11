@@ -10,6 +10,7 @@ import { ExperimentTracker } from '@/components/workspace/ExperimentTracker'
 import { MilestoneTimeline } from '@/components/workspace/MilestoneTimeline'
 import { PrintableReportModal } from '@/components/export/PrintableReportModal'
 import { DataSyncBanner } from '@/components/workspace/DataSyncBanner'
+import { ToolNavigationFooter } from '@/components/workspace/ToolNavigationFooter'
 import { Heart, Grid, Lightbulb, FlaskConical, Calendar } from 'lucide-react'
 import { EmptyError } from '@/components/ui/EmptyState'
 
@@ -145,8 +146,12 @@ export function WorkspacePage() {
       ) : (
         <MilestoneTimeline project={project} />
       )}
+
+      {/* ── Tool Navigation Footer (Prev / Next Stepper Controls) ──── */}
+      <ToolNavigationFooter activeTab={activeTab} onSelectTab={setActiveTab} />
     </div>
   )
 }
+
 
 
