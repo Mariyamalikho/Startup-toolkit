@@ -28,12 +28,7 @@ export interface SidebarProps {
   onCloseMobileMenu?: () => void
 }
 
-export function Sidebar({
-  isOpen,
-  onToggle,
-  mobileMenuOpen,
-  onCloseMobileMenu,
-}: SidebarProps) {
+export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }: SidebarProps) {
   const location = useLocation()
   const { activeProject } = useProjectStore()
 
@@ -52,7 +47,7 @@ export function Sidebar({
     <>
       {/* ── Desktop Sidebar Container ───────────────────────────────── */}
       <aside
-        className={`bg-[#181d27] border-r border-border/40 transition-all duration-300 flex flex-col justify-between select-none ${
+        className={`bg-surface border-r border-border/40 transition-all duration-300 flex flex-col justify-between select-none ${
           isOpen ? 'w-64' : 'w-16'
         } hidden md:flex`}
       >
@@ -60,7 +55,9 @@ export function Sidebar({
           {/* Navigation Links Group */}
           <div className="space-y-1">
             {navigationItems.map((item) => {
-              const isActive = location.pathname === item.path || (item.path.startsWith('/workspace') && location.pathname.startsWith('/workspace'))
+              const isActive =
+                location.pathname === item.path ||
+                (item.path.startsWith('/workspace') && location.pathname.startsWith('/workspace'))
               const Icon = item.icon
 
               return (
@@ -74,12 +71,14 @@ export function Sidebar({
                   }`}
                   title={!isOpen ? item.label : undefined}
                 >
-                  <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-sky-400' : 'text-muted-foreground group-hover:text-foreground'}`} />
+                  <Icon
+                    className={`h-4 w-4 shrink-0 ${isActive ? 'text-sky-400' : 'text-muted-foreground group-hover:text-foreground'}`}
+                  />
                   {isOpen && <span className="truncate">{item.label}</span>}
 
                   {/* Tooltip hint when sidebar is collapsed */}
                   {!isOpen && (
-                    <div className="absolute left-14 z-50 hidden group-hover:block bg-[#1c222e] text-white text-[11px] font-medium px-2.5 py-1 rounded-md border border-border/60 shadow-xl whitespace-nowrap pointer-events-none">
+                    <div className="absolute left-14 z-50 hidden group-hover:block bg-surface text-foreground text-[11px] font-medium px-2.5 py-1 rounded-md border border-border/60 shadow-xl whitespace-nowrap pointer-events-none">
                       {item.label}
                     </div>
                   )}
@@ -93,18 +92,22 @@ export function Sidebar({
         <div className="p-3 space-y-3 border-t border-border/40">
           {/* Active Venture Summary Card (when sidebar is open) */}
           {isOpen && activeProject && (
-            <div className="p-3.5 rounded-xl border border-border/40 bg-[#1c222e] space-y-2">
+            <div className="p-3.5 rounded-xl border border-border/40 bg-muted/30 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-sky-400 flex items-center gap-1">
                   <Layers className="h-3 w-3" />
                   Active Venture
                 </span>
-                <span className="text-[10px] font-mono text-muted-foreground">{activeProject.progress}%</span>
+                <span className="text-[10px] font-mono text-muted-foreground">
+                  {activeProject.progress}%
+                </span>
               </div>
 
               <div>
-                <p className="text-xs font-bold text-white truncate">{activeProject.title}</p>
-                <p className="text-[10px] text-muted-foreground truncate">{activeProject.industry || 'Tech & SaaS'}</p>
+                <p className="text-xs font-bold text-foreground truncate">{activeProject.title}</p>
+                <p className="text-[10px] text-muted-foreground truncate">
+                  {activeProject.industry || 'Tech & SaaS'}
+                </p>
               </div>
 
               {/* Progress bar line */}
@@ -139,9 +142,9 @@ export function Sidebar({
       {/* ── Mobile Navigation Drawer Overlay ────────────────────────── */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-md md:hidden pt-16 flex flex-col">
-          <div className="bg-[#181d27] border-b border-border/40 p-4 space-y-2 flex-1">
+          <div className="bg-surface border-b border-border/40 p-4 space-y-2 flex-1">
             <div className="pb-3 mb-2 border-b border-border/40 flex items-center justify-between">
-              <span className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                 <Zap className="h-3.5 w-3.5 text-sky-400" />
                 Workspace Navigation
               </span>
@@ -170,13 +173,15 @@ export function Sidebar({
 
             {/* Mobile Active Venture Highlight */}
             {activeProject && (
-              <div className="mt-6 p-4 rounded-xl border border-border/40 bg-[#1c222e] space-y-1.5">
+              <div className="mt-6 p-4 rounded-xl border border-border/40 bg-muted/30 space-y-1.5">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-sky-400 flex items-center gap-1">
                   <Layers className="h-3 w-3" />
                   Active Project Context
                 </span>
-                <p className="text-sm font-bold text-white">{activeProject.title}</p>
-                <p className="text-xs text-muted-foreground">{activeProject.industry || 'Technology'}</p>
+                <p className="text-sm font-bold text-foreground">{activeProject.title}</p>
+                <p className="text-xs text-muted-foreground">
+                  {activeProject.industry || 'Technology'}
+                </p>
               </div>
             )}
           </div>

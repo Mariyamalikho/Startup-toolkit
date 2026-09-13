@@ -57,7 +57,13 @@ const DEFAULT_EMPATHY_STATE: EmpathyMapState = {
 
 const QUADRANT_CONFIG: Record<
   QuadrantKey,
-  { title: string; subtitle: string; icon: React.ReactNode; defaultColor: NoteColor; headerBg: string }
+  {
+    title: string
+    subtitle: string
+    icon: React.ReactNode
+    defaultColor: NoteColor
+    headerBg: string
+  }
 > = {
   says: {
     title: 'SAYS',
@@ -148,7 +154,7 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
   const handleAddNote = (quadrant: QuadrantKey) => {
     const config = QUADRANT_CONFIG[quadrant]
     const newNote: NoteItem = {
-      id: `${quadrant}-${Date.now()}`,
+      id: `${quadrant}-${crypto.randomUUID()}`,
       content: '',
       color: config.defaultColor,
     }
@@ -194,7 +200,7 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
         onDragOver={(e) => handleDragOver(e, key)}
         onDragLeave={handleDragLeave}
         onDrop={(e) => handleDrop(e, key, handleMoveNote)}
-        className={`bg-[#181d27] border rounded-2xl p-5 shadow-lg space-y-4 flex flex-col justify-between min-h-[280px] transition-all duration-200 ${
+        className={`bg-surface border rounded-2xl p-5 shadow-lg space-y-4 flex flex-col justify-between min-h-[280px] transition-all duration-200 ${
           isOver
             ? 'border-sky-400 bg-sky-400/10 shadow-[0_0_20px_rgba(56,189,248,0.25)] ring-2 ring-sky-400/40 scale-[1.01]'
             : 'border-border/60'
@@ -204,11 +210,13 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
         <div className="space-y-2">
           <div className="flex items-center justify-between border-b border-border/40 pb-3">
             <div className="flex items-center space-x-2">
-              <div className={`h-8 w-8 rounded-xl border flex items-center justify-center ${config.headerBg}`}>
+              <div
+                className={`h-8 w-8 rounded-xl border flex items-center justify-center ${config.headerBg}`}
+              >
                 {config.icon}
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white tracking-wide">{config.title}</h3>
+                <h3 className="text-sm font-bold text-foreground tracking-wide">{config.title}</h3>
                 <p className="text-[11px] text-muted-foreground">{config.subtitle}</p>
               </div>
             </div>
@@ -261,16 +269,17 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
   return (
     <div className="space-y-6">
       {/* Top Description Banner */}
-      <div className="flex items-center justify-between bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
+      <div className="flex items-center justify-between bg-surface/70 border border-border/40 p-4 rounded-2xl">
         <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <h2 className="text-base font-bold text-foreground flex items-center gap-2">
             <span>Empathy Map Canvas</span>
             <span className="text-[10px] font-mono font-bold uppercase bg-sky-400/20 text-sky-300 px-2 py-0.5 rounded-full">
               User Research Phase
             </span>
           </h2>
           <p className="text-xs text-muted-foreground pt-0.5">
-            Capture qualitative user research insights across 4 key human behaviors to uncover unmet customer needs.
+            Capture qualitative user research insights across 4 key human behaviors to uncover unmet
+            customer needs.
           </p>
         </div>
       </div>
