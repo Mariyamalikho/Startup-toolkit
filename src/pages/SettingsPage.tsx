@@ -7,17 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react'
-import {
-  User,
-  Lock,
-  Moon,
-  Sun,
-  Monitor,
-  Camera,
-  Key,
-  ShieldCheck,
-  Save,
-} from 'lucide-react'
+import { User, Lock, Moon, Sun, Monitor, Camera, Key, ShieldCheck, Save } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { profileService } from '@/services/profileService'
 import { Button } from '@/components/ui/Button'
@@ -29,9 +19,11 @@ export function SettingsPage() {
   const { user } = useAuth()
   const { toast } = useToast()
 
-  const [fullName, setFullName] = useState('Mariyam Malik')
+  const [fullName, setFullName] = useState('Mariyam Ali K.')
   const [email, setEmail] = useState(user?.email || 'founder@startuptoolkit.io')
-  const [avatarUrl, setAvatarUrl] = useState('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150')
+  const [avatarUrl, setAvatarUrl] = useState(
+    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+  )
   const [theme, setTheme] = useState<'dark' | 'light' | 'system'>('dark')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -65,10 +57,10 @@ export function SettingsPage() {
         description: 'Your account settings and theme preferences have been saved.',
         variant: 'success',
       })
-    } catch (err: any) {
+    } catch (err: unknown) {
       toast({
         title: 'Save Failed',
-        description: err.message || 'Failed to update profile settings.',
+        description: (err as Error).message || 'Failed to update profile settings.',
         variant: 'error',
       })
     } finally {
@@ -97,10 +89,10 @@ export function SettingsPage() {
       })
       setNewPassword('')
       setConfirmPassword('')
-    } catch (err: any) {
+    } catch (err: unknown) {
       toast({
         title: 'Update Failed',
-        description: err.message || 'Failed to update account password.',
+        description: (err as Error).message || 'Failed to update account password.',
         variant: 'error',
       })
     } finally {
@@ -126,7 +118,9 @@ export function SettingsPage() {
 
         <div className="flex items-center space-x-2 bg-[#12161f] border border-border/40 px-3 py-1.5 rounded-xl text-xs">
           <ShieldCheck className="h-4 w-4 text-emerald-400" />
-          <span className="text-muted-foreground font-mono">Status: <strong className="text-emerald-400 font-bold">Active Session</strong></span>
+          <span className="text-muted-foreground font-mono">
+            Status: <strong className="text-emerald-400 font-bold">Active Session</strong>
+          </span>
         </div>
       </div>
 
@@ -145,7 +139,9 @@ export function SettingsPage() {
             {/* Avatar Preview & Upload */}
             <div className="relative group">
               <img
-                src={avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
+                src={
+                  avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
+                }
                 alt="Founder Avatar"
                 className="h-24 w-24 rounded-full object-cover border-2 border-sky-400/60 shadow-lg"
               />
@@ -270,7 +266,10 @@ export function SettingsPage() {
       </form>
 
       {/* Security Credentials Section */}
-      <form onSubmit={handleUpdatePassword} className="bg-[#181d27] border border-border/60 p-6 rounded-2xl shadow-xl space-y-6">
+      <form
+        onSubmit={handleUpdatePassword}
+        className="bg-[#181d27] border border-border/60 p-6 rounded-2xl shadow-xl space-y-6"
+      >
         <div className="border-b border-border/40 pb-4">
           <h2 className="text-base font-bold text-white flex items-center gap-2">
             <Lock className="h-4 w-4 text-purple-400" />

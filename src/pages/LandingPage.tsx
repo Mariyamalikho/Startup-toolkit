@@ -48,7 +48,10 @@ export function LandingPage() {
             </Button>
           </Link>
           <Link to="/signup">
-            <Button size="sm" className="text-xs font-bold bg-sky-400 text-slate-950 hover:bg-sky-300">
+            <Button
+              size="sm"
+              className="text-xs font-bold bg-sky-400 text-slate-950 hover:bg-sky-300"
+            >
               Get Started
             </Button>
           </Link>
@@ -75,7 +78,8 @@ export function LandingPage() {
 
           {/* Subtitle Paragraph */}
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            From Ideation and Empathy Mapping to Business Model Canvas and Pitch Decks — everything early-stage founders need in one dark, pixel-perfect workspace.
+            From Ideation and Empathy Mapping to Business Model Canvas and Pitch Decks — everything
+            early-stage founders need in one dark, pixel-perfect workspace.
           </p>
 
           {/* CTA Action Buttons */}
@@ -108,7 +112,9 @@ export function LandingPage() {
               <span className="h-3 w-3 rounded-full bg-red-500/80" />
               <span className="h-3 w-3 rounded-full bg-amber-500/80" />
               <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
-              <span className="pl-2 font-mono text-xs text-muted-foreground">workspace.startuptoolkit.io</span>
+              <span className="pl-2 font-mono text-xs text-muted-foreground">
+                workspace.startuptoolkit.io
+              </span>
             </div>
             <div className="flex items-center space-x-2 text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-semibold">
               <CheckCircle2 className="h-3.5 w-3.5" />
@@ -128,7 +134,9 @@ export function LandingPage() {
                 <Kanban className="h-3.5 w-3.5" />
                 Problem & Value Prop
               </span>
-              <p className="text-xs text-muted-foreground">High friction in early-stage founder methodology alignment.</p>
+              <p className="text-xs text-muted-foreground">
+                High friction in early-stage founder methodology alignment.
+              </p>
               <div className="pt-2">
                 <span className="inline-block px-2 py-1 bg-amber-500/20 text-amber-300 text-[11px] rounded font-mono">
                   Post-it: Frictionless UI
@@ -141,7 +149,9 @@ export function LandingPage() {
                 <Users className="h-3.5 w-3.5" />
                 Customer Segments
               </span>
-              <p className="text-xs text-muted-foreground">Solo founders, pre-seed teams, and incubator cohort members.</p>
+              <p className="text-xs text-muted-foreground">
+                Solo founders, pre-seed teams, and incubator cohort members.
+              </p>
               <div className="pt-2">
                 <span className="inline-block px-2 py-1 bg-sky-500/20 text-sky-300 text-[11px] rounded font-mono">
                   Target: Technical Founders
@@ -154,7 +164,9 @@ export function LandingPage() {
                 <Grid className="h-3.5 w-3.5" />
                 Revenue Streams
               </span>
-              <p className="text-xs text-muted-foreground">Freemium tier, Pro Founder plan ($19/mo), and Enterprise cohorts.</p>
+              <p className="text-xs text-muted-foreground">
+                Freemium tier, Pro Founder plan ($19/mo), and Enterprise cohorts.
+              </p>
               <div className="pt-2">
                 <span className="inline-block px-2 py-1 bg-emerald-500/20 text-emerald-300 text-[11px] rounded font-mono">
                   SaaS Subscription Model
@@ -167,8 +179,12 @@ export function LandingPage() {
         {/* ── Feature Highlights Grid ─────────────────────────────────── */}
         <div className="space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Built for High-Execution Founders</h2>
-            <p className="text-sm text-muted-foreground">Structured startup frameworks combined with modern database sync.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Built for High-Execution Founders
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Structured startup frameworks combined with modern database sync.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -178,7 +194,8 @@ export function LandingPage() {
               </div>
               <h3 className="text-base font-bold text-white">Structured Canvas</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Organize ideas, empathy maps, and business model canvas quadrants in a 1:1 pixel-perfect dark UI.
+                Organize ideas, empathy maps, and business model canvas quadrants in a 1:1
+                pixel-perfect dark UI.
               </p>
             </div>
 
@@ -198,7 +215,8 @@ export function LandingPage() {
               </div>
               <h3 className="text-base font-bold text-white">Protected Workspaces</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                PostgreSQL RLS security policies keeping your startup venture IP completely confidential.
+                PostgreSQL RLS security policies keeping your startup venture IP completely
+                confidential.
               </p>
             </div>
 
@@ -208,7 +226,8 @@ export function LandingPage() {
               </div>
               <h3 className="text-base font-bold text-white">Pitch Deck Export</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Instantly convert your canvas insights into structured pitch deck slides for investors.
+                Instantly convert your canvas insights into structured pitch deck slides for
+                investors.
               </p>
             </div>
           </div>
@@ -226,7 +245,8 @@ export function LandingPage() {
               <span className="text-muted-foreground">© {new Date().getFullYear()}</span>
             </div>
             <p className="text-[11px] text-muted-foreground">
-              Built with precision by <span className="font-semibold text-slate-200">Mariyam Ali Khokhar</span>
+              Built with precision by{' '}
+              <span className="font-semibold text-foreground">Mariyam Ali K.</span>
             </p>
           </div>
 

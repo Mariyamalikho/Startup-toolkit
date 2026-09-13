@@ -68,12 +68,22 @@ export function PrivacyPolicyPage() {
               1. Information We Collect
             </h2>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              When you use Startup Toolkit, we collect minimal data required to provide seamless venture creation:
+              When you use Startup Toolkit, we collect minimal data required to provide seamless
+              venture creation:
             </p>
             <ul className="list-disc list-inside text-xs text-slate-300 space-y-1.5 pl-2">
-              <li><strong className="text-white">Account Information:</strong> Email address provided during sign-up via Supabase Authentication.</li>
-              <li><strong className="text-white">Venture & Canvas Data:</strong> Project titles, descriptions, empathy maps, business model canvas notes, and methodology progress.</li>
-              <li><strong className="text-white">Usage Preferences:</strong> Selected active venture ID and theme display mode (Dark/Light).</li>
+              <li>
+                <strong className="text-white">Account Information:</strong> Email address provided
+                during sign-up via Supabase Authentication.
+              </li>
+              <li>
+                <strong className="text-white">Venture & Canvas Data:</strong> Project titles,
+                descriptions, empathy maps, business model canvas notes, and methodology progress.
+              </li>
+              <li>
+                <strong className="text-white">Usage Preferences:</strong> Selected active venture
+                ID and theme display mode (Dark/Light).
+              </li>
             </ul>
           </section>
 
@@ -87,8 +97,16 @@ export function PrivacyPolicyPage() {
               We treat your startup intellectual property with utmost security:
             </p>
             <ul className="list-disc list-inside text-xs text-slate-300 space-y-1.5 pl-2">
-              <li><strong className="text-white">PostgreSQL RLS Policies:</strong> All Supabase database tables enforce Row Level Security. Only your authenticated user account can access or modify your project records.</li>
-              <li><strong className="text-white">Encrypted Connections:</strong> All API communication between your browser and Supabase backend is encrypted over HTTPS using SSL/TLS protocols.</li>
+              <li>
+                <strong className="text-white">PostgreSQL RLS Policies:</strong> All Supabase
+                database tables enforce Row Level Security. Only your authenticated user account can
+                access or modify your project records.
+              </li>
+              <li>
+                <strong className="text-white">Encrypted Connections:</strong> All API communication
+                between your browser and Supabase backend is encrypted over HTTPS using SSL/TLS
+                protocols.
+              </li>
             </ul>
           </section>
 
@@ -102,8 +120,15 @@ export function PrivacyPolicyPage() {
               To prevent data loss while you type into canvas fields:
             </p>
             <ul className="list-disc list-inside text-xs text-slate-300 space-y-1.5 pl-2">
-              <li><strong className="text-white">1000ms Debounced Sync:</strong> Changes auto-save to Supabase 1 second after typing stops.</li>
-              <li><strong className="text-white">Local Storage Usage:</strong> Browser local storage stores transient UI states (active tab, theme) without tracking cookies or third-party ad pixels.</li>
+              <li>
+                <strong className="text-white">1000ms Debounced Sync:</strong> Changes auto-save to
+                Supabase 1 second after typing stops.
+              </li>
+              <li>
+                <strong className="text-white">Local Storage Usage:</strong> Browser local storage
+                stores transient UI states (active tab, theme) without tracking cookies or
+                third-party ad pixels.
+              </li>
             </ul>
           </section>
 
@@ -114,7 +139,9 @@ export function PrivacyPolicyPage() {
               4. Your Rights & Data Deletion
             </h2>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              You own your venture data completely. You have the right to request a full export of your startup projects or request complete account deletion at any time by contacting our engineering team.
+              You own your venture data completely. You have the right to request a full export of
+              your startup projects or request complete account deletion at any time by contacting
+              our engineering team.
             </p>
           </section>
 
@@ -125,13 +152,14 @@ export function PrivacyPolicyPage() {
                 MA
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white">Built by Mariyam Ali Khokhar</h3>
+                <h3 className="text-sm font-bold text-foreground">Built by Mariyam Ali K.</h3>
                 <p className="text-xs text-muted-foreground">Founder & Lead Software Engineer</p>
               </div>
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed">
-              If you have any questions or feedback regarding privacy or data security in Startup Toolkit, feel free to connect directly through my personal platforms:
+              If you have any questions or feedback regarding privacy or data security in Startup
+              Toolkit, feel free to connect directly through my personal platforms:
             </p>
 
             <div className="flex flex-wrap gap-2.5 pt-1">
@@ -179,9 +207,20 @@ export function PrivacyPolicyPage() {
           </div>
 
           <div className="flex items-center space-x-6">
-            <Link to="/" className="hover:text-white transition-colors">Home</Link>
-            <Link to="/privacy-policy" className="text-sky-400 font-semibold">Privacy Policy</Link>
-            <a href="https://mariyamalikhokhar.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Website</a>
+            <Link to="/" className="hover:text-white transition-colors">
+              Home
+            </Link>
+            <Link to="/privacy-policy" className="text-sky-400 font-semibold">
+              Privacy Policy
+            </Link>
+            <a
+              href="https://mariyamalikhokhar.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              Website
+            </a>
           </div>
         </div>
       </footer>

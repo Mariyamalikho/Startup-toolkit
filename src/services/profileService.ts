@@ -11,7 +11,7 @@ import type { Profile } from '@/types/database.types'
 let mockProfile: Profile = {
   id: 'demo-user-id',
   email: 'founder@startuptoolkit.io',
-  full_name: 'Mariyam Malik',
+  full_name: 'Mariyam Ali K.',
   avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
   theme_preference: 'dark',
   created_at: new Date().toISOString(),
@@ -24,7 +24,9 @@ export const profileService = {
    */
   async getProfile(userId: string): Promise<Profile> {
     if (!isSupabaseConfigured) {
-      return new Promise((resolve) => setTimeout(() => resolve({ ...mockProfile, id: userId }), 300))
+      return new Promise((resolve) =>
+        setTimeout(() => resolve({ ...mockProfile, id: userId }), 300),
+      )
     }
 
     const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).single()
