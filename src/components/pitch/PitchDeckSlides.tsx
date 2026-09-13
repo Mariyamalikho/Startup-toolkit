@@ -1,9 +1,9 @@
 /**
  * PitchDeckSlides.tsx
  *
- * 1:1 Pixel-Perfect Investor Pitch Deck Presenter Component for Startup Toolkit.
- * Automatically compiles Empathy Map insights and 9-box Business Model Canvas data
- * into 10 structured, presentation-ready investor slides with slide navigation.
+ * 1:1 Pixel-Perfect Investor Pitch Deck Presenter & Theme Customizer Component for Startup Toolkit.
+ * Automatically compiles Empathy Map insights, 9-box Business Model Canvas data, Experiments, and Roadmaps
+ * into 10 presentation-ready investor slides with theme palette switching, content editing, and PDF export.
  */
 
 import React, { useState } from 'react'
@@ -22,13 +22,74 @@ import {
   Trophy,
   Target,
   ArrowLeft,
+  Palette,
+  Edit3,
+  Sliders,
+  Check,
 } from 'lucide-react'
 import type { Project } from '@/types/database.types'
 import { Button } from '@/components/ui/Button'
 import { Link } from 'react-router-dom'
+import { Modal, ModalContent, ModalHeader, ModalTitle, ModalFooter } from '@/components/ui/Modal'
+import { Input } from '@/components/ui/Input'
+import { Textarea } from '@/components/ui/Textarea'
+
+export type DeckTheme = 'cyberpunk' | 'emerald' | 'sunset' | 'purple' | 'midnight'
 
 interface PitchDeckSlidesProps {
   project: Project
+}
+
+interface ThemeConfig {
+  name: string
+  bg: string
+  border: string
+  accentGradient: string
+  badgeBg: string
+  badgeText: string
+}
+
+const DECK_THEMES: Record<DeckTheme, ThemeConfig> = {
+  cyberpunk: {
+    name: 'Cyberpunk Sky',
+    bg: 'bg-[#181d27]',
+    border: 'border-sky-500/40',
+    accentGradient: 'from-sky-400 to-indigo-600',
+    badgeBg: 'bg-sky-500/10',
+    badgeText: 'text-sky-300 border-sky-500/30',
+  },
+  emerald: {
+    name: 'Emerald Growth',
+    bg: 'bg-[#131e1a]',
+    border: 'border-emerald-500/40',
+    accentGradient: 'from-emerald-400 to-teal-600',
+    badgeBg: 'bg-emerald-500/10',
+    badgeText: 'text-emerald-300 border-emerald-500/30',
+  },
+  sunset: {
+    name: 'Sunset Amber',
+    bg: 'bg-[#1f1917]',
+    border: 'border-amber-500/40',
+    accentGradient: 'from-amber-400 to-rose-600',
+    badgeBg: 'bg-amber-500/10',
+    badgeText: 'text-amber-300 border-amber-500/30',
+  },
+  purple: {
+    name: 'Royal Purple',
+    bg: 'bg-[#1a1726]',
+    border: 'border-purple-500/40',
+    accentGradient: 'from-purple-400 to-pink-600',
+    badgeBg: 'bg-purple-500/10',
+    badgeText: 'text-purple-300 border-purple-500/30',
+  },
+  midnight: {
+    name: 'Midnight Dark',
+    bg: 'bg-[#0f172a]',
+    border: 'border-slate-700',
+    accentGradient: 'from-slate-300 to-slate-500',
+    badgeBg: 'bg-slate-800',
+    badgeText: 'text-slate-200 border-slate-700',
+  },
 }
 
 interface SlideData {
@@ -42,6 +103,17 @@ interface SlideData {
 
 export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
+  const [activeTheme, setActiveTheme] = useState<DeckTheme>('cyberpunk')
+  const [isThemeModalOpen, setIsThemeModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+
+  // Custom slide text overrides
+  const [customTitle, setCustomTitle] = useState(project.title)
+  const [customSubtitle, setCustomSubtitle] = useState(
+    project.description || 'Transforming ideas into scalable startup ventures.',
+  )
+
+  const themeConfig = DECK_THEMES[activeTheme] || DECK_THEMES.cyberpunk
 
   // Extract canvas / empathy data with fallbacks
   const canvas = project.canvas || {}
@@ -85,22 +157,22 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
   const slides: SlideData[] = [
     {
       id: 1,
-      title: project.title,
-      subtitle: project.description || 'Transforming ideas into scalable startup ventures.',
+      title: customTitle,
+      subtitle: customSubtitle,
       icon: <Rocket className="h-8 w-8 text-sky-400" />,
       accentColor: 'from-sky-400 to-blue-600',
       content: (
         <div className="text-center space-y-6 max-w-xl mx-auto py-8">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-300 text-xs font-mono font-bold uppercase tracking-wider">
+          <div className={`inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border text-xs font-mono font-bold uppercase tracking-wider ${themeConfig.badgeBg} ${themeConfig.badgeText}`}>
             <span>Investor Pitch Deck</span>
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            {project.title}
+            {customTitle}
           </h2>
 
           <p className="text-base text-slate-300 leading-relaxed font-medium">
-            {project.description || 'A groundbreaking methodology toolkit empowering founders to build, validate, and scale faster.'}
+            {customSubtitle}
           </p>
 
           <div className="pt-6 flex items-center justify-center space-x-6 text-xs text-muted-foreground font-mono">
@@ -329,7 +401,7 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
   return (
     <div className="space-y-6">
       {/* Top Header Bar */}
-      <div className="flex items-center justify-between bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
         <div className="flex items-center space-x-3">
           <Link to={`/workspace/${project.id}`}>
             <Button variant="outline" size="sm" className="h-9 px-2.5 border-border/60 text-muted-foreground hover:text-white">
@@ -338,7 +410,10 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
           </Link>
           <div>
             <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <span>{project.title} — Investor Pitch Deck</span>
+              <span>{customTitle} — Investor Pitch Deck</span>
+              <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full">
+                {themeConfig.name}
+              </span>
             </h2>
             <p className="text-xs text-muted-foreground">
               Slide {currentSlideIndex + 1} of {slides.length}
@@ -346,19 +421,41 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
           </div>
         </div>
 
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => window.print()}
-          className="h-9 px-3 text-xs font-semibold border-border/60"
-        >
-          <Printer className="mr-1.5 h-3.5 w-3.5 text-sky-400" />
-          Print / PDF
-        </Button>
+        {/* Customizer & Print Trigger Buttons */}
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsThemeModalOpen(true)}
+            className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20"
+          >
+            <Palette className="mr-1.5 h-3.5 w-3.5 text-sky-400" />
+            Deck Theme
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsEditModalOpen(true)}
+            className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20"
+          >
+            <Edit3 className="mr-1.5 h-3.5 w-3.5 text-indigo-400" />
+            Edit Cover
+          </Button>
+
+          <Button
+            size="sm"
+            onClick={() => window.print()}
+            className="h-9 px-4 text-xs font-extrabold bg-sky-400 text-slate-950 hover:bg-sky-300 shadow-md shadow-sky-500/20"
+          >
+            <Printer className="mr-1.5 h-3.5 w-3.5" />
+            Export PDF
+          </Button>
+        </div>
       </div>
 
       {/* Main Slide Presentation Stage */}
-      <div className="relative bg-[#181d27] border border-border/60 rounded-3xl p-8 sm:p-12 shadow-2xl min-h-[480px] flex flex-col justify-between overflow-hidden">
+      <div className={`relative ${themeConfig.bg} border ${themeConfig.border} rounded-3xl p-8 sm:p-12 shadow-2xl min-h-[480px] flex flex-col justify-between overflow-hidden transition-all duration-300`}>
         {/* Top Slide Header */}
         <div className="flex items-center justify-between border-b border-border/40 pb-6">
           <div className="flex items-center space-x-3">
@@ -420,6 +517,117 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
           </Button>
         </div>
       </div>
+
+      {/* Deck Theme Selector Modal */}
+      <Modal open={isThemeModalOpen} onOpenChange={setIsThemeModalOpen}>
+        <ModalContent className="max-w-md bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+          <ModalHeader className="space-y-1">
+            <div className="flex items-center space-x-2 text-sky-400">
+              <Sliders className="h-5 w-5" />
+              <ModalTitle className="text-xl font-bold text-white">Select Pitch Deck Theme</ModalTitle>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Choose an aesthetic color palette and gradient style for your investor presentation deck.
+            </p>
+          </ModalHeader>
+
+          <div className="space-y-3">
+            {(Object.keys(DECK_THEMES) as DeckTheme[]).map((themeKey) => {
+              const cfg = DECK_THEMES[themeKey]
+              const isSelected = activeTheme === themeKey
+
+              return (
+                <button
+                  key={themeKey}
+                  type="button"
+                  onClick={() => {
+                    setActiveTheme(themeKey)
+                    setIsThemeModalOpen(false)
+                  }}
+                  className={`w-full p-4 rounded-xl border flex items-center justify-between transition-all ${
+                    isSelected
+                      ? 'bg-sky-400/10 border-sky-400 text-white shadow-lg'
+                      : 'bg-[#12161f] border-border/40 text-slate-300 hover:border-sky-400/40'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className={`h-6 w-6 rounded-full bg-gradient-to-tr ${cfg.accentGradient}`} />
+                    <span className="text-xs font-bold">{cfg.name}</span>
+                  </div>
+
+                  {isSelected && <Check className="h-4 w-4 text-sky-400" />}
+                </button>
+              )
+            })}
+          </div>
+
+          <ModalFooter className="pt-4 border-t border-border/40 flex justify-end">
+            <Button
+              type="button"
+              onClick={() => setIsThemeModalOpen(false)}
+              className="bg-sky-400 text-slate-950 font-bold text-xs px-5"
+            >
+              Apply Theme
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Edit Cover Slide Modal */}
+      <Modal open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <ModalContent className="max-w-md bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+          <ModalHeader className="space-y-1">
+            <div className="flex items-center space-x-2 text-indigo-400">
+              <Edit3 className="h-5 w-5" />
+              <ModalTitle className="text-xl font-bold text-white">Edit Pitch Deck Title</ModalTitle>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Customize your startup title and 1-line tag for investor presentation.
+            </p>
+          </ModalHeader>
+
+          <div className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-200">Venture Title</label>
+              <Input
+                type="text"
+                value={customTitle}
+                onChange={(e) => setCustomTitle(e.target.value)}
+                className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-slate-200">Tagline / Subtitle</label>
+              <Textarea
+                value={customSubtitle}
+                onChange={(e) => setCustomSubtitle(e.target.value)}
+                rows={3}
+                className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400 resize-none"
+              />
+            </div>
+          </div>
+
+          <ModalFooter className="pt-4 border-t border-border/40 flex justify-end space-x-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsEditModalOpen(false)}
+              className="text-xs font-semibold border-border/60"
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="button"
+              onClick={() => setIsEditModalOpen(false)}
+              className="bg-indigo-500 text-white font-bold text-xs px-5"
+            >
+              Save Cover
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   )
 }
