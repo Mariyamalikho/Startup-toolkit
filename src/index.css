@@ -38,59 +38,59 @@
 
 @layer base {
   :root {
-    /* Light Mode - Notion/Linear Style */
-    --background: #ffffff;
-    --foreground: #111827; /* Gray 900 */
+    /* Light Mode - Notion / Linear Style */
+    --background: #f8fafc;
+    --foreground: #0f172a;
 
     --surface: #ffffff;
-    --surface-hover: #f9fafb; /* Gray 50 */
-    --surface-foreground: #111827;
+    --surface-hover: #f1f5f9;
+    --surface-foreground: #0f172a;
 
-    --muted: #f3f4f6; /* Gray 100 */
-    --muted-foreground: #6b7280; /* Gray 500 */
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
 
-    --border: #e5e7eb; /* Gray 200 */
-    --input: #e5e7eb;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
 
-    /* Primary: Almost black for that sleek premium feel */
-    --primary: #111827;
-    --primary-hover: #1f2937;
+    /* Primary: Deep slate */
+    --primary: #0f172a;
+    --primary-hover: #1e293b;
     --primary-foreground: #ffffff;
 
     /* Secondary: Soft gray */
-    --secondary: #f3f4f6;
-    --secondary-hover: #e5e7eb;
-    --secondary-foreground: #111827;
+    --secondary: #f1f5f9;
+    --secondary-hover: #e2e8f0;
+    --secondary-foreground: #0f172a;
 
-    --ring: rgba(17, 24, 39, 0.2);
+    --ring: rgba(15, 23, 42, 0.2);
   }
 
   .dark {
-    /* Dark Mode - Linear Style */
-    --background: #0a0a0a; /* Very dark, almost black */
-    --foreground: #f3f4f6; /* Gray 100 */
+    /* Dark Mode - Premium Workspace Style */
+    --background: #0b0f17;
+    --foreground: #f3f4f6;
 
-    --surface: #171717; /* Neutral 900 */
-    --surface-hover: #262626; /* Neutral 800 */
+    --surface: #12161f;
+    --surface-hover: #181d27;
     --surface-foreground: #f3f4f6;
 
-    --muted: #262626;
-    --muted-foreground: #a1a1aa; /* Zinc 400 */
+    --muted: #1c222e;
+    --muted-foreground: #94a3b8;
 
-    --border: #262626;
-    --input: #262626;
+    --border: #262f40;
+    --input: #1c222e;
 
-    /* Primary: White for dark mode */
+    /* Primary: Clean white for dark mode */
     --primary: #f9fafb;
     --primary-hover: #e5e7eb;
     --primary-foreground: #030712;
 
-    /* Secondary: Dark gray */
-    --secondary: #262626;
-    --secondary-hover: #404040;
+    /* Secondary: Dark slate */
+    --secondary: #181d27;
+    --secondary-hover: #1c222e;
     --secondary-foreground: #f9fafb;
 
-    --ring: rgba(255, 255, 255, 0.2);
+    --ring: rgba(56, 189, 248, 0.4);
   }
 }
 

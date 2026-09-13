@@ -36,11 +36,7 @@ interface NavbarProps {
   onToggleMobileMenu?: () => void
 }
 
-export function Navbar({
-  onToggleSidebar,
-  mobileMenuOpen,
-  onToggleMobileMenu,
-}: NavbarProps) {
+export function Navbar({ onToggleSidebar, mobileMenuOpen, onToggleMobileMenu }: NavbarProps) {
   const [userDropdownOpen, setUserDropdownOpen] = React.useState(false)
   const [notificationsOpen, setNotificationsOpen] = React.useState(false)
   const [searchQuery, setSearchQuery] = React.useState('')
@@ -65,7 +61,7 @@ export function Navbar({
   }, [])
 
   return (
-    <header className="sticky top-0 z-40 h-16 bg-[#181d27]/90 backdrop-blur-md border-b border-border/40 px-4 sm:px-6 flex items-center justify-between">
+    <header className="sticky top-0 z-40 h-16 bg-surface/90 backdrop-blur-md border-b border-border/40 px-4 sm:px-6 flex items-center justify-between">
       {/* ── Left Brand & Venture Selector Section ─────────────────── */}
       <div className="flex items-center space-x-4">
         {/* Toggle Sidebar Button (Desktop) */}
@@ -96,7 +92,7 @@ export function Navbar({
           <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20">
             <Rocket className="h-5 w-5 text-white" />
           </div>
-          <span className="font-bold text-base tracking-tight text-white hidden sm:inline">
+          <span className="font-bold text-base tracking-tight text-foreground hidden sm:inline">
             Startup<span className="text-sky-400">Toolkit</span>
           </span>
         </Link>
@@ -111,7 +107,7 @@ export function Navbar({
                   const selected = projects.find((p) => p.id === e.target.value)
                   if (selected) setActiveProject(selected)
                 }}
-                className="appearance-none bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground py-1.5 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-400 cursor-pointer"
+                className="appearance-none bg-background border border-border/60 text-xs font-semibold text-foreground py-1.5 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-1 focus:ring-sky-400 cursor-pointer"
               >
                 {projects.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -133,7 +129,7 @@ export function Navbar({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search canvas tools, metrics, AI..."
-          className="pl-9 pr-12 h-8 text-xs bg-[#1c222e] border-border/40 focus:border-sky-400"
+          className="pl-9 pr-12 h-8 text-xs bg-background border-border/40 focus:border-sky-400"
         />
         <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground bg-muted/20 border border-border/40 rounded">
           ⌘K
@@ -175,9 +171,9 @@ export function Navbar({
 
           {/* Notifications Dropdown Panel */}
           {notificationsOpen && (
-            <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-border/60 bg-[#1c222e] p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95">
+            <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-border/60 bg-surface p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95">
               <div className="flex items-center justify-between pb-3 border-b border-border/40">
-                <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
                   <Zap className="h-3.5 w-3.5 text-sky-400" />
                   Notifications
                 </span>
@@ -229,9 +225,9 @@ export function Navbar({
 
           {/* User Profile Dropdown Menu */}
           {userDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-border/60 bg-[#1c222e] p-2 shadow-2xl z-50 animate-in fade-in zoom-in-95">
+            <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-border/60 bg-surface p-2 shadow-2xl z-50 animate-in fade-in zoom-in-95">
               <div className="px-3 py-2.5 border-b border-border/40">
-                <p className="text-xs font-bold text-white truncate">
+                <p className="text-xs font-bold text-foreground truncate">
                   {user?.email || 'Guest Founder'}
                 </p>
                 <span className="inline-block mt-0.5 text-[10px] font-semibold text-sky-400 bg-sky-400/10 px-2 py-0.5 rounded-md">

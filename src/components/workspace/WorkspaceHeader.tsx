@@ -30,12 +30,7 @@ interface WorkspaceHeaderProps {
   onSettings?: () => void
 }
 
-export function WorkspaceHeader({
-  project,
-  onExport,
-  onShare,
-  onSettings,
-}: WorkspaceHeaderProps) {
+export function WorkspaceHeader({ project, onExport, onShare, onSettings }: WorkspaceHeaderProps) {
   const [aiModalOpen, setAiModalOpen] = useState(false)
   const progress = project.progress || 35
 
@@ -48,7 +43,7 @@ export function WorkspaceHeader({
   }, [project.updated_at])
 
   return (
-    <div className="bg-[#181d27] border border-border/60 rounded-2xl p-5 shadow-xl space-y-4">
+    <div className="bg-surface border border-border/60 rounded-2xl p-5 shadow-xl space-y-4">
       {/* Top Navigation & Actions Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 pb-4">
         {/* Left Title & Status */}
@@ -57,7 +52,7 @@ export function WorkspaceHeader({
             <Button
               variant="outline"
               size="sm"
-              className="h-9 px-2.5 border-border/60 text-muted-foreground hover:text-white shrink-0"
+              className="h-9 px-2.5 border-border/60 text-muted-foreground hover:text-foreground shrink-0"
               title="Back to Dashboard"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -71,7 +66,7 @@ export function WorkspaceHeader({
                 <span>Active Venture Workspace</span>
               </span>
 
-              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-[#12161f] border border-border/40 text-muted-foreground font-mono text-[10px]">
+              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-muted/40 border border-border/40 text-muted-foreground font-mono text-[10px]">
                 <Tag className="h-2.5 w-2.5 text-sky-400" />
                 <span>{project.industry || 'Tech'}</span>
               </span>
@@ -82,7 +77,7 @@ export function WorkspaceHeader({
               </div>
             </div>
 
-            <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight truncate">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight truncate">
               {project.title}
             </h1>
           </div>
@@ -128,7 +123,7 @@ export function WorkspaceHeader({
               variant="outline"
               size="sm"
               onClick={onSettings}
-              className="h-9 w-9 p-0 border-border/60 hover:bg-muted/20 text-muted-foreground hover:text-white"
+              className="h-9 w-9 p-0 border-border/60 hover:bg-muted/20 text-muted-foreground hover:text-foreground"
               title="Venture Settings"
             >
               <Settings className="h-4 w-4" />
@@ -138,16 +133,13 @@ export function WorkspaceHeader({
       </div>
 
       {/* AI Generator Modal Trigger */}
-      <AIGeneratorModal
-        open={aiModalOpen}
-        onOpenChange={setAiModalOpen}
-        project={project}
-      />
+      <AIGeneratorModal open={aiModalOpen} onOpenChange={setAiModalOpen} project={project} />
 
       {/* Description & Progress Bar Footer */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
         <p className="text-muted-foreground line-clamp-1 flex-1">
-          {project.description || 'No description set. Edit venture details in settings to add founder goals.'}
+          {project.description ||
+            'No description set. Edit venture details in settings to add founder goals.'}
         </p>
 
         {/* Methodology Progress Bar */}
@@ -158,7 +150,7 @@ export function WorkspaceHeader({
             <span className="font-bold text-sky-400">{progress}%</span>
           </div>
 
-          <div className="flex-1 h-2 rounded-full bg-[#12161f] overflow-hidden border border-border/40">
+          <div className="flex-1 h-2 rounded-full bg-muted/40 overflow-hidden border border-border/40">
             <div
               className="h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}

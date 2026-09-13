@@ -21,7 +21,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   return (
-    <div className="min-h-screen bg-[#12161f] text-foreground flex flex-col font-sans selection:bg-primary/30">
+    <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-primary/30">
       {/* ── Top Navbar Header ─────────────────────────────────────────── */}
       <Navbar
         isSidebarOpen={sidebarOpen}
@@ -41,9 +41,9 @@ export function AppLayout({ children }: AppLayoutProps) {
         />
 
         {/* Scrollable Main Content Viewport Container */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#12161f] space-y-6">
+        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-background space-y-6">
           {/* Interlocking Chevron Stepper Ribbon */}
-          <div className="bg-[#181d27]/60 border border-border/40 p-2.5 rounded-2xl backdrop-blur shadow-sm">
+          <div className="bg-surface/80 border border-border/60 p-2.5 rounded-2xl backdrop-blur shadow-sm">
             <ChevronStepperRibbon />
           </div>
 

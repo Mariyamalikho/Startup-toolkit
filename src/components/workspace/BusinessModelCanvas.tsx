@@ -62,11 +62,19 @@ const DEFAULT_BMC_STATE: BMCState = {
     { id: 'ka-2', content: 'Founder community building & content marketing', color: 'green' },
   ],
   key_resources: [
-    { id: 'kr-1', content: 'Proprietary interactive methodology canvas algorithms', color: 'purple' },
+    {
+      id: 'kr-1',
+      content: 'Proprietary interactive methodology canvas algorithms',
+      color: 'purple',
+    },
     { id: 'kr-2', content: 'Experienced full-stack engineering team', color: 'blue' },
   ],
   value_propositions: [
-    { id: 'vp-1', content: 'All-in-one methodology workspace for early-stage founders', color: 'green' },
+    {
+      id: 'vp-1',
+      content: 'All-in-one methodology workspace for early-stage founders',
+      color: 'green',
+    },
     { id: 'vp-2', content: 'Automated 1000ms debounced cloud autosave', color: 'yellow' },
   ],
   customer_relationships: [
@@ -74,7 +82,11 @@ const DEFAULT_BMC_STATE: BMCState = {
     { id: 'cr-2', content: 'Dedicated Discord community support channel', color: 'blue' },
   ],
   channels: [
-    { id: 'ch-1', content: 'Organic Product Hunt launch & social build-in-public', color: 'purple' },
+    {
+      id: 'ch-1',
+      content: 'Organic Product Hunt launch & social build-in-public',
+      color: 'purple',
+    },
     { id: 'ch-2', content: 'SEO founder guides and startup toolkit templates', color: 'yellow' },
   ],
   customer_segments: [
@@ -93,7 +105,13 @@ const DEFAULT_BMC_STATE: BMCState = {
 
 const BMC_BLOCK_CONFIG: Record<
   BMCKey,
-  { title: string; subtitle: string; icon: React.ReactNode; defaultColor: NoteColor; headerBg: string }
+  {
+    title: string
+    subtitle: string
+    icon: React.ReactNode
+    defaultColor: NoteColor
+    headerBg: string
+  }
 > = {
   key_partners: {
     title: 'Key Partners',
@@ -204,7 +222,7 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
   const handleAddNote = (key: BMCKey) => {
     const config = BMC_BLOCK_CONFIG[key]
     const newNote: NoteItem = {
-      id: `${key}-${Date.now()}`,
+      id: `${key}-${crypto.randomUUID()}`,
       content: '',
       color: config.defaultColor,
     }
@@ -250,7 +268,7 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
         onDragOver={(e) => handleDragOver(e, key)}
         onDragLeave={handleDragLeave}
         onDrop={(e) => handleDrop(e, key, handleMoveNote)}
-        className={`bg-[#181d27] border rounded-2xl p-4 shadow-lg space-y-3 flex flex-col justify-between min-h-[220px] transition-all duration-200 ${
+        className={`bg-surface border rounded-2xl p-4 shadow-lg space-y-3 flex flex-col justify-between min-h-[220px] transition-all duration-200 ${
           isOver
             ? 'border-emerald-400 bg-emerald-400/10 shadow-[0_0_20px_rgba(52,211,153,0.25)] ring-2 ring-emerald-400/40 scale-[1.01]'
             : 'border-border/60'
@@ -259,11 +277,13 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
         <div className="space-y-2">
           <div className="flex items-center justify-between border-b border-border/40 pb-2.5">
             <div className="flex items-center space-x-2">
-              <div className={`h-7 w-7 rounded-lg border flex items-center justify-center ${config.headerBg}`}>
+              <div
+                className={`h-7 w-7 rounded-lg border flex items-center justify-center ${config.headerBg}`}
+              >
                 {config.icon}
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white tracking-wide">{config.title}</h3>
+                <h3 className="text-xs font-bold text-foreground tracking-wide">{config.title}</h3>
                 <p className="text-[10px] text-muted-foreground line-clamp-1">{config.subtitle}</p>
               </div>
             </div>
@@ -311,16 +331,17 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="flex items-center justify-between bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
+      <div className="flex items-center justify-between bg-surface/70 border border-border/40 p-4 rounded-2xl">
         <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
+          <h2 className="text-base font-bold text-foreground flex items-center gap-2">
             <span>Business Model Canvas (9-Box Grid)</span>
             <span className="text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">
               Strategic Blueprint
             </span>
           </h2>
           <p className="text-xs text-muted-foreground pt-0.5">
-            Osterwalder&apos;s 9 building blocks mapping your value proposition, infrastructure, customers, and finances.
+            Osterwalder&apos;s 9 building blocks mapping your value proposition, infrastructure,
+            customers, and finances.
           </p>
         </div>
       </div>
