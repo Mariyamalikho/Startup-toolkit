@@ -21,6 +21,8 @@ import {
 import type { Project } from '@/types/database.types'
 import { Modal, ModalContent, ModalHeader, ModalTitle, ModalFooter } from '@/components/ui/Modal'
 import { Button } from '@/components/ui/Button'
+import { generateVenturePdfReport } from '@/lib/pdfExporter'
+import { useToast } from '@/components/ui/Toast'
 
 interface PrintableReportModalProps {
   open: boolean
@@ -29,13 +31,46 @@ interface PrintableReportModalProps {
 }
 
 export function PrintableReportModal({ open, onOpenChange, project }: PrintableReportModalProps) {
+  const { toast } = useToast()
   const [includeEmpathyMap, setIncludeEmpathyMap] = useState(true)
   const [includeBMC, setIncludeBMC] = useState(true)
   const [includeExperiments, setIncludeExperiments] = useState(true)
   const [includeRoadmap, setIncludeRoadmap] = useState(true)
+  const [isExporting, setIsExporting] = useState(false)
 
-  const handlePrint = () => {
-    window.print()
+  const handlePrint = async () => {
+    setIsExporting(true)
+    try {
+      toast({
+        title: 'Generating PDF Report',
+        description: 'Compiling venture canvases and methodology sections into PDF...',
+        variant: 'info',
+      })
+
+      await generateVenturePdfReport(project, {
+        includeEmpathyMap,
+        includeBMC,
+        includeExperiments,
+        includeRoadmap,
+        onProgress: (stage) => {
+          console.log('PDF Progress:', stage)
+        },
+      })
+
+      toast({
+        title: 'PDF Report Ready',
+        description: 'Venture executive PDF document stream initiated successfully.',
+        variant: 'success',
+      })
+    } catch (err: unknown) {
+      toast({
+        title: 'Export Failed',
+        description: (err as Error).message || 'Failed to generate PDF document.',
+        variant: 'error',
+      })
+    } finally {
+      setIsExporting(false)
+    }
   }
 
   const handleDownloadHTML = () => {
@@ -74,10 +109,10 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
   }
 
   // Parse structured data payloads
-  const empathyData = project.empathy_map || {}
-  const bmcData = project.canvas || {}
-  const experiments = (project.experiments as any[]) || []
-  const milestones = (project.milestones as any[]) || []
+  const empathyData = (project.empathy_map as Record<string, unknown>) || {}
+  const bmcData = (project.canvas as Record<string, unknown>) || {}
+  const experiments = (project.experiments as Record<string, unknown>[]) || []
+  const milestones = (project.milestones as Record<string, unknown>[]) || []
 
   return (
     <Modal open={open} onOpenChange={onOpenChange}>
@@ -90,13 +125,16 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
             </ModalTitle>
           </div>
           <p className="text-xs text-muted-foreground pt-1">
-            Compile venture insights, Empathy Maps, Business Model Canvases, Experiments, and Roadmaps into a clean A4 PDF report.
+            Compile venture insights, Empathy Maps, Business Model Canvases, Experiments, and
+            Roadmaps into a clean A4 PDF report.
           </p>
         </ModalHeader>
 
         {/* Section Selectors */}
         <div className="space-y-3 bg-[#131720] p-4 rounded-xl border border-border/40">
-          <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Include Report Sections:</h3>
+          <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+            Include Report Sections:
+          </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <button
               type="button"
@@ -161,7 +199,10 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
         </div>
 
         {/* Live Document Preview Box */}
-        <div id="printable-report-area" className="bg-[#12161f] border border-border/40 p-6 rounded-xl space-y-6 text-xs text-slate-200">
+        <div
+          id="printable-report-area"
+          className="bg-[#12161f] border border-border/40 p-6 rounded-xl space-y-6 text-xs text-slate-200"
+        >
           {/* Document Header */}
           <div className="border-b border-border/40 pb-4 space-y-1.5">
             <div className="flex items-center justify-between">
@@ -169,11 +210,17 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
                 Executive Venture Report
               </span>
               <span className="text-[10px] text-muted-foreground font-mono">
-                {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                {new Date().toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
               </span>
             </div>
             <h2 className="text-xl font-extrabold text-white">{project.title}</h2>
-            <p className="text-muted-foreground">{project.description || 'No detailed description set for this venture.'}</p>
+            <p className="text-muted-foreground">
+              {project.description || 'No detailed description set for this venture.'}
+            </p>
           </div>
 
           {/* Section: Empathy Map Summary */}
@@ -185,11 +232,16 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
               <div className="grid grid-cols-2 gap-3 text-[11px]">
                 <div className="bg-[#181d27] p-3 rounded-lg border border-border/40">
                   <strong className="text-slate-200 block mb-1">Thinks & Feels</strong>
-                  <p className="text-muted-foreground">{empathyData.thinks_and_feels?.[0] || 'Desires rapid execution & reliable autosave.'}</p>
+                  <p className="text-muted-foreground">
+                    {empathyData.thinks_and_feels?.[0] ||
+                      'Desires rapid execution & reliable autosave.'}
+                  </p>
                 </div>
                 <div className="bg-[#181d27] p-3 rounded-lg border border-border/40">
                   <strong className="text-slate-200 block mb-1">Pains & Friction</strong>
-                  <p className="text-muted-foreground">{empathyData.pains?.[0] || 'Fragmented tools & manual document creation.'}</p>
+                  <p className="text-muted-foreground">
+                    {empathyData.pains?.[0] || 'Fragmented tools & manual document creation.'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -204,15 +256,24 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
               <div className="grid grid-cols-3 gap-3 text-[11px]">
                 <div className="bg-[#181d27] p-3 rounded-lg border border-border/40">
                   <strong className="text-slate-200 block mb-1">Value Propositions</strong>
-                  <p className="text-muted-foreground">{bmcData.value_propositions?.[0]?.content || 'All-in-one methodology workspace for founders.'}</p>
+                  <p className="text-muted-foreground">
+                    {bmcData.value_propositions?.[0]?.content ||
+                      'All-in-one methodology workspace for founders.'}
+                  </p>
                 </div>
                 <div className="bg-[#181d27] p-3 rounded-lg border border-border/40">
                   <strong className="text-slate-200 block mb-1">Customer Segments</strong>
-                  <p className="text-muted-foreground">{bmcData.customer_segments?.[0]?.content || 'Solo Technical Founders & Accelerator Cohorts.'}</p>
+                  <p className="text-muted-foreground">
+                    {bmcData.customer_segments?.[0]?.content ||
+                      'Solo Technical Founders & Accelerator Cohorts.'}
+                  </p>
                 </div>
                 <div className="bg-[#181d27] p-3 rounded-lg border border-border/40">
                   <strong className="text-slate-200 block mb-1">Revenue Streams</strong>
-                  <p className="text-muted-foreground">{bmcData.revenue_streams?.[0]?.content || 'Freemium workspace & $19/mo Pro subscriptions.'}</p>
+                  <p className="text-muted-foreground">
+                    {bmcData.revenue_streams?.[0]?.content ||
+                      'Freemium workspace & $19/mo Pro subscriptions.'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -222,17 +283,25 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
           {includeExperiments && (
             <div className="space-y-3">
               <h3 className="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5 border-b border-border/20 pb-1">
-                <FlaskConical className="h-3.5 w-3.5" /> Lean Validation Experiments ({experiments.length})
+                <FlaskConical className="h-3.5 w-3.5" /> Lean Validation Experiments (
+                {experiments.length})
               </h3>
               <div className="space-y-2 text-[11px]">
-                {experiments.slice(0, 2).map((exp: any, idx: number) => (
-                  <div key={idx} className="bg-[#181d27] p-3 rounded-lg border border-border/40 flex justify-between items-center">
+                {experiments.slice(0, 2).map((exp: Record<string, unknown>, idx: number) => (
+                  <div
+                    key={idx}
+                    className="bg-[#181d27] p-3 rounded-lg border border-border/40 flex justify-between items-center"
+                  >
                     <div>
-                      <strong className="text-slate-200">{exp.title}</strong>
-                      <p className="text-muted-foreground text-[10px]">{exp.hypothesis}</p>
+                      <strong className="text-slate-200">
+                        {(exp.title as string) || 'Experiment'}
+                      </strong>
+                      <p className="text-muted-foreground text-[10px]">
+                        {(exp.hypothesis as string) || ''}
+                      </p>
                     </div>
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded uppercase bg-emerald-500/10 text-emerald-300">
-                      {exp.status || 'Validated'}
+                      {(exp.status as string) || 'Validated'}
                     </span>
                   </div>
                 ))}
@@ -247,14 +316,21 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
                 <Calendar className="h-3.5 w-3.5" /> Roadmap & Milestones ({milestones.length})
               </h3>
               <div className="space-y-2 text-[11px]">
-                {milestones.slice(0, 2).map((m: any, idx: number) => (
-                  <div key={idx} className="bg-[#181d27] p-3 rounded-lg border border-border/40 flex justify-between items-center">
+                {milestones.slice(0, 2).map((m: Record<string, unknown>, idx: number) => (
+                  <div
+                    key={idx}
+                    className="bg-[#181d27] p-3 rounded-lg border border-border/40 flex justify-between items-center"
+                  >
                     <div>
-                      <strong className="text-slate-200">{m.title}</strong>
-                      <p className="text-muted-foreground text-[10px]">{m.deliverables}</p>
+                      <strong className="text-slate-200">
+                        {(m.title as string) || 'Milestone'}
+                      </strong>
+                      <p className="text-muted-foreground text-[10px]">
+                        {(m.deliverables as string) || ''}
+                      </p>
                     </div>
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded uppercase bg-sky-500/10 text-sky-300">
-                      {m.phase || 'Prototype'}
+                      {(m.phase as string) || 'Prototype'}
                     </span>
                   </div>
                 ))}
@@ -286,10 +362,12 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
 
             <Button
               type="button"
+              disabled={isExporting}
               onClick={handlePrint}
-              className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold text-xs px-6 shadow-md shadow-sky-500/20"
+              className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold text-xs px-6 shadow-md shadow-sky-500/20 disabled:opacity-40"
             >
-              <Printer className="mr-1.5 h-4 w-4" /> Print / Save as PDF
+              <Printer className="mr-1.5 h-4 w-4" />{' '}
+              {isExporting ? 'Generating PDF...' : 'Print / Save as PDF'}
             </Button>
           </div>
         </ModalFooter>
