@@ -109,8 +109,17 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
   }
 
   // Parse structured data payloads
-  const empathyData = (project.empathy_map as Record<string, unknown>) || {}
-  const bmcData = (project.canvas as Record<string, unknown>) || {}
+  const empathyData =
+    (project.empathy_map as {
+      thinks?: { content?: string }[]
+      pains?: { content?: string }[]
+    }) || {}
+  const bmcData =
+    (project.canvas as {
+      value_propositions?: { content?: string }[]
+      customer_segments?: { content?: string }[]
+      revenue_streams?: { content?: string }[]
+    }) || {}
   const experiments = (project.experiments as Record<string, unknown>[]) || []
   const milestones = (project.milestones as Record<string, unknown>[]) || []
 
@@ -233,14 +242,15 @@ export function PrintableReportModal({ open, onOpenChange, project }: PrintableR
                 <div className="bg-[#181d27] p-3 rounded-lg border border-border/40">
                   <strong className="text-slate-200 block mb-1">Thinks & Feels</strong>
                   <p className="text-muted-foreground">
-                    {empathyData.thinks_and_feels?.[0] ||
+                    {empathyData.thinks?.[0]?.content ||
                       'Desires rapid execution & reliable autosave.'}
                   </p>
                 </div>
                 <div className="bg-[#181d27] p-3 rounded-lg border border-border/40">
                   <strong className="text-slate-200 block mb-1">Pains & Friction</strong>
                   <p className="text-muted-foreground">
-                    {empathyData.pains?.[0] || 'Fragmented tools & manual document creation.'}
+                    {empathyData.pains?.[0]?.content ||
+                      'Fragmented tools & manual document creation.'}
                   </p>
                 </div>
               </div>
