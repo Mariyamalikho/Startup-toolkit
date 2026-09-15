@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * projectService.ts
  *
@@ -8,6 +9,7 @@
 
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import type { Project, ProjectStatus } from '@/types/database.types'
+import { withRetry } from '@/lib/retryHandler'
 
 export interface CreateProjectInput {
   title: string
@@ -57,24 +59,26 @@ let mockProjects: Project[] = [
 
 export const projectService = {
   /**
-   * Fetch all projects belonging to the current user.
+   * Fetch all projects belonging to the current user with retry resilience.
    */
   async fetchProjects(): Promise<Project[]> {
     if (!isSupabaseConfigured) {
       return new Promise((resolve) => setTimeout(() => resolve([...mockProjects]), 400))
     }
 
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*')
-      .order('updated_at', { ascending: false })
+    return withRetry(async () => {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('updated_at', { ascending: false })
 
-    if (error) {
-      console.error('[projectService.fetchProjects] Error:', error)
-      throw new Error(error.message)
-    }
+      if (error) {
+        console.error('[projectService.fetchProjects] Error:', error)
+        throw new Error(error.message)
+      }
 
-    return (data as Project[]) ?? []
+      return (data as Project[]) ?? []
+    })
   },
 
   /**
@@ -86,15 +90,17 @@ export const projectService = {
       return new Promise((resolve) => setTimeout(() => resolve(match), 300))
     }
 
-    const { data, error } = await supabase.from('projects').select('*').eq('id', id).single()
+    return withRetry(async () => {
+      const { data, error } = await supabase.from('projects').select('*').eq('id', id).single()
 
-    if (error) {
-      if (error.code === 'PGRST116') return null // Single row query zero results
-      console.error('[projectService.getProjectById] Error:', error)
-      throw new Error(error.message)
-    }
+      if (error) {
+        if (error.code === 'PGRST116') return null // Single row query zero results
+        console.error('[projectService.getProjectById] Error:', error)
+        throw new Error(error.message)
+      }
 
-    return data as Project
+      return data as Project
+    })
   },
 
   /**
@@ -117,33 +123,35 @@ export const projectService = {
       return new Promise((resolve) => setTimeout(() => resolve(newMock), 500))
     }
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    return withRetry(async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
 
-    if (!user) {
-      throw new Error('User must be authenticated to create a project.')
-    }
+      if (!user) {
+        throw new Error('User must be authenticated to create a project.')
+      }
 
-    const { data, error } = await supabase
-      .from('projects')
-      .insert({
-        user_id: user.id,
-        title: input.title,
-        description: input.description,
-        industry: input.industry,
-        status: input.status || 'active',
-        progress: 0,
-      })
-      .select()
-      .single()
+      const { data, error } = await supabase
+        .from('projects')
+        .insert({
+          user_id: user.id,
+          title: input.title,
+          description: input.description,
+          industry: input.industry,
+          status: input.status || 'active',
+          progress: 0,
+        })
+        .select()
+        .single()
 
-    if (error) {
-      console.error('[projectService.createProject] Error:', error)
-      throw new Error(error.message)
-    }
+      if (error) {
+        console.error('[projectService.createProject] Error:', error)
+        throw new Error(error.message)
+      }
 
-    return data as Project
+      return data as Project
+    })
   },
 
   /**
@@ -158,22 +166,24 @@ export const projectService = {
       return new Promise((resolve) => setTimeout(() => resolve(updated), 400))
     }
 
-    const { data, error } = await supabase
-      .from('projects')
-      .update({
-        ...patch,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', id)
-      .select()
-      .single()
+    return withRetry(async () => {
+      const { data, error } = await supabase
+        .from('projects')
+        .update({
+          ...patch,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', id)
+        .select()
+        .single()
 
-    if (error) {
-      console.error('[projectService.updateProject] Error:', error)
-      throw new Error(error.message)
-    }
+      if (error) {
+        console.error('[projectService.updateProject] Error:', error)
+        throw new Error(error.message)
+      }
 
-    return data as Project
+      return data as Project
+    })
   },
 
   /**
@@ -185,11 +195,13 @@ export const projectService = {
       return new Promise((resolve) => setTimeout(() => resolve(), 300))
     }
 
-    const { error } = await supabase.from('projects').delete().eq('id', id)
+    return withRetry(async () => {
+      const { error } = await supabase.from('projects').delete().eq('id', id)
 
-    if (error) {
-      console.error('[projectService.deleteProject] Error:', error)
-      throw new Error(error.message)
-    }
+      if (error) {
+        console.error('[projectService.deleteProject] Error:', error)
+        throw new Error(error.message)
+      }
+    })
   },
 }
