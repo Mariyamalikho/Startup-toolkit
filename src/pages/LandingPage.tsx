@@ -238,15 +238,22 @@ export function LandingPage() {
       <footer className="border-t border-border/40 bg-[#181d27] py-10 px-4 sm:px-8 text-xs text-muted-foreground space-y-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand & Copyright */}
-          <div className="space-y-1 text-center md:text-left">
+          <div className="space-y-1.5 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start space-x-2">
               <Rocket className="h-4 w-4 text-sky-400" />
               <span className="font-bold text-white text-sm">Startup Toolkit</span>
-              <span className="text-muted-foreground">© {new Date().getFullYear()}</span>
+              <span className="text-slate-400">© {new Date().getFullYear()}</span>
             </div>
-            <p className="text-[11px] text-muted-foreground">
+            <p className="text-xs sm:text-sm text-slate-300 font-medium">
               Built with precision by{' '}
-              <span className="font-semibold text-foreground">Mariyam Ali K.</span>
+              <a
+                href="https://mariyamalikhokhar.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-sky-400 hover:text-sky-300 underline decoration-sky-400/40 underline-offset-4 transition-colors"
+              >
+                Mariyam Ali K.
+              </a>
             </p>
           </div>
 

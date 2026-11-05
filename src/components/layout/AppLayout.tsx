@@ -62,13 +62,31 @@ export function AppLayout({ children }: AppLayoutProps) {
         />
 
         {/* Scrollable Main Content Viewport Container */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-background space-y-6">
-          {/* Interlocking Chevron Stepper Ribbon */}
-          <div className="bg-surface/80 border border-border/60 p-2.5 rounded-2xl backdrop-blur shadow-sm">
-            <ChevronStepperRibbon />
+        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-background flex flex-col justify-between space-y-6">
+          <div className="space-y-6">
+            {/* Interlocking Chevron Stepper Ribbon */}
+            <div className="bg-surface/80 border border-border/60 p-2.5 rounded-2xl backdrop-blur shadow-sm">
+              <ChevronStepperRibbon />
+            </div>
+
+            {children ? children : <Outlet />}
           </div>
 
-          {children ? children : <Outlet />}
+          {/* Workspace Footer Credit */}
+          <footer className="pt-6 mt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+            <span>Startup Toolkit © {new Date().getFullYear()}</span>
+            <p className="font-medium text-foreground/90">
+              Built with precision by{' '}
+              <a
+                href="https://mariyamalikhokhar.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-sky-400 hover:text-sky-300 underline decoration-sky-400/40 underline-offset-4 transition-colors"
+              >
+                Mariyam Ali K.
+              </a>
+            </p>
+          </footer>
         </main>
       </div>
     </div>
