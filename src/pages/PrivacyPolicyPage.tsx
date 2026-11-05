@@ -198,12 +198,25 @@ export function PrivacyPolicyPage() {
       </main>
 
       {/* ── Footer ─────────────────────────────────────────────────── */}
-      <footer className="border-t border-border/40 bg-[#181d27] py-8 px-4 sm:px-8 text-center text-xs text-muted-foreground">
+      <footer className="border-t border-border/40 bg-[#181d27] py-8 px-4 sm:px-8 text-center text-xs text-slate-300">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2">
-            <Rocket className="h-4 w-4 text-sky-400" />
-            <span className="font-bold text-white">Startup Toolkit</span>
-            <span>© {new Date().getFullYear()}</span>
+          <div className="space-y-1 text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start space-x-2">
+              <Rocket className="h-4 w-4 text-sky-400" />
+              <span className="font-bold text-white">Startup Toolkit</span>
+              <span className="text-slate-400">© {new Date().getFullYear()}</span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-300 font-medium">
+              Built with precision by{' '}
+              <a
+                href="https://mariyamalikhokhar.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-sky-400 hover:text-sky-300 underline decoration-sky-400/40 underline-offset-4 transition-colors"
+              >
+                Mariyam Ali K.
+              </a>
+            </p>
           </div>
 
           <div className="flex items-center space-x-6">
