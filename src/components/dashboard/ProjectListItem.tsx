@@ -50,9 +50,11 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
     >
       {/* Title & Active Badge */}
       <div className="flex items-center space-x-3 min-w-0 flex-1">
-        <div className={`h-9 w-9 rounded-lg flex items-center justify-center shrink-0 ${
-          isActive ? 'bg-sky-400 text-slate-950 font-bold' : 'bg-muted/40 text-muted-foreground'
-        }`}>
+        <div
+          className={`h-9 w-9 rounded-lg flex items-center justify-center shrink-0 ${
+            isActive ? 'bg-sky-400 text-slate-950 font-bold' : 'bg-muted/40 text-muted-foreground'
+          }`}
+        >
           <Layers className="h-4 w-4" />
         </div>
 
@@ -98,7 +100,9 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
           type="button"
           onClick={(e) => {
             e.stopPropagation()
-            onDelete && onDelete(project)
+            if (onDelete) {
+              onDelete(project)
+            }
           }}
           className="p-1.5 rounded-lg text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-colors"
           title="Delete Venture"

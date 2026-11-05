@@ -44,9 +44,10 @@ export function useAutosave<T>({
   const latestDataRef = useRef<T>(data)
   const onSaveRef = useRef(onSave)
 
-  // Keep refs updated to prevent stale closures inside timers
-  latestDataRef.current = data
-  onSaveRef.current = onSave
+  useEffect(() => {
+    latestDataRef.current = data
+    onSaveRef.current = onSave
+  }, [data, onSave])
 
   const executeSave = useCallback(async (dataToSave: T) => {
     setStatus('saving')
@@ -57,9 +58,10 @@ export function useAutosave<T>({
       savedDataRef.current = dataToSave
       setStatus('saved')
       setLastSavedAt(new Date())
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[useAutosave] Save failed:', err)
-      setError(err?.message || 'Failed to save changes.')
+      const message = err instanceof Error ? err.message : 'Failed to save changes.'
+      setError(message)
       setStatus('error')
     }
   }, [])

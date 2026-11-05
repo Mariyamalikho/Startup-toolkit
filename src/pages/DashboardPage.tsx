@@ -30,7 +30,7 @@ export function DashboardPage() {
 
   React.useEffect(() => {
     fetchUserProjects()
-  }, [])
+  }, [fetchUserProjects])
 
   const {
     filteredProjects,
@@ -195,7 +195,9 @@ export function DashboardPage() {
               onChange={(e) => setSelectedIndustry(e.target.value)}
               className="h-10 bg-transparent text-xs font-semibold text-foreground focus:outline-none cursor-pointer pr-1"
             >
-              <option value="all" className="bg-[#1c222e]">All Industries</option>
+              <option value="all" className="bg-[#1c222e]">
+                All Industries
+              </option>
               {industries.map((ind) => (
                 <option key={ind} value={ind} className="bg-[#1c222e]">
                   {ind}
@@ -212,10 +214,18 @@ export function DashboardPage() {
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               className="h-10 bg-transparent text-xs font-semibold text-foreground focus:outline-none cursor-pointer pr-1"
             >
-              <option value="newest" className="bg-[#1c222e]">Sort: Newest</option>
-              <option value="oldest" className="bg-[#1c222e]">Sort: Oldest</option>
-              <option value="title" className="bg-[#1c222e]">Sort: Title (A-Z)</option>
-              <option value="progress" className="bg-[#1c222e]">Sort: Progress</option>
+              <option value="newest" className="bg-[#1c222e]">
+                Sort: Newest
+              </option>
+              <option value="oldest" className="bg-[#1c222e]">
+                Sort: Oldest
+              </option>
+              <option value="title" className="bg-[#1c222e]">
+                Sort: Title (A-Z)
+              </option>
+              <option value="progress" className="bg-[#1c222e]">
+                Sort: Progress
+              </option>
             </select>
           </div>
         </div>
@@ -230,10 +240,7 @@ export function DashboardPage() {
       />
 
       {/* ── Create Project Modal ─────────────────────────────────────── */}
-      <CreateProjectModal
-        open={createModalOpen}
-        onOpenChange={setCreateModalOpen}
-      />
+      <CreateProjectModal open={createModalOpen} onOpenChange={setCreateModalOpen} />
 
       {/* ── Delete Project Dialog ────────────────────────────────────── */}
       <DeleteProjectDialog
