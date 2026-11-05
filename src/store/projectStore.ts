@@ -8,7 +8,11 @@
 
 import { create } from 'zustand'
 import type { Project } from '@/types/database.types'
-import { projectService, type CreateProjectInput, type UpdateProjectInput } from '@/services/projectService'
+import {
+  projectService,
+  type CreateProjectInput,
+  type UpdateProjectInput,
+} from '@/services/projectService'
 import { toastStore } from '@/store/toastStore'
 
 interface ProjectState {
@@ -95,7 +99,11 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
     set((state) => {
       const filtered = state.projects.filter((p) => p.id !== id)
       const nextActive =
-        state.activeProject?.id === id ? (filtered.length > 0 ? filtered[0] : null) : state.activeProject
+        state.activeProject?.id === id
+          ? filtered.length > 0
+            ? filtered[0]
+            : null
+          : state.activeProject
       return {
         projects: filtered,
         activeProject: nextActive,
@@ -126,8 +134,8 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
         loading: false,
       })
       return fetchedProjects
-    } catch (err: any) {
-      const errMsg = err?.message || 'Failed to fetch projects from database.'
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : 'Failed to fetch projects from database.'
       set({ error: errMsg, loading: false })
       toastStore.add({
         variant: 'error',
@@ -153,8 +161,8 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
         description: `Successfully initialized "${created.title}".`,
       })
       return created
-    } catch (err: any) {
-      const errMsg = err?.message || 'Failed to create new project.'
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : 'Failed to create new project.'
       set({ error: errMsg, loading: false })
       toastStore.add({
         variant: 'error',
@@ -176,13 +184,14 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
       const updated = await projectService.updateProject(id, patch)
       set({ error: null })
       return updated
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : 'Could not save changes to database.'
       // Rollback on error
-      set({ projects: previousProjects, activeProject: previousActive, error: err?.message })
+      set({ projects: previousProjects, activeProject: previousActive, error: errMsg })
       toastStore.add({
         variant: 'error',
         title: 'Update Sync Error',
-        description: err?.message || 'Could not save changes to database.',
+        description: errMsg,
       })
       return null
     }
@@ -202,13 +211,14 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
         description: 'Project was removed from your workspace.',
       })
       return true
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : 'Could not delete project from database.'
       // Rollback on error
-      set({ projects: previousProjects, activeProject: previousActive, error: err?.message })
+      set({ projects: previousProjects, activeProject: previousActive, error: errMsg })
       toastStore.add({
         variant: 'error',
         title: 'Deletion Failed',
-        description: err?.message || 'Could not delete project from database.',
+        description: errMsg,
       })
       return false
     }

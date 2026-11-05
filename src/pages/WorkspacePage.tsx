@@ -18,7 +18,9 @@ export function WorkspacePage() {
   const { projectId } = useParams<{ projectId: string }>()
   const navigate = useNavigate()
   const { projects, activeProject, setActiveProject } = useProjectStore()
-  const [activeTab, setActiveTab] = useState<'brainstorm' | 'empathy' | 'canvas' | 'experiments' | 'roadmap'>('brainstorm')
+  const [activeTab, setActiveTab] = useState<
+    'brainstorm' | 'empathy' | 'canvas' | 'experiments' | 'roadmap'
+  >('brainstorm')
   const [isPrintReportOpen, setIsPrintReportOpen] = useState(false)
 
   // Find project by param or fallback to active project
@@ -31,7 +33,7 @@ export function WorkspacePage() {
     if (project && activeProject?.id !== project.id) {
       setActiveProject(project)
     }
-  }, [project, activeProject])
+  }, [project, activeProject, setActiveProject])
 
   if (!project) {
     return (
@@ -152,6 +154,3 @@ export function WorkspacePage() {
     </div>
   )
 }
-
-
-

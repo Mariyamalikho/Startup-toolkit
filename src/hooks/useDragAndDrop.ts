@@ -16,15 +16,12 @@ export function useDragAndDrop() {
   const [draggedItem, setDraggedItem] = useState<DraggedItemPayload | null>(null)
   const [activeDropzone, setActiveDropzone] = useState<string | null>(null)
 
-  const handleDragStart = useCallback(
-    (e: React.DragEvent, id: string, sourceContainer: string) => {
-      const payload: DraggedItemPayload = { id, sourceContainer }
-      setDraggedItem(payload)
-      e.dataTransfer.setData('text/plain', JSON.stringify(payload))
-      e.dataTransfer.effectAllowed = 'move'
-    },
-    [],
-  )
+  const handleDragStart = useCallback((e: React.DragEvent, id: string, sourceContainer: string) => {
+    const payload: DraggedItemPayload = { id, sourceContainer }
+    setDraggedItem(payload)
+    e.dataTransfer.setData('text/plain', JSON.stringify(payload))
+    e.dataTransfer.effectAllowed = 'move'
+  }, [])
 
   const handleDragOver = useCallback((e: React.DragEvent, containerId: string) => {
     e.preventDefault()
@@ -48,14 +45,12 @@ export function useDragAndDrop() {
 
       try {
         const rawData = e.dataTransfer.getData('text/plain')
-        const payload: DraggedItemPayload = rawData
-          ? JSON.parse(rawData)
-          : draggedItem
+        const payload: DraggedItemPayload | null = rawData ? JSON.parse(rawData) : draggedItem
 
         if (payload && payload.id) {
           onMove(payload.id, payload.sourceContainer, targetContainer)
         }
-      } catch (err) {
+      } catch {
         if (draggedItem) {
           onMove(draggedItem.id, draggedItem.sourceContainer, targetContainer)
         }

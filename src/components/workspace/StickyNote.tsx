@@ -28,38 +28,39 @@ interface StickyNoteProps {
   onDragEnd?: (e: React.DragEvent) => void
 }
 
-const COLOR_CLASSES: Record<NoteColor, { bg: string; text: string; border: string; dot: string }> = {
-  yellow: {
-    bg: 'bg-[#fef08a]',
-    text: 'text-slate-900',
-    border: 'border-amber-300',
-    dot: 'bg-amber-400',
-  },
-  blue: {
-    bg: 'bg-[#bae6fd]',
-    text: 'text-slate-900',
-    border: 'border-sky-300',
-    dot: 'bg-sky-400',
-  },
-  green: {
-    bg: 'bg-[#bbf7d0]',
-    text: 'text-slate-900',
-    border: 'border-emerald-300',
-    dot: 'bg-emerald-400',
-  },
-  pink: {
-    bg: 'bg-[#fbcfe8]',
-    text: 'text-slate-900',
-    border: 'border-rose-300',
-    dot: 'bg-rose-400',
-  },
-  purple: {
-    bg: 'bg-[#e9d5ff]',
-    text: 'text-slate-900',
-    border: 'border-purple-300',
-    dot: 'bg-purple-400',
-  },
-}
+const COLOR_CLASSES: Record<NoteColor, { bg: string; text: string; border: string; dot: string }> =
+  {
+    yellow: {
+      bg: 'bg-[#fef08a]',
+      text: 'text-slate-900',
+      border: 'border-amber-300',
+      dot: 'bg-amber-400',
+    },
+    blue: {
+      bg: 'bg-[#bae6fd]',
+      text: 'text-slate-900',
+      border: 'border-sky-300',
+      dot: 'bg-sky-400',
+    },
+    green: {
+      bg: 'bg-[#bbf7d0]',
+      text: 'text-slate-900',
+      border: 'border-emerald-300',
+      dot: 'bg-emerald-400',
+    },
+    pink: {
+      bg: 'bg-[#fbcfe8]',
+      text: 'text-slate-900',
+      border: 'border-rose-300',
+      dot: 'bg-rose-400',
+    },
+    purple: {
+      bg: 'bg-[#e9d5ff]',
+      text: 'text-slate-900',
+      border: 'border-purple-300',
+      dot: 'bg-purple-400',
+    },
+  }
 
 export function StickyNote({
   note,
@@ -87,8 +88,16 @@ export function StickyNote({
   return (
     <div
       draggable={!isEditing}
-      onDragStart={(e) => onDragStart && onDragStart(e, note.id, containerId)}
-      onDragEnd={(e) => onDragEnd && onDragEnd(e)}
+      onDragStart={(e) => {
+        if (onDragStart) {
+          onDragStart(e, note.id, containerId)
+        }
+      }}
+      onDragEnd={(e) => {
+        if (onDragEnd) {
+          onDragEnd(e)
+        }
+      }}
       style={{ transform: `rotate(${rotationDeg}deg)` }}
       className={`group relative p-3.5 rounded-xl border shadow-lg transition-all duration-200 ${theme.bg} ${theme.text} ${theme.border} space-y-2 hover:shadow-xl hover:scale-[1.02] hover:z-10 cursor-grab active:cursor-grabbing`}
     >
@@ -134,7 +143,9 @@ export function StickyNote({
               key={c}
               type="button"
               onClick={() => {
-                onChangeColor && onChangeColor(note.id, c)
+                if (onChangeColor) {
+                  onChangeColor(note.id, c)
+                }
                 setShowPalette(false)
               }}
               className={`h-4 w-4 rounded-full ${COLOR_CLASSES[c].dot} flex items-center justify-center transition-transform hover:scale-125`}

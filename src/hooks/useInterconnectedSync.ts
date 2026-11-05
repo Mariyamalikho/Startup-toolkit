@@ -9,6 +9,8 @@
 import type { Project } from '@/types/database.types'
 import { useProjectStore } from '@/store/projectStore'
 
+type CanvasNoteEntry = { id?: string; content: string; color?: string } | string
+
 export interface InterconnectedData {
   customerPersona: string
   problemStatement: string
@@ -23,13 +25,15 @@ export function useInterconnectedSync(project: Project) {
   const getInterconnectedData = (): InterconnectedData => {
     const bmc = project.canvas || {}
 
+    const firstSegment = (bmc.customer_segments as CanvasNoteEntry[] | undefined)?.[0]
     const customerPersona =
-      (bmc.customer_segments as any[])?.[0]?.content ||
+      (typeof firstSegment === 'string' ? firstSegment : firstSegment?.content) ||
       'Solo Technical Founders & Accelerator Teams'
 
-    const problemStatement = project.description || 'High operational friction in manual founder workflows.'
+    const problemStatement =
+      project.description || 'High operational friction in manual founder workflows.'
 
-    const valuePropositions = (bmc.value_propositions as any[])?.map((v) =>
+    const valuePropositions = (bmc.value_propositions as CanvasNoteEntry[] | undefined)?.map((v) =>
       typeof v === 'string' ? v : v.content,
     ) || ['All-in-one methodology workspace', 'Real-time debounced cloud autosave']
 
@@ -59,26 +63,23 @@ export function useInterconnectedSync(project: Project) {
         `Needs solution for: "${problem}"`,
         ...(existingEmpathy.thinks_and_feels || []),
       ],
-      pains: [
-        `Primary Pain Point: ${problem}`,
-        ...(existingEmpathy.pains || []),
-      ],
+      pains: [`Primary Pain Point: ${problem}`, ...(existingEmpathy.pains || [])],
     }
 
     // Updated BMC Payload
     const updatedBMC = {
       ...existingBMC,
       customer_segments: [
-        { id: `cs-ai-${Date.now()}`, content: persona, color: 'green' },
-        ...((existingBMC.customer_segments as any[]) || []),
+        { id: `cs-ai-${Date.now()}`, content: persona, color: 'green' as const },
+        ...(existingBMC.customer_segments || []),
       ],
       value_propositions: [
         ...valueProps.map((vp, i) => ({
           id: `vp-ai-${Date.now()}-${i}`,
           content: vp,
-          color: i % 2 === 0 ? 'green' : 'yellow',
+          color: (i % 2 === 0 ? 'green' : 'yellow') as 'green' | 'yellow',
         })),
-        ...((existingBMC.value_propositions as any[]) || []),
+        ...(existingBMC.value_propositions || []),
       ],
     }
 
