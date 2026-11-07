@@ -42,7 +42,11 @@ export function LandingPage() {
 
         <div className="flex items-center space-x-3">
           <Link to="/login">
-            <Button variant="ghost" size="sm" className="text-xs font-semibold text-slate-200">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs font-semibold text-slate-100 hover:bg-slate-800 hover:text-white"
+            >
               Sign In
             </Button>
           </Link>
@@ -89,7 +93,7 @@ export function LandingPage() {
               variant="outline"
               size="lg"
               onClick={() => navigate('/workspace/demo-proj-1')}
-              className="border-slate-700 text-slate-200 hover:bg-slate-800/60 rounded-lg text-sm font-semibold"
+              className="bg-[#181d27] border-slate-600 text-white hover:bg-slate-800 hover:border-sky-400/70 hover:text-sky-300 rounded-lg text-sm font-semibold px-6"
             >
               Inspect Live Canvas
             </Button>
@@ -100,13 +104,23 @@ export function LandingPage() {
         <div className="rounded-xl border border-slate-800 bg-[#12161f] p-4 sm:p-6 space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
             <div className="flex items-center space-x-2">
-              <span className="font-mono text-xs font-semibold text-slate-300">
+              <span className="font-mono text-xs font-semibold text-slate-200">
                 Active Venture: EcoPack Innovation
               </span>
             </div>
-            <div className="flex items-center space-x-1.5 text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 font-mono">
-              <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>Autosave Synced</span>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center space-x-1.5 text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 font-mono">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>Autosave Synced</span>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate('/workspace/demo-proj-1')}
+                className="h-7 px-3 text-xs font-semibold bg-[#181d27] border-slate-700 text-slate-100 hover:bg-slate-800 hover:border-sky-400/60 hover:text-sky-300"
+              >
+                Open Demo
+              </Button>
             </div>
           </div>
 

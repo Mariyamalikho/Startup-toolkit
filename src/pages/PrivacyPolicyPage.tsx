@@ -1,9 +1,9 @@
 /**
  * PrivacyPolicyPage.tsx
  *
- * Pixel-Perfect Public Privacy Policy Page for Startup Toolkit.
- * Explains founder data protection, Supabase Row Level Security (RLS),
- * 1000ms debounced database autosave, local storage, and founder contact info.
+ * Public Privacy Policy & Data Security Page for Startup Toolkit.
+ * Outlines data collection, Supabase Row Level Security (RLS), local storage usage,
+ * and founder contact information.
  */
 
 import { Link } from 'react-router-dom'
@@ -12,10 +12,10 @@ import {
   ShieldCheck,
   Lock,
   Database,
-  Globe,
-  ArrowLeft,
   HardDrive,
   UserCheck,
+  ArrowLeft,
+  Globe,
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/SocialIcons'
 import { Button } from '@/components/ui/Button'
@@ -35,7 +35,11 @@ export function PrivacyPolicyPage() {
         </Link>
 
         <Link to="/">
-          <Button variant="outline" size="sm" className="text-xs font-semibold border-border/60">
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-xs font-semibold bg-[#181d27] border-slate-700 text-slate-100 hover:bg-slate-800 hover:text-white"
+          >
             <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
             Back to Home
           </Button>
@@ -167,7 +171,7 @@ export function PrivacyPolicyPage() {
                 href="https://mariyamalikhokhar.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-surface border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-200 hover:text-sky-300 transition-colors"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-border/60 hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-400 transition-colors"
               >
                 <Globe className="h-3.5 w-3.5 text-sky-400" />
                 <span>mariyamalikhokhar.com</span>
@@ -177,65 +181,42 @@ export function PrivacyPolicyPage() {
                 href="https://github.com/Mariyamalikho"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-surface border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-200 hover:text-sky-300 transition-colors"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-border/60 hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-400 transition-colors"
               >
-                <GithubIcon className="h-3.5 w-3.5 text-indigo-400" />
-                <span>GitHub Profile</span>
+                <GithubIcon className="h-3.5 w-3.5 text-sky-400" />
+                <span>GitHub (@Mariyamalikho)</span>
               </a>
 
               <a
                 href="https://www.linkedin.com/in/mariyamali-khokhar/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-surface border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-200 hover:text-sky-300 transition-colors"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-border/60 hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-400 transition-colors"
               >
                 <LinkedinIcon className="h-3.5 w-3.5 text-sky-400" />
-                <span>LinkedIn Profile</span>
+                <span>LinkedIn</span>
               </a>
             </div>
           </section>
         </div>
       </main>
 
-      {/* ── Footer ─────────────────────────────────────────────────── */}
-      <footer className="border-t border-border/40 bg-[#181d27] py-8 px-4 sm:px-8 text-center text-xs text-slate-300">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-1 text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start space-x-2">
-              <Rocket className="h-4 w-4 text-sky-400" />
-              <span className="font-bold text-white">Startup Toolkit</span>
-              <span className="text-slate-400">© {new Date().getFullYear()}</span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium">
-              Built with precision by{' '}
-              <a
-                href="https://mariyamalikhokhar.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-sky-400 hover:text-sky-300 underline decoration-sky-400/40 underline-offset-4 transition-colors"
-              >
-                Mariyam Ali K.
-              </a>
-            </p>
-          </div>
-
-          <div className="flex items-center space-x-6">
-            <Link to="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <Link to="/privacy-policy" className="text-sky-400 font-semibold">
-              Privacy Policy
-            </Link>
-            <a
-              href="https://mariyamalikhokhar.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition-colors"
-            >
-              Website
-            </a>
-          </div>
-        </div>
+      {/* ── Footer ──────────────────────────────────────────────────── */}
+      <footer className="border-t border-border/40 bg-[#181d27]/50 py-6 px-4 text-center text-xs text-muted-foreground space-y-1.5">
+        <p className="text-xs sm:text-sm text-slate-200 font-medium">
+          Built with precision by{' '}
+          <a
+            href="https://mariyamalikhokhar.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-sky-400 hover:text-sky-300 underline decoration-sky-400/40 underline-offset-4 transition-colors"
+          >
+            Mariyam Ali K.
+          </a>
+        </p>
+        <p className="text-[11px] text-muted-foreground">
+          © {new Date().getFullYear()} Startup Toolkit. All rights reserved.
+        </p>
       </footer>
     </div>
   )
