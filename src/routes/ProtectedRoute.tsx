@@ -2,8 +2,9 @@
  * ProtectedRoute.tsx
  *
  * Route guard component that protects authenticated workspace routes.
- * Allows direct inspection of live demo workspaces (/workspace/demo-*) and
- * local fallback sessions when Supabase environment variables are not configured.
+ * Allows direct inspection of methodology stages and live demo workspaces
+ * (/workspace/*, /empathy-map, /business-model-canvas, /prototype, /pitch-deck)
+ * as well as local fallback sessions when Supabase credentials are not configured.
  */
 
 import * as React from 'react'
@@ -16,6 +17,15 @@ interface ProtectedRouteProps {
   children?: React.ReactNode
 }
 
+const PUBLIC_INSPECTABLE_PREFIXES = [
+  '/workspace/',
+  '/empathy-map',
+  '/business-model-canvas',
+  '/prototype',
+  '/experiments',
+  '/pitch-deck',
+]
+
 export function ProtectedRoute({ redirectPath = '/login', children }: ProtectedRouteProps) {
   const { user, loading, isConfigured } = useAuth()
   const location = useLocation()
@@ -24,9 +34,11 @@ export function ProtectedRoute({ redirectPath = '/login', children }: ProtectedR
     return <LoadingOverlay message="Authenticating session..." />
   }
 
-  const isLiveDemoWorkspace = location.pathname.startsWith('/workspace/demo-')
+  const isInspectableMethodologyRoute = PUBLIC_INSPECTABLE_PREFIXES.some((prefix) =>
+    location.pathname.startsWith(prefix),
+  )
 
-  if (!user && isConfigured && !isLiveDemoWorkspace) {
+  if (!user && isConfigured && !isInspectableMethodologyRoute) {
     return <Navigate to={redirectPath} replace />
   }
 

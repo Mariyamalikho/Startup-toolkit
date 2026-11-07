@@ -13,6 +13,7 @@ import {
   Kanban,
   Users,
   Grid,
+  Calendar,
   FileText,
   Settings,
   Layers,
@@ -32,13 +33,14 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
   const location = useLocation()
   const { activeProject } = useProjectStore()
 
-  const projectId = activeProject?.id || 'default'
+  const projectId = activeProject?.id || 'demo-proj-1'
 
   const navigationItems = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { label: 'Ideation Canvas', icon: Kanban, path: `/workspace/${projectId}` },
     { label: 'Empathy Map', icon: Users, path: '/empathy-map' },
     { label: 'Business Model Canvas', icon: Grid, path: '/business-model-canvas' },
+    { label: 'Prototype Roadmap', icon: Calendar, path: '/prototype' },
     { label: 'Pitch Deck', icon: FileText, path: '/pitch-deck' },
     { label: 'Settings', icon: Settings, path: '/settings' },
   ]
