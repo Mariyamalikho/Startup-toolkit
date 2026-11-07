@@ -6,7 +6,7 @@
  */
 
 import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { AuthForm } from '@/components/auth/AuthForm'
@@ -34,22 +34,23 @@ const SettingsPage = lazy(() =>
   import('@/pages/SettingsPage').then((m) => ({ default: m.SettingsPage })),
 )
 
-// Placeholder Page views
 function LoginPage() {
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-8 shadow-xl">
-        <AuthForm initialMode="login" />
+        <AuthForm initialMode="login" onSuccess={() => navigate('/dashboard')} />
       </div>
     </div>
   )
 }
 
 function SignupPage() {
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-8 shadow-xl">
-        <AuthForm initialMode="signup" />
+        <AuthForm initialMode="signup" onSuccess={() => navigate('/dashboard')} />
       </div>
     </div>
   )

@@ -12,7 +12,7 @@ import { BrowserRouter } from 'react-router-dom'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="system" storageKey="startup-toolkit-theme">
+      <ThemeProvider defaultTheme="dark" storageKey="startup-toolkit-theme">
         <AuthProvider>
           <ToastProvider>
             <BrowserRouter>
