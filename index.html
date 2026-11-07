@@ -1,17 +1,87 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0f17" />
     <meta
       name="description"
-      content="Startup Toolkit — An all-in-one venture ideation, Business Model Canvas, Empathy Map, lean validation, and pitch deck workspace."
+      content="Startup Toolkit: Venture ideation, Business Model Canvas, Empathy Map, lean validation, and pitch deck workspace built by Mariyam Ali K."
     />
-    <title>Startup Toolkit — Venture Ideation & Validation Workspace</title>
+    <meta property="og:title" content="Startup Toolkit | Venture Ideation & Validation Workspace" />
+    <meta
+      property="og:description"
+      content="Structured startup frameworks including Business Model Canvas, Empathy Mapping, Lean Experiments, and Pitch Deck exports in one workspace."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Startup Toolkit | Venture Ideation & Validation Workspace</title>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="bg-[#0b0f17] text-[#f3f4f6] antialiased">
+    <div id="root">
+      <div
+        style="
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          background-color: #0b0f17;
+          color: #f3f4f6;
+          font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        "
+      >
+        <header
+          style="
+            height: 64px;
+            border-bottom: 1px solid #262f40;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #12161f;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 10px">
+            <img src="/favicon.svg" alt="Startup Toolkit Logo" width="32" height="32" />
+            <strong style="font-size: 16px; letter-spacing: -0.02em">StartupToolkit</strong>
+          </div>
+          <span style="font-size: 12px; color: #94a3b8">Initializing workspace...</span>
+        </header>
+        <main style="max-width: 960px; margin: 0 auto; padding: 64px 24px; width: 100%">
+          <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em">
+            Startup Toolkit: Venture Ideation &amp; Validation Workspace
+          </h1>
+          <p style="font-size: 15px; color: #94a3b8; line-height: 1.6; max-width: 640px">
+            Structured workspace for early-stage founders to build Empathy Maps, 9-Box Business
+            Model Canvases, Lean Validation Experiments, Prototype Roadmaps, and Investor Pitch
+            Decks.
+          </p>
+        </main>
+        <footer
+          style="
+            border-top: 1px solid #262f40;
+            padding: 20px 24px;
+            font-size: 12px;
+            color: #94a3b8;
+            text-align: center;
+          "
+        >
+          Built with precision by Mariyam Ali K.
+        </footer>
+      </div>
+    </div>
+    <noscript>
+      <div style="padding: 24px; background: #181d27; color: #f3f4f6; text-align: center">
+        JavaScript is required to run the interactive Startup Toolkit canvas workspace.
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx" defer></script>
   </body>
 </html>
