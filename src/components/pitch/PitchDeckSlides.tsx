@@ -60,7 +60,7 @@ const DECK_THEMES: Record<DeckTheme, ThemeConfig> = {
     name: 'Cyberpunk Sky',
     bg: 'bg-[#181d27]',
     border: 'border-sky-500/40',
-    accentGradient: 'from-sky-400 to-indigo-600',
+    accentGradient: 'bg-sky-400',
     badgeBg: 'bg-sky-500/10',
     badgeText: 'text-sky-300 border-sky-500/30',
   },
@@ -68,7 +68,7 @@ const DECK_THEMES: Record<DeckTheme, ThemeConfig> = {
     name: 'Emerald Growth',
     bg: 'bg-[#131e1a]',
     border: 'border-emerald-500/40',
-    accentGradient: 'from-emerald-400 to-teal-600',
+    accentGradient: 'bg-emerald-400',
     badgeBg: 'bg-emerald-500/10',
     badgeText: 'text-emerald-300 border-emerald-500/30',
   },
@@ -76,23 +76,23 @@ const DECK_THEMES: Record<DeckTheme, ThemeConfig> = {
     name: 'Sunset Amber',
     bg: 'bg-[#1f1917]',
     border: 'border-amber-500/40',
-    accentGradient: 'from-amber-400 to-rose-600',
+    accentGradient: 'bg-amber-400',
     badgeBg: 'bg-amber-500/10',
     badgeText: 'text-amber-300 border-amber-500/30',
   },
   purple: {
-    name: 'Royal Purple',
-    bg: 'bg-[#1a1726]',
-    border: 'border-purple-500/40',
-    accentGradient: 'from-purple-400 to-pink-600',
-    badgeBg: 'bg-purple-500/10',
-    badgeText: 'text-purple-300 border-purple-500/30',
+    name: 'Cobalt Slate',
+    bg: 'bg-[#151c28]',
+    border: 'border-blue-500/40',
+    accentGradient: 'bg-blue-400',
+    badgeBg: 'bg-blue-500/10',
+    badgeText: 'text-blue-300 border-blue-500/30',
   },
   midnight: {
     name: 'Midnight Dark',
     bg: 'bg-[#0f172a]',
     border: 'border-slate-700',
-    accentGradient: 'from-slate-300 to-slate-500',
+    accentGradient: 'bg-slate-400',
     badgeBg: 'bg-slate-800',
     badgeText: 'text-slate-200 border-slate-700',
   },
@@ -457,8 +457,8 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
           </Link>
           <div>
             <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <span>{customTitle} — Investor Pitch Deck</span>
-              <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full">
+              <span>{customTitle} - Investor Pitch Deck</span>
+              <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-md">
                 {themeConfig.name}
               </span>
             </h2>
@@ -508,9 +508,7 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
         {/* Top Slide Header */}
         <div className="flex items-center justify-between border-b border-border/40 pb-6">
           <div className="flex items-center space-x-3">
-            <div
-              className={`p-2.5 rounded-2xl bg-gradient-to-br ${currentSlide.accentColor} text-slate-950 shadow-md`}
-            >
+            <div className="p-2.5 rounded-xl bg-slate-900 border border-border/60 text-sky-400">
               {currentSlide.icon}
             </div>
             <div>
@@ -605,9 +603,7 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <div
-                      className={`h-6 w-6 rounded-full bg-gradient-to-tr ${cfg.accentGradient}`}
-                    />
+                    <div className={`h-6 w-6 rounded-md ${cfg.accentGradient}`} />
                     <span className="text-xs font-bold">{cfg.name}</span>
                   </div>
 

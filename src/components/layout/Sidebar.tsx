@@ -113,7 +113,7 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
               {/* Progress bar line */}
               <div className="w-full h-1.5 rounded-full bg-muted/30 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full transition-all duration-500"
+                  className="h-full bg-sky-400 rounded-full transition-all duration-500"
                   style={{ width: `${activeProject.progress}%` }}
                 />
               </div>

@@ -1,16 +1,15 @@
 /**
  * LandingPage.tsx
  *
- * Pixel-Perfect Public Landing Page for Startup Toolkit.
- * Features announcement pill, hero typography, primary/secondary CTA triggers,
- * desaturated dark interactive workspace UI mockup preview, feature grid cards, and footer.
+ * Public Landing Page for Startup Toolkit.
+ * Features structured product overview, interactive workspace preview,
+ * methodology specification table, and founder attribution footer.
  */
 
 import { Link, useNavigate } from 'react-router-dom'
 import {
   Rocket,
   ArrowRight,
-  Zap,
   Kanban,
   Users,
   Grid,
@@ -29,12 +28,12 @@ export function LandingPage() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-[#12161f] text-foreground font-sans selection:bg-primary/30 flex flex-col justify-between">
-      {/* ── Top Public Header ─────────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 h-16 bg-[#181d27]/90 backdrop-blur-md border-b border-border/40 px-4 sm:px-8 flex items-center justify-between">
+    <div className="min-h-screen bg-[#0b0f17] text-slate-100 font-sans selection:bg-sky-400/30 flex flex-col justify-between">
+      {/* Top Public Header */}
+      <header className="sticky top-0 z-40 h-16 bg-[#12161f] border-b border-slate-800 px-4 sm:px-8 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2.5">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20">
-            <Rocket className="h-5 w-5 text-white" />
+          <div className="h-9 w-9 rounded-lg bg-slate-900 border border-sky-400/50 flex items-center justify-center">
+            <Rocket className="h-4 w-4 text-sky-400" />
           </div>
           <span className="font-bold text-lg tracking-tight text-white">
             Startup<span className="text-sky-400">Toolkit</span>
@@ -43,14 +42,14 @@ export function LandingPage() {
 
         <div className="flex items-center space-x-3">
           <Link to="/login">
-            <Button variant="ghost" size="sm" className="text-xs font-semibold">
+            <Button variant="ghost" size="sm" className="text-xs font-semibold text-slate-200">
               Sign In
             </Button>
           </Link>
           <Link to="/signup">
             <Button
               size="sm"
-              className="text-xs font-bold bg-sky-400 text-slate-950 hover:bg-sky-300"
+              className="text-xs font-bold bg-sky-400 text-slate-950 hover:bg-sky-300 rounded-lg"
             >
               Get Started
             </Button>
@@ -58,193 +57,180 @@ export function LandingPage() {
         </div>
       </header>
 
-      {/* ── Main Landing Body ────────────────────────────────────────── */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-12 md:py-20 space-y-20">
-        {/* Hero Headline & Subtitle Section */}
-        <div className="text-center space-y-6 max-w-3xl mx-auto">
-          {/* Announcement Pill Badge */}
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-300 text-xs font-semibold shadow-sm">
-            <Zap className="h-3.5 w-3.5 text-sky-400 animate-pulse" />
-            <span>All-in-One Founder Methodology Suite • Powered by Supabase</span>
-          </div>
-
-          {/* Main Hero Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            Turn Startup Ideas into{' '}
-            <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              Investor-Ready Ventures
-            </span>
-          </h1>
-
-          {/* Subtitle Paragraph */}
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            From Ideation and Empathy Mapping to Business Model Canvas and Pitch Decks — everything
-            early-stage founders need in one dark, pixel-perfect workspace.
+      {/* Main Landing Body */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-12 md:py-16 space-y-16">
+        {/* Hero Headline & Actions */}
+        <div className="max-w-3xl space-y-5">
+          <p className="font-mono text-xs uppercase tracking-widest text-sky-400 font-semibold">
+            Venture Ideation &amp; Validation Workspace
           </p>
 
-          {/* CTA Action Buttons */}
-          <div className="flex flex-wrap justify-center items-center gap-4 pt-4">
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            Structured frameworks for building and validating early-stage ventures.
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
+            Map customer discovery insights, model unit economics across a 9-box Business Model
+            Canvas, track validation hypotheses, and export investor pitch decks from one unified
+            workspace.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <Button
               size="lg"
               onClick={() => navigate('/signup')}
-              className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold px-8 shadow-lg shadow-sky-500/20 text-sm group"
+              className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold px-6 rounded-lg text-sm"
             >
-              Get Started Free
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              Open New Workspace
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
 
             <Button
               variant="outline"
               size="lg"
               onClick={() => navigate('/workspace/demo-proj-1')}
-              className="border-border/60 hover:bg-muted/20 text-sm font-semibold"
+              className="border-slate-700 text-slate-200 hover:bg-slate-800/60 rounded-lg text-sm font-semibold"
             >
-              Explore Live Canvas Demo
+              Inspect Live Canvas
             </Button>
           </div>
         </div>
 
-        {/* ── Interactive Workspace Mockup Preview Card ────────────────── */}
-        <div className="rounded-2xl border border-border/60 bg-[#181d27] p-4 sm:p-6 shadow-2xl space-y-6">
-          {/* Mockup Header Bar */}
-          <div className="flex items-center justify-between border-b border-border/40 pb-4">
+        {/* Interactive Workspace Preview Container */}
+        <div className="rounded-xl border border-slate-800 bg-[#12161f] p-4 sm:p-6 space-y-5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
             <div className="flex items-center space-x-2">
-              <span className="h-3 w-3 rounded-full bg-red-500/80" />
-              <span className="h-3 w-3 rounded-full bg-amber-500/80" />
-              <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
-              <span className="pl-2 font-mono text-xs text-muted-foreground">
-                workspace.startuptoolkit.io
+              <span className="font-mono text-xs font-semibold text-slate-300">
+                Active Venture: EcoPack Innovation
               </span>
             </div>
-            <div className="flex items-center space-x-2 text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-semibold">
+            <div className="flex items-center space-x-1.5 text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 font-mono">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>Real-time Autosave Active</span>
+              <span>Autosave Synced</span>
             </div>
           </div>
 
-          {/* Stepper Ribbon Inside Mockup */}
-          <div className="bg-[#1c222e] p-2 rounded-xl border border-border/40">
+          <div className="bg-[#181d27] p-2 rounded-lg border border-slate-800">
             <ChevronStepperRibbon currentStageId="bmc" />
           </div>
 
-          {/* Canvas Mockup Quadrant Grid Preview */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-[#1c222e] border border-border/40 space-y-2">
-              <span className="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Kanban className="h-3.5 w-3.5" />
-                Problem & Value Prop
-              </span>
-              <p className="text-xs text-muted-foreground">
-                High friction in early-stage founder methodology alignment.
-              </p>
-              <div className="pt-2">
-                <span className="inline-block px-2 py-1 bg-amber-500/20 text-amber-300 text-[11px] rounded font-mono">
-                  Post-it: Frictionless UI
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 rounded-lg bg-[#181d27] border border-slate-800 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                  <Kanban className="h-3.5 w-3.5" />
+                  Value Propositions
                 </span>
+                <span className="font-mono text-[11px] text-slate-400">Block 04 / 09</span>
               </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Compostable thermal packaging engineered for regional meal delivery operators at
+                parity unit cost with Expanded Polystyrene.
+              </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#1c222e] border border-border/40 space-y-2">
-              <span className="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Users className="h-3.5 w-3.5" />
-                Customer Segments
-              </span>
-              <p className="text-xs text-muted-foreground">
-                Solo founders, pre-seed teams, and incubator cohort members.
-              </p>
-              <div className="pt-2">
-                <span className="inline-block px-2 py-1 bg-sky-500/20 text-sky-300 text-[11px] rounded font-mono">
-                  Target: Technical Founders
+            <div className="p-4 rounded-lg bg-[#181d27] border border-slate-800 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                  <Users className="h-3.5 w-3.5" />
+                  Customer Segments &amp; Revenue
                 </span>
+                <span className="font-mono text-[11px] text-slate-400">Block 07 / 09</span>
               </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-[#1c222e] border border-border/40 space-y-2">
-              <span className="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Grid className="h-3.5 w-3.5" />
-                Revenue Streams
-              </span>
-              <p className="text-xs text-muted-foreground">
-                Freemium tier, Pro Founder plan ($19/mo), and Enterprise cohorts.
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Direct B2B wholesale supply contracts with multi-location cloud kitchens and
+                regional grocery fulfillment centers.
               </p>
-              <div className="pt-2">
-                <span className="inline-block px-2 py-1 bg-emerald-500/20 text-emerald-300 text-[11px] rounded font-mono">
-                  SaaS Subscription Model
-                </span>
-              </div>
             </div>
           </div>
         </div>
 
-        {/* ── Feature Highlights Grid ─────────────────────────────────── */}
-        <div className="space-y-8">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Built for High-Execution Founders
+        {/* Architectural Capabilities Matrix */}
+        <div className="space-y-6">
+          <div className="border-b border-slate-800 pb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-white">
+              Core Methodology &amp; Infrastructure
             </h2>
-            <p className="text-sm text-muted-foreground">
-              Structured startup frameworks combined with modern database sync.
+            <p className="text-sm text-slate-300 mt-1">
+              Engineered for low-latency editing, strict tenant isolation, and clean document
+              exports.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3 hover:border-sky-400/40 transition-colors">
-              <div className="h-10 w-10 rounded-xl bg-sky-400/10 text-sky-400 flex items-center justify-center">
-                <Kanban className="h-5 w-5" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Grid className="h-4 w-4" />
               </div>
-              <h3 className="text-base font-bold text-white">Structured Canvas</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Organize ideas, empathy maps, and business model canvas quadrants in a 1:1
-                pixel-perfect dark UI.
-              </p>
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-white">
+                  Empathy Map &amp; 9-Box Business Model Canvas
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Drag-and-drop sticky notes across customer discovery quadrants and business model
+                  blocks with cross-tool state synchronization.
+                </p>
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3 hover:border-sky-400/40 transition-colors">
-              <div className="h-10 w-10 rounded-xl bg-indigo-400/10 text-indigo-400 flex items-center justify-center">
-                <Database className="h-5 w-5" />
+            <div className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Database className="h-4 w-4" />
               </div>
-              <h3 className="text-base font-bold text-white">Supabase Autosave</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                1000ms debounced automatic database saving so your work is never lost.
-              </p>
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-white">
+                  Debounced Persistence &amp; Query Caching
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  1000ms debounced autosave with exponential backoff retry handling, in-memory TTL
+                  query caching, and offline state recovery.
+                </p>
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3 hover:border-sky-400/40 transition-colors">
-              <div className="h-10 w-10 rounded-xl bg-purple-400/10 text-purple-400 flex items-center justify-center">
-                <Lock className="h-5 w-5" />
+            <div className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Lock className="h-4 w-4" />
               </div>
-              <h3 className="text-base font-bold text-white">Protected Workspaces</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                PostgreSQL RLS security policies keeping your startup venture IP completely
-                confidential.
-              </p>
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-white">
+                  Row Level Security &amp; Input Sanitization
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  PostgreSQL Row Level Security policies enforce strict user-scoped access across
+                  all tables and private storage buckets.
+                </p>
+              </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3 hover:border-sky-400/40 transition-colors">
-              <div className="h-10 w-10 rounded-xl bg-emerald-400/10 text-emerald-400 flex items-center justify-center">
-                <FileText className="h-5 w-5" />
+            <div className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+                <FileText className="h-4 w-4" />
               </div>
-              <h3 className="text-base font-bold text-white">Pitch Deck Export</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Instantly convert your canvas insights into structured pitch deck slides for
-                investors.
-              </p>
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-white">
+                  Pitch Deck &amp; Printable PDF Reports
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Compile canvas insights, validation experiments, and 6-month roadmaps into
+                  presentation slides and structured PDF documents.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </main>
 
-      {/* ── Public Footer ────────────────────────────────────────────── */}
-      <footer className="border-t border-border/40 bg-[#181d27] py-10 px-4 sm:px-8 text-xs text-muted-foreground space-y-6">
+      {/* Public Footer */}
+      <footer className="border-t border-slate-800 bg-[#12161f] py-8 px-4 sm:px-8 text-xs text-slate-300">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Brand & Copyright */}
           <div className="space-y-1.5 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start space-x-2">
               <Rocket className="h-4 w-4 text-sky-400" />
               <span className="font-bold text-white text-sm">Startup Toolkit</span>
               <span className="text-slate-400">© {new Date().getFullYear()}</span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-300 font-medium">
+            <p className="text-xs sm:text-sm text-slate-200 font-medium">
               Built with precision by{' '}
               <a
                 href="https://mariyamalikhokhar.com/"
@@ -257,13 +243,12 @@ export function LandingPage() {
             </p>
           </div>
 
-          {/* Founder Social Links & Privacy Policy */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
             <a
               href="https://mariyamalikhokhar.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-slate-700 hover:border-sky-400 text-xs font-semibold text-slate-200 hover:text-sky-300 transition-colors"
             >
               <Globe className="h-3.5 w-3.5 text-sky-400" />
               <span>Website</span>
@@ -273,9 +258,9 @@ export function LandingPage() {
               href="https://github.com/Mariyamalikho"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-slate-700 hover:border-sky-400 text-xs font-semibold text-slate-200 hover:text-sky-300 transition-colors"
             >
-              <GithubIcon className="h-3.5 w-3.5 text-indigo-400" />
+              <GithubIcon className="h-3.5 w-3.5 text-sky-400" />
               <span>GitHub</span>
             </a>
 
@@ -283,7 +268,7 @@ export function LandingPage() {
               href="https://www.linkedin.com/in/mariyamali-khokhar/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-slate-700 hover:border-sky-400 text-xs font-semibold text-slate-200 hover:text-sky-300 transition-colors"
             >
               <LinkedinIcon className="h-3.5 w-3.5 text-sky-400" />
               <span>LinkedIn</span>
@@ -291,7 +276,7 @@ export function LandingPage() {
 
             <Link
               to="/privacy-policy"
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#1c222e] border border-border/60 hover:border-sky-400 text-xs font-semibold text-slate-300 hover:text-sky-300 transition-colors"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-slate-700 hover:border-sky-400 text-xs font-semibold text-slate-200 hover:text-sky-300 transition-colors"
             >
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
               <span>Privacy Policy</span>

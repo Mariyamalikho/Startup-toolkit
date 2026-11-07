@@ -59,7 +59,7 @@ function NotFoundPage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <EmptyError
-        message="404 — The workspace route or page you requested does not exist."
+        message="404: The workspace route or page you requested does not exist."
         onRetry={() => {
           window.location.href = '/'
         }}

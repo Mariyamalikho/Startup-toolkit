@@ -26,8 +26,8 @@ export function PrivacyPolicyPage() {
       {/* ── Top Header ─────────────────────────────────────────────── */}
       <header className="sticky top-0 z-40 h-16 bg-[#181d27]/90 backdrop-blur-md border-b border-border/40 px-4 sm:px-8 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2.5">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20">
-            <Rocket className="h-5 w-5 text-white" />
+          <div className="h-9 w-9 rounded-lg bg-slate-900 border border-sky-400/50 flex items-center justify-center">
+            <Rocket className="h-5 w-5 text-sky-400" />
           </div>
           <span className="font-bold text-lg tracking-tight text-white">
             Startup<span className="text-sky-400">Toolkit</span>
@@ -148,7 +148,7 @@ export function PrivacyPolicyPage() {
           {/* Section 5: Founder & Engineering Contact */}
           <section className="p-6 rounded-2xl bg-[#1c222e] border border-sky-400/30 space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
+              <div className="h-10 w-10 rounded-lg bg-sky-400 text-slate-950 flex items-center justify-center font-bold text-sm">
                 MA
               </div>
               <div>

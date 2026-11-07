@@ -30,7 +30,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         <div className="bg-amber-500/15 border-b border-amber-500/30 text-amber-400 text-xs font-semibold px-4 py-2 flex items-center justify-center space-x-2 animate-in fade-in">
           <WifiOff className="h-4 w-4 animate-pulse" />
           <span>
-            Offline Mode — Connection lost. Working in offline mode; edits will sync when
+            Offline Mode: Connection lost. Working in offline mode; edits will sync when
             reconnected.
           </span>
         </div>
@@ -39,7 +39,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       {isOnline && wasOffline && (
         <div className="bg-emerald-500/15 border-b border-emerald-500/30 text-emerald-400 text-xs font-semibold px-4 py-2 flex items-center justify-center space-x-2 animate-in fade-in">
           <Wifi className="h-4 w-4" />
-          <span>Connection Restored — Supabase cloud sync active.</span>
+          <span>Connection Restored: Supabase cloud sync active.</span>
         </div>
       )}
 

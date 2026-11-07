@@ -56,7 +56,7 @@ export function AuthForm({ initialMode = 'login', onSuccess, className }: AuthFo
         toast({
           variant: 'info',
           title: mode === 'login' ? 'Demo Login Successful' : 'Demo Account Created',
-          description: 'Supabase credentials not set in .env.local — running in demo mode.',
+          description: 'Supabase credentials not set in .env.local; running in demo mode.',
         })
         onSuccess?.()
       }, 1000)
