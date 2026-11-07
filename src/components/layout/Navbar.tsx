@@ -89,8 +89,8 @@ export function Navbar({ onToggleSidebar, mobileMenuOpen, onToggleMobileMenu }: 
 
         {/* Brand Logo */}
         <Link to="/" className="flex items-center space-x-2.5">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20">
-            <Rocket className="h-5 w-5 text-white" />
+          <div className="h-9 w-9 rounded-lg bg-slate-900 border border-sky-400/50 flex items-center justify-center">
+            <Rocket className="h-5 w-5 text-sky-400" />
           </div>
           <span className="font-bold text-base tracking-tight text-foreground hidden sm:inline">
             Startup<span className="text-sky-400">Toolkit</span>
@@ -217,7 +217,7 @@ export function Navbar({ onToggleSidebar, mobileMenuOpen, onToggleMobileMenu }: 
             }}
             className="flex items-center space-x-2 p-1.5 rounded-xl hover:bg-muted/30 transition-colors"
           >
-            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-500 border border-sky-400/30 flex items-center justify-center text-white font-bold text-xs shadow-md">
+            <div className="h-8 w-8 rounded-lg bg-sky-400 text-slate-950 border border-sky-300/30 flex items-center justify-center font-bold text-xs">
               {user?.email ? user.email.charAt(0).toUpperCase() : 'G'}
             </div>
             <ChevronDown className="h-3.5 w-3.5 text-muted-foreground hidden sm:block" />

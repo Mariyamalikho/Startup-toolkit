@@ -1,7 +1,7 @@
 /**
  * WorkspaceHeader.tsx
  *
- * 1:1 Pixel-Perfect Workspace Header Banner Component for Startup Toolkit.
+ * Workspace Header Banner Component for Startup Toolkit.
  * Displays active venture title, industry badge, last autosaved status,
  * methodology progress percentage bar, and quick export/share action triggers.
  */
@@ -17,7 +17,7 @@ import {
   Settings,
   ArrowLeft,
   TrendingUp,
-  Zap,
+  Sliders,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Link } from 'react-router-dom'
@@ -43,7 +43,7 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
   }, [project.updated_at])
 
   return (
-    <div className="bg-surface border border-border/60 rounded-2xl p-5 shadow-xl space-y-4">
+    <div className="bg-surface border border-border/60 rounded-xl p-5 space-y-4">
       {/* Top Navigation & Actions Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 pb-4">
         {/* Left Title & Status */}
@@ -61,17 +61,17 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
 
           <div className="space-y-1 min-w-0 flex-1">
             <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-              <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-400 font-mono text-[10px] font-bold uppercase tracking-wider">
+              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-sky-400/10 border border-sky-400/30 text-sky-400 font-mono text-[10px] font-bold uppercase tracking-wider">
                 <Layers className="h-3 w-3" />
                 <span>Active Venture Workspace</span>
               </span>
 
-              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-muted/40 border border-border/40 text-muted-foreground font-mono text-[10px]">
+              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-muted border border-border/40 text-muted-foreground font-mono text-[10px]">
                 <Tag className="h-2.5 w-2.5 text-sky-400" />
                 <span>{project.industry || 'Tech'}</span>
               </span>
 
-              <div className="inline-flex items-center space-x-1 text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full font-semibold">
+              <div className="inline-flex items-center space-x-1 text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md font-semibold">
                 <CheckCircle2 className="h-3 w-3" />
                 <span>Autosaved at {formattedDate}</span>
               </div>
@@ -88,10 +88,10 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
           <Button
             size="sm"
             onClick={() => setAiModalOpen(true)}
-            className="h-9 px-3.5 text-xs font-extrabold bg-sky-400 text-slate-950 hover:bg-sky-300 shadow-md shadow-sky-500/20"
+            className="h-9 px-3.5 text-xs font-bold bg-sky-400 text-slate-950 hover:bg-sky-300 rounded-lg"
           >
-            <Zap className="mr-1.5 h-3.5 w-3.5 fill-slate-950" />
-            AI Co-Pilot
+            <Sliders className="mr-1.5 h-3.5 w-3.5" />
+            Value Prop Builder
           </Button>
 
           {onShare && (
@@ -99,7 +99,7 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
               variant="outline"
               size="sm"
               onClick={onShare}
-              className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20"
+              className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20 rounded-lg"
             >
               <Share2 className="mr-1.5 h-3.5 w-3.5" />
               Share
@@ -111,10 +111,10 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
               variant="outline"
               size="sm"
               onClick={onExport}
-              className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20"
+              className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20 rounded-lg"
             >
               <Download className="mr-1.5 h-3.5 w-3.5 text-sky-400" />
-              Export Pitch
+              Export Report
             </Button>
           )}
 
@@ -123,7 +123,7 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
               variant="outline"
               size="sm"
               onClick={onSettings}
-              className="h-9 w-9 p-0 border-border/60 hover:bg-muted/20 text-muted-foreground hover:text-foreground"
+              className="h-9 w-9 p-0 border-border/60 hover:bg-muted/20 text-muted-foreground hover:text-foreground rounded-lg"
               title="Venture Settings"
             >
               <Settings className="h-4 w-4" />
@@ -132,7 +132,7 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
         </div>
       </div>
 
-      {/* AI Generator Modal Trigger */}
+      {/* Strategy Builder Modal Trigger */}
       <AIGeneratorModal open={aiModalOpen} onOpenChange={setAiModalOpen} project={project} />
 
       {/* Description & Progress Bar Footer */}
@@ -150,9 +150,9 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
             <span className="font-bold text-sky-400">{progress}%</span>
           </div>
 
-          <div className="flex-1 h-2 rounded-full bg-muted/40 overflow-hidden border border-border/40">
+          <div className="flex-1 h-2 rounded-sm bg-muted overflow-hidden border border-border/40">
             <div
-              className="h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full transition-all duration-500"
+              className="h-full bg-sky-400 transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

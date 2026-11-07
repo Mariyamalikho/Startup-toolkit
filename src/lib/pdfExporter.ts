@@ -376,7 +376,7 @@ export async function generateVenturePdfReport(
             .map(
               (m) => `
             <div style="margin-bottom: 8px;">
-              <strong style="color: #0f172a;">Phase: ${m.phase?.toUpperCase() || 'PROTOTYPE'}</strong> — ${m.title || ''}
+              <strong style="color: #0f172a;">Phase: ${m.phase?.toUpperCase() || 'PROTOTYPE'}</strong> - ${m.title || ''}
               <div style="font-size: 10px; color: #64748b;">Deliverables: ${m.deliverables || 'Code deliverables'}</div>
             </div>
           `,

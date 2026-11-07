@@ -1,9 +1,8 @@
 /**
  * ProjectCard.tsx
  *
- * 1:1 Pixel-Perfect Grid View Card Component for Founder Projects.
- * Features desaturated dark theme (#181d27), active venture indicator badge,
- * stage progress bar, industry tag, last modified timestamp, and action triggers.
+ * Grid View Card Component for Founder Projects.
+ * Memoized with React.memo to prevent unnecessary re-renders when sibling state changes.
  */
 
 import React from 'react'
@@ -20,7 +19,10 @@ interface ProjectCardProps {
   onDelete?: (project: Project) => void
 }
 
-export function ProjectCard({ project, onDelete }: ProjectCardProps) {
+export const ProjectCard = React.memo(function ProjectCard({
+  project,
+  onDelete,
+}: ProjectCardProps) {
   const navigate = useNavigate()
   const { activeProject, setActiveProject } = useProjectStore()
 
@@ -32,7 +34,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
     navigate(`/workspace/${project.id}`)
   }
 
-  const progress = project.progress || 25
+  const progress = project.progress || 0
 
   const formattedDate = React.useMemo(() => {
     if (!project.updated_at) return 'Recently modified'
@@ -46,10 +48,10 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
   return (
     <Card
       onClick={handleOpenProject}
-      className={`group relative cursor-pointer transition-all duration-200 bg-[#181d27] border p-5 rounded-2xl flex flex-col justify-between space-y-4 hover:shadow-xl ${
+      className={`group relative cursor-pointer transition-colors duration-150 bg-surface border p-5 rounded-xl flex flex-col justify-between space-y-4 ${
         isActive
-          ? 'border-sky-400/80 shadow-[0_0_16px_rgba(56,189,248,0.2)] ring-1 ring-sky-400/40'
-          : 'border-border/60 hover:border-sky-400/40 hover:bg-[#1c222e]'
+          ? 'border-sky-400 ring-1 ring-sky-400/30'
+          : 'border-border/60 hover:border-sky-400/50 hover:bg-surface-hover'
       }`}
     >
       {/* Top Header Row */}
@@ -57,19 +59,19 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
         <div className="space-y-1.5 flex-1 min-w-0">
           <div className="flex items-center space-x-2">
             {isActive ? (
-              <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-400 font-mono text-[10px] font-bold tracking-wider uppercase">
+              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-sky-400/10 border border-sky-400/30 text-sky-400 font-mono text-[10px] font-bold tracking-wider uppercase">
                 <Layers className="h-3 w-3" />
                 <span>Active Venture</span>
               </span>
             ) : (
-              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-muted/30 text-muted-foreground font-mono text-[10px] font-semibold uppercase">
+              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-muted text-muted-foreground font-mono text-[10px] font-semibold uppercase">
                 <Tag className="h-2.5 w-2.5" />
                 <span>{project.industry || 'Tech'}</span>
               </span>
             )}
           </div>
 
-          <h3 className="text-base font-bold text-white group-hover:text-sky-300 transition-colors truncate">
+          <h3 className="text-base font-bold text-foreground group-hover:text-sky-400 transition-colors truncate">
             {project.title}
           </h3>
         </div>
@@ -78,7 +80,9 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
         <div className="relative" onClick={(e) => e.stopPropagation()}>
           <button
             type="button"
-            onClick={() => onDelete && onDelete(project)}
+            onClick={() => {
+              if (onDelete) onDelete(project)
+            }}
             className="p-1.5 rounded-lg text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-colors"
             title="Delete Venture"
           >
@@ -89,7 +93,8 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
 
       {/* Description Paragraph */}
       <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-        {project.description || 'No description provided. Click to open workspace and add methodology details.'}
+        {project.description ||
+          'No description provided. Open workspace to configure venture details.'}
       </p>
 
       {/* Progress Bar & Footer Details */}
@@ -99,9 +104,9 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
             <span className="text-muted-foreground">Canvas Progress</span>
             <span className="font-bold text-sky-400">{progress}%</span>
           </div>
-          <div className="w-full h-1.5 rounded-full bg-[#12161f] overflow-hidden">
+          <div className="w-full h-1.5 rounded-sm bg-muted overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full transition-all duration-300"
+              className="h-full bg-sky-400 transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -109,7 +114,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
 
         <div className="flex items-center justify-between pt-1 text-[11px] text-muted-foreground">
           <div className="flex items-center space-x-1.5">
-            <Clock className="h-3 w-3 text-slate-500" />
+            <Clock className="h-3 w-3" />
             <span>{formattedDate}</span>
           </div>
 
@@ -117,13 +122,13 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
             size="sm"
             variant="ghost"
             onClick={handleOpenProject}
-            className="text-[11px] font-bold text-sky-400 hover:text-sky-300 hover:bg-sky-400/10 h-7 px-2.5 rounded-lg group/btn"
+            className="text-[11px] font-bold text-sky-400 hover:text-sky-300 hover:bg-sky-400/10 h-7 px-2.5 rounded-md"
           >
             <span>Open</span>
-            <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover/btn:translate-x-1" />
+            <ArrowRight className="ml-1 h-3 w-3" />
           </Button>
         </div>
       </div>
     </Card>
   )
-}
+})

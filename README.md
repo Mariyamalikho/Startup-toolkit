@@ -44,7 +44,7 @@ Built by **Mariyam Ali K.** ([@Mariyamalikho](https://github.com/Mariyamalikho))
 ### Prerequisites
 
 - **Node.js** 18+ and **npm**
-- A **Supabase** project (optional — the app includes an automatic local storage fallback when Supabase environment variables are not configured)
+- A **Supabase** project (optional; the app includes an automatic local storage fallback when Supabase environment variables are not configured)
 
 ### 1. Clone the repository
 

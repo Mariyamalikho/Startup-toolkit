@@ -1,9 +1,8 @@
 /**
  * ProjectListItem.tsx
  *
- * 1:1 Pixel-Perfect List View Row Item Component for Founder Projects.
- * Compact table row representation with active venture status, industry badge,
- * last modified timestamp, progress percentage bar, and direct action triggers.
+ * List View Row Item Component for Founder Projects.
+ * Memoized with React.memo to prevent unnecessary re-renders.
  */
 
 import React from 'react'
@@ -19,7 +18,10 @@ interface ProjectListItemProps {
   onDelete?: (project: Project) => void
 }
 
-export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
+export const ProjectListItem = React.memo(function ProjectListItem({
+  project,
+  onDelete,
+}: ProjectListItemProps) {
   const navigate = useNavigate()
   const { activeProject, setActiveProject } = useProjectStore()
 
@@ -42,17 +44,17 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
   return (
     <div
       onClick={handleOpenProject}
-      className={`group cursor-pointer p-4 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+      className={`group cursor-pointer p-4 rounded-xl border transition-colors duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
         isActive
-          ? 'bg-sky-400/10 border-sky-400/70 text-white shadow-md'
-          : 'bg-[#181d27] border-border/60 hover:bg-[#1c222e] hover:border-sky-400/40'
+          ? 'bg-sky-400/10 border-sky-400 text-foreground'
+          : 'bg-surface border-border/60 hover:bg-surface-hover hover:border-sky-400/40'
       }`}
     >
       {/* Title & Active Badge */}
       <div className="flex items-center space-x-3 min-w-0 flex-1">
         <div
           className={`h-9 w-9 rounded-lg flex items-center justify-center shrink-0 ${
-            isActive ? 'bg-sky-400 text-slate-950 font-bold' : 'bg-muted/40 text-muted-foreground'
+            isActive ? 'bg-sky-400 text-slate-950 font-bold' : 'bg-muted text-muted-foreground'
           }`}
         >
           <Layers className="h-4 w-4" />
@@ -60,11 +62,11 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center space-x-2">
-            <h4 className="text-sm font-bold text-white group-hover:text-sky-300 transition-colors truncate">
+            <h4 className="text-sm font-bold text-foreground group-hover:text-sky-400 transition-colors truncate">
               {project.title}
             </h4>
             {isActive && (
-              <span className="px-2 py-0.5 rounded-full bg-sky-400/20 text-sky-300 font-mono text-[10px] font-bold uppercase">
+              <span className="px-2 py-0.5 rounded-md bg-sky-400/20 text-sky-400 font-mono text-[10px] font-bold uppercase">
                 Active
               </span>
             )}
@@ -77,13 +79,13 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
 
       {/* Industry & Date Badge */}
       <div className="flex items-center space-x-6 text-xs text-muted-foreground shrink-0">
-        <span className="hidden md:inline-flex items-center space-x-1 px-2.5 py-1 rounded-md bg-[#12161f] border border-border/40 font-mono text-[11px]">
+        <span className="hidden md:inline-flex items-center space-x-1 px-2.5 py-1 rounded-md bg-muted border border-border/40 font-mono text-[11px]">
           <Tag className="h-3 w-3 text-sky-400" />
           <span>{project.industry || 'Tech'}</span>
         </span>
 
-        <div className="flex items-center space-x-1 text-slate-400">
-          <Clock className="h-3.5 w-3.5 text-slate-500" />
+        <div className="flex items-center space-x-1">
+          <Clock className="h-3.5 w-3.5" />
           <span className="font-mono text-[11px]">{formattedDate}</span>
         </div>
 
@@ -112,4 +114,4 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
       </div>
     </div>
   )
-}
+})

@@ -45,36 +45,39 @@ interface MilestoneTimelineProps {
   project: Project
 }
 
-const PHASE_COLORS: Record<MilestonePhase, { bg: string; text: string; border: string; bar: string }> = {
+const PHASE_COLORS: Record<
+  MilestonePhase,
+  { bg: string; text: string; border: string; bar: string }
+> = {
   discovery: {
-    bg: 'bg-indigo-500/10',
-    text: 'text-indigo-400',
-    border: 'border-indigo-500/30',
-    bar: 'bg-gradient-to-r from-indigo-600 to-indigo-400',
-  },
-  prototype: {
     bg: 'bg-sky-500/10',
     text: 'text-sky-400',
     border: 'border-sky-500/30',
-    bar: 'bg-gradient-to-r from-sky-600 to-sky-400',
+    bar: 'bg-sky-500',
+  },
+  prototype: {
+    bg: 'bg-teal-500/10',
+    text: 'text-teal-400',
+    border: 'border-teal-500/30',
+    bar: 'bg-teal-500',
   },
   alpha: {
     bg: 'bg-amber-500/10',
     text: 'text-amber-400',
     border: 'border-amber-500/30',
-    bar: 'bg-gradient-to-r from-amber-600 to-amber-400',
+    bar: 'bg-amber-500',
   },
   beta: {
-    bg: 'bg-purple-500/10',
-    text: 'text-purple-400',
-    border: 'border-purple-500/30',
-    bar: 'bg-gradient-to-r from-purple-600 to-purple-400',
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    border: 'border-blue-500/30',
+    bar: 'bg-blue-500',
   },
   launch: {
     bg: 'bg-emerald-500/10',
     text: 'text-emerald-400',
     border: 'border-emerald-500/30',
-    bar: 'bg-gradient-to-r from-emerald-600 to-emerald-400',
+    bar: 'bg-emerald-500',
   },
 }
 
@@ -251,7 +254,8 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
             </span>
           </h2>
           <p className="text-xs text-muted-foreground pt-0.5">
-            Track product engineering milestones from discovery through prototype, alpha, beta, and public launch.
+            Track product engineering milestones from discovery through prototype, alpha, beta, and
+            public launch.
           </p>
         </div>
 
@@ -283,7 +287,9 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
 
         <div className="p-4 rounded-2xl bg-[#181d27] border border-indigo-500/30 space-y-1">
           <span className="text-[11px] font-semibold text-indigo-400">Overall Progress</span>
-          <div className="text-2xl font-extrabold text-indigo-400 font-mono">{completionPercentage}%</div>
+          <div className="text-2xl font-extrabold text-indigo-400 font-mono">
+            {completionPercentage}%
+          </div>
         </div>
       </div>
 
@@ -385,7 +391,9 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
                       }}
                     >
                       <div className={`absolute inset-0 ${phaseStyle.bar} opacity-90`} />
-                      <span className="relative z-10 truncate font-mono">{item.deliverables || item.title}</span>
+                      <span className="relative z-10 truncate font-mono">
+                        {item.deliverables || item.title}
+                      </span>
 
                       <div className="relative z-10 flex items-center space-x-1 shrink-0 bg-black/40 px-1.5 py-0.5 rounded">
                         <button
@@ -413,8 +421,13 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
 
             {milestones.length === 0 && (
               <div className="border-2 border-dashed border-border/40 rounded-2xl p-12 text-center text-muted-foreground text-xs space-y-3">
-                <p className="text-sm font-semibold text-slate-300">No prototype milestones configured yet.</p>
-                <Button onClick={handleOpenCreateModal} className="bg-indigo-500 text-white text-xs font-bold">
+                <p className="text-sm font-semibold text-slate-300">
+                  No prototype milestones configured yet.
+                </p>
+                <Button
+                  onClick={handleOpenCreateModal}
+                  className="bg-indigo-500 text-white text-xs font-bold"
+                >
                   + Add First Milestone
                 </Button>
               </div>

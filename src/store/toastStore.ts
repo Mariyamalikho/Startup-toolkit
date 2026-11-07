@@ -3,8 +3,8 @@
  *
  * A framework-agnostic singleton store for toast state.
  * Separates business logic from the React UI layer so the toast
- * system can be triggered from anywhere — hooks, utilities, or
- * async service calls — without needing React context directly.
+ * system can be triggered from anywhere (hooks, utilities, or
+ * async service calls) without needing React context directly.
  *
  * Usage (outside React):
  *   import { toastStore } from '@/store/toastStore'

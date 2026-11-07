@@ -146,14 +146,17 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
             <div className="h-8 w-8 rounded-xl bg-sky-400/10 border border-sky-400/30 flex items-center justify-center text-sky-400">
               <Zap className="h-4 w-4 fill-sky-400/20" />
             </div>
-            <span className="font-mono text-xs font-bold uppercase tracking-wider">AI Venture Co-Pilot</span>
+            <span className="font-mono text-xs font-bold uppercase tracking-wider">
+              Venture Strategy Builder
+            </span>
           </div>
 
           <ModalTitle className="text-xl font-bold text-white">
             Problem & Value Prop Generator
           </ModalTitle>
           <ModalDescription className="text-xs text-muted-foreground">
-            Formulate crisp, investor-ready problem statements and value propositions tailored to your industry sector.
+            Formulate crisp, investor-ready problem statements and value propositions tailored to
+            your industry sector.
           </ModalDescription>
         </ModalHeader>
 
@@ -203,9 +206,7 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
               </span>
               <span className="text-[10px] text-muted-foreground font-mono">Mad-Libs Standard</span>
             </div>
-            <p className="text-xs text-white leading-relaxed font-medium">
-              "{generatedProblem}"
-            </p>
+            <p className="text-xs text-white leading-relaxed font-medium">"{generatedProblem}"</p>
           </div>
 
           {/* Value Propositions Card */}
@@ -235,7 +236,9 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
             disabled={isGenerating}
             className="text-xs font-semibold border-border/60"
           >
-            <RefreshCw className={`mr-1.5 h-3.5 w-3.5 text-sky-400 ${isGenerating ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`mr-1.5 h-3.5 w-3.5 text-sky-400 ${isGenerating ? 'animate-spin' : ''}`}
+            />
             Regenerate
           </Button>
 

@@ -2,7 +2,7 @@
  * Toast.tsx
  *
  * React UI layer for the Toast notification system.
- * State is managed by the singleton `toastStore` — this file
+ * State is managed by the singleton `toastStore`; this file
  * is responsible only for rendering and animations.
  *
  * Public API:

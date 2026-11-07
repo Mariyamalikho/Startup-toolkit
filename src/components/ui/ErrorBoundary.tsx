@@ -1,7 +1,7 @@
 /**
  * ErrorBoundary.tsx
  *
- * Global React Error Boundary — catches unhandled render errors in the
+ * Global React Error Boundary: catches unhandled render errors in the
  * component tree and displays a graceful fallback UI instead of a
  * white screen crash.
  *
@@ -30,7 +30,7 @@ interface ErrorBoundaryProps {
   children: React.ReactNode
   /** Custom fallback UI. Receives error details. */
   fallback?: (props: ErrorFallbackProps) => React.ReactNode
-  /** Called when an error is caught — use for logging to Sentry etc. */
+  /** Called when an error is caught; use for logging to Sentry etc. */
   onError?: (error: Error, info: React.ErrorInfo) => void
   /** If true, shows a compact inline error instead of full-page */
   inline?: boolean
@@ -81,7 +81,7 @@ export function ErrorFallback({ error, errorInfo, resetError, inline }: ErrorFal
         <div className="text-center space-y-2">
           <h1 className="text-xl font-semibold text-foreground">Something went wrong</h1>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            An unexpected error occurred in the application. Your work has been preserved — click
+            An unexpected error occurred in the application. Your work has been preserved. Click
             "Try again" to reload this section.
           </p>
         </div>
