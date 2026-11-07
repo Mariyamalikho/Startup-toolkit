@@ -2,7 +2,7 @@
  * AppRoutes.tsx
  *
  * Central router configuration for Startup Toolkit built with React Router v6+.
- * Defines public routes, protected private workspace routes, and fallback 404 paths.
+ * Defines public routes, methodology stage routes, workspace routes, and fallback 404 paths.
  */
 
 import { lazy, Suspense } from 'react'
@@ -95,7 +95,7 @@ export function AppRoutes() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
 
-        {/* Protected Private Workspace Routes wrapped in AppLayout */}
+        {/* Protected & Methodology Workspace Routes wrapped in AppLayout */}
         <Route
           element={
             <ProtectedRoute>
@@ -115,7 +115,39 @@ export function AppRoutes() {
             path="/workspace/:projectId"
             element={
               <Suspense fallback={<RouteLoadingFallback />}>
-                <WorkspacePage />
+                <WorkspacePage initialTab="brainstorm" />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/empathy-map"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <WorkspacePage initialTab="empathy" />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/business-model-canvas"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <WorkspacePage initialTab="canvas" />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/prototype"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <WorkspacePage initialTab="roadmap" />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/experiments"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <WorkspacePage initialTab="experiments" />
               </Suspense>
             }
           />

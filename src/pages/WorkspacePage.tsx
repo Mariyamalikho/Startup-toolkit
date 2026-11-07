@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useProjectStore } from '@/store/projectStore'
 import { WorkspaceHeader } from '@/components/workspace/WorkspaceHeader'
 import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibbon'
@@ -14,14 +14,37 @@ import { ToolNavigationFooter } from '@/components/workspace/ToolNavigationFoote
 import { Heart, Grid, Lightbulb, FlaskConical, Calendar } from 'lucide-react'
 import { EmptyError } from '@/components/ui/EmptyState'
 
-export function WorkspacePage() {
+export type WorkspaceTab = 'brainstorm' | 'empathy' | 'canvas' | 'experiments' | 'roadmap'
+
+interface WorkspacePageProps {
+  initialTab?: WorkspaceTab
+}
+
+function getTabFromPathname(pathname: string, fallback: WorkspaceTab): WorkspaceTab {
+  if (pathname === '/empathy-map') return 'empathy'
+  if (pathname === '/business-model-canvas') return 'canvas'
+  if (pathname === '/prototype') return 'roadmap'
+  if (pathname === '/experiments') return 'experiments'
+  return fallback
+}
+
+export function WorkspacePage({ initialTab = 'brainstorm' }: WorkspacePageProps) {
   const { projectId } = useParams<{ projectId: string }>()
   const navigate = useNavigate()
+  const location = useLocation()
   const { projects, activeProject, setActiveProject } = useProjectStore()
-  const [activeTab, setActiveTab] = useState<
-    'brainstorm' | 'empathy' | 'canvas' | 'experiments' | 'roadmap'
-  >('brainstorm')
+
+  const [activeTab, setActiveTab] = useState<WorkspaceTab>(() =>
+    getTabFromPathname(location.pathname, initialTab),
+  )
+  const [prevPathname, setPrevPathname] = useState(location.pathname)
   const [isPrintReportOpen, setIsPrintReportOpen] = useState(false)
+
+  // Synchronize activeTab when route pathname changes (e.g., clicking Sidebar or ChevronStepperRibbon)
+  if (location.pathname !== prevPathname) {
+    setPrevPathname(location.pathname)
+    setActiveTab(getTabFromPathname(location.pathname, initialTab))
+  }
 
   // Find project by param or fallback to active project
   const project = React.useMemo(() => {
@@ -44,6 +67,15 @@ export function WorkspacePage() {
     )
   }
 
+  const currentStageId =
+    activeTab === 'empathy'
+      ? 'empathy'
+      : activeTab === 'canvas'
+        ? 'bmc'
+        : activeTab === 'roadmap'
+          ? 'prototype'
+          : 'ideation'
+
   return (
     <div className="space-y-6">
       {/* ── Active Workspace Header Banner ──────────────────────────── */}
@@ -65,7 +97,15 @@ export function WorkspacePage() {
 
       {/* ── Interlocking Chevron Stage Stepper Ribbon & Tab Switcher ─ */}
       <div className="bg-[#181d27]/60 border border-border/40 p-3 rounded-2xl backdrop-blur shadow-sm space-y-3">
-        <ChevronStepperRibbon />
+        <ChevronStepperRibbon
+          currentStageId={currentStageId}
+          onStageChange={(stageId) => {
+            if (stageId === 'ideation') setActiveTab('brainstorm')
+            else if (stageId === 'empathy') setActiveTab('empathy')
+            else if (stageId === 'bmc') setActiveTab('canvas')
+            else if (stageId === 'prototype') setActiveTab('roadmap')
+          }}
+        />
 
         {/* Tab Buttons */}
         <div className="flex flex-wrap items-center gap-2 border-t border-border/40 pt-3">
@@ -113,7 +153,7 @@ export function WorkspacePage() {
             onClick={() => setActiveTab('experiments')}
             className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
               activeTab === 'experiments'
-                ? 'bg-purple-400 text-slate-950 shadow-md shadow-purple-500/20'
+                ? 'bg-teal-400 text-slate-950 shadow-md shadow-teal-500/20'
                 : 'bg-[#1c222e] text-muted-foreground hover:text-white'
             }`}
           >
@@ -126,7 +166,7 @@ export function WorkspacePage() {
             onClick={() => setActiveTab('roadmap')}
             className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
               activeTab === 'roadmap'
-                ? 'bg-indigo-400 text-slate-950 shadow-md shadow-indigo-500/20'
+                ? 'bg-blue-400 text-slate-950 shadow-md shadow-blue-500/20'
                 : 'bg-[#1c222e] text-muted-foreground hover:text-white'
             }`}
           >
