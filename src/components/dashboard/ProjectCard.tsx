@@ -12,6 +12,7 @@ import type { Project } from '@/types/database.types'
 import { Layers, ArrowRight, Clock, Tag, Trash2 } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { StageProgressSegments } from '@/components/ui/Skeleton'
 
 interface ProjectCardProps {
   project: Project
@@ -97,19 +98,14 @@ export const ProjectCard = React.memo(function ProjectCard({
           'No description provided. Open workspace to configure venture details.'}
       </p>
 
-      {/* Progress Bar & Footer Details */}
+      {/* Segmented Stage Indicator & Footer Details */}
       <div className="space-y-3 pt-2 border-t border-border/40">
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           <div className="flex items-center justify-between text-[11px] font-mono">
-            <span className="text-muted-foreground">Canvas Progress</span>
+            <span className="text-muted-foreground">Stage Completion</span>
             <span className="font-bold text-sky-400">{progress}%</span>
           </div>
-          <div className="w-full h-1.5 rounded-sm bg-muted overflow-hidden">
-            <div
-              className="h-full bg-sky-400 transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+          <StageProgressSegments progress={progress} />
         </div>
 
         <div className="flex items-center justify-between pt-1 text-[11px] text-muted-foreground">

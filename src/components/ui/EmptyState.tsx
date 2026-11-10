@@ -17,7 +17,7 @@ import { FolderOpen, SearchX, FileQuestion, AlertCircle, PlusCircle, RefreshCw }
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 
-// ─── Base EmptyState ──────────────────────────────────────────────────────────
+// - Base EmptyState -
 
 export interface EmptyStateAction {
   label: string
@@ -117,7 +117,7 @@ export function EmptyState({
   )
 }
 
-// ─── Pre-built variants ────────────────────────────────────────────────────────
+// - Pre-built variants -
 
 /** Shown on the Dashboard when the user has no projects yet. */
 export function EmptyProjects({

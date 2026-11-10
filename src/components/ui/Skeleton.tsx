@@ -1,24 +1,14 @@
 /**
  * Skeleton.tsx
  *
- * Loading skeleton components with CSS pulse animation.
- * Use these to replace content while data is being fetched,
- * preventing layout shift and improving perceived performance.
- *
- * Components:
- *   - <Skeleton />           → base building block (any shape)
- *   - <SkeletonText />       → paragraph lines
- *   - <SkeletonAvatar />     → circular avatar placeholder
- *   - <SkeletonCard />       → full project card placeholder
- *   - <SkeletonDashboard />  → full dashboard grid placeholder
+ * Structural loading placeholders and segmented progress indicators.
+ * Designed to match exact component geometry and prevent layout shift.
  */
 
+import React from 'react'
 import { cn } from '@/lib/utils'
 
-// ─── Base Skeleton ────────────────────────────────────────────────────────────
-
 interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Additional Tailwind classes for width, height, shape, etc. */
   className?: string
 }
 
@@ -26,108 +16,151 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
       role="status"
-      aria-label="Loading…"
-      className={cn('animate-pulse rounded-md bg-muted', className)}
+      aria-label="Loading"
+      className={cn('rounded-sm bg-slate-800/70', className)}
       {...props}
     />
   )
 }
 
-// ─── Text Lines Skeleton ──────────────────────────────────────────────────────
-
-interface SkeletonTextProps {
-  /** Number of lines to render. Defaults to 3. */
-  lines?: number
-  className?: string
+/**
+ * Slim 2px top viewport loading bar for route transitions.
+ */
+export function TopLoadingBar() {
+  return (
+    <div
+      role="progressbar"
+      aria-label="Loading page"
+      className="fixed top-0 left-0 right-0 z-50 h-0.5 bg-slate-900 overflow-hidden"
+    >
+      <div className="h-full w-2/5 bg-sky-400 transition-all duration-300" />
+    </div>
+  )
 }
 
-export function SkeletonText({ lines = 3, className }: SkeletonTextProps) {
+/**
+ * Discrete 5-stage methodology progress indicator (Ideation, Empathy, BMC, Prototype, Pitch).
+ */
+export function StageProgressSegments({
+  progress,
+  className,
+}: {
+  progress: number
+  className?: string
+}) {
+  const clamped = Math.max(0, Math.min(100, progress || 0))
+  const completedStages = clamped === 0 ? 0 : Math.max(1, Math.round((clamped / 100) * 5))
+
   return (
-    <div className={cn('space-y-2', className)} role="status" aria-label="Loading text…">
-      {Array.from({ length: lines }).map((_, i) => (
-        <Skeleton
-          key={i}
-          // Last line is shorter to look natural
-          className={cn('h-4', i === lines - 1 ? 'w-3/4' : 'w-full')}
+    <div
+      role="progressbar"
+      aria-valuenow={clamped}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      className={cn('grid grid-cols-5 gap-1 w-full', className)}
+    >
+      {[0, 1, 2, 3, 4].map((index) => (
+        <div
+          key={index}
+          className={cn(
+            'h-1.5 rounded-[2px] transition-colors duration-200',
+            index < completedStages ? 'bg-sky-400' : 'bg-slate-800',
+          )}
         />
       ))}
     </div>
   )
 }
 
-// ─── Avatar Skeleton ──────────────────────────────────────────────────────────
+interface SkeletonTextProps {
+  lines?: number
+  className?: string
+}
+
+export function SkeletonText({ lines = 2, className }: SkeletonTextProps) {
+  return (
+    <div className={cn('space-y-2', className)} role="status" aria-label="Loading text">
+      {Array.from({ length: lines }).map((_, i) => (
+        <Skeleton key={i} className={cn('h-3', i === lines - 1 ? 'w-3/5' : 'w-full')} />
+      ))}
+    </div>
+  )
+}
 
 interface SkeletonAvatarProps {
-  /** Size in Tailwind units. Defaults to 10 (40px). */
   size?: number
   className?: string
 }
 
-export function SkeletonAvatar({ size = 10, className }: SkeletonAvatarProps) {
+export function SkeletonAvatar({ size = 9, className }: SkeletonAvatarProps) {
   return (
     <Skeleton
-      aria-label="Loading avatar…"
+      aria-label="Loading icon"
       style={{ width: `${size * 4}px`, height: `${size * 4}px` }}
-      className={cn('rounded-full flex-shrink-0', className)}
+      className={cn('rounded-lg flex-shrink-0', className)}
     />
   )
 }
-
-// ─── Project Card Skeleton ────────────────────────────────────────────────────
 
 interface SkeletonCardProps {
   className?: string
 }
 
+/**
+ * Matches the exact geometry of ProjectCard (category tag, title, 2-line description,
+ * 5-segment stage progress bar, and footer metadata).
+ */
 export function SkeletonCard({ className }: SkeletonCardProps) {
   return (
     <div
       role="status"
-      aria-label="Loading project card…"
+      aria-label="Loading venture card"
       className={cn(
-        'rounded-2xl border border-border bg-surface p-5 space-y-4 shadow-sm',
+        'rounded-xl border border-border/60 bg-surface p-5 flex flex-col justify-between space-y-4',
         className,
       )}
     >
-      {/* Header row: avatar + title */}
-      <div className="flex items-center gap-3">
-        <SkeletonAvatar size={9} />
-        <div className="flex-1 space-y-1.5">
-          <Skeleton className="h-4 w-2/3" />
-          <Skeleton className="h-3 w-1/3" />
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-2 flex-1">
+          <Skeleton className="h-4 w-20 rounded-md" />
+          <Skeleton className="h-5 w-3/4 rounded-sm" />
         </div>
+        <Skeleton className="h-6 w-6 rounded-md" />
       </div>
 
-      {/* Body text */}
       <SkeletonText lines={2} />
 
-      {/* Footer row: badge + button */}
-      <div className="flex items-center justify-between pt-1">
-        <Skeleton className="h-5 w-16 rounded-full" />
-        <Skeleton className="h-8 w-20 rounded-lg" />
+      <div className="space-y-3 pt-2 border-t border-border/40">
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-3 w-10" />
+          </div>
+          <div className="grid grid-cols-5 gap-1">
+            {[0, 1, 2, 3, 4].map((idx) => (
+              <Skeleton key={idx} className="h-1.5 rounded-[2px]" />
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between pt-1">
+          <Skeleton className="h-3.5 w-24" />
+          <Skeleton className="h-7 w-16 rounded-md" />
+        </div>
       </div>
     </div>
   )
 }
 
-// ─── Dashboard Grid Skeleton ──────────────────────────────────────────────────
-
 interface SkeletonDashboardProps {
-  /** Number of card skeletons to show. Defaults to 6. */
   count?: number
   className?: string
 }
 
 export function SkeletonDashboard({ count = 6, className }: SkeletonDashboardProps) {
   return (
-    <div role="status" aria-label="Loading dashboard…" className={cn('space-y-6', className)}>
-      {/* Top bar: search + button */}
-      <div className="flex items-center gap-3">
-        <Skeleton className="h-9 flex-1 rounded-lg" />
-        <Skeleton className="h-9 w-32 rounded-lg" />
-      </div>
-
-      {/* Card grid */}
+    <div role="status" aria-label="Loading dashboard" className={cn('space-y-6', className)}>
+      <TopLoadingBar />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: count }).map((_, i) => (
           <SkeletonCard key={i} />
@@ -137,35 +170,46 @@ export function SkeletonDashboard({ count = 6, className }: SkeletonDashboardPro
   )
 }
 
-// ─── Empathy Map Skeleton ─────────────────────────────────────────────────────
-// Used while the Empathy Map tool is loading project data.
-
-export function SkeletonEmpathyMap({ className }: { className?: string }) {
+export function SkeletonWorkspace({ className }: { className?: string }) {
   return (
-    <div role="status" aria-label="Loading empathy map…" className={cn('space-y-3', className)}>
-      {/* Title */}
-      <Skeleton className="h-6 w-48" />
-      <Skeleton className="h-4 w-72 mb-4" />
+    <div role="status" aria-label="Loading workspace" className={cn('space-y-6', className)}>
+      <TopLoadingBar />
 
-      {/* 2x2 quadrant grid */}
-      <div className="grid grid-cols-2 gap-3">
-        {['Think & Feel', 'See', 'Hear', 'Say & Do'].map((label) => (
-          <div key={label} className="rounded-xl border border-border bg-surface p-4 space-y-2">
-            <Skeleton className="h-4 w-20" />
-            <SkeletonText lines={3} />
+      {/* Workspace Header Placeholder */}
+      <div className="bg-surface border border-border/60 rounded-xl p-5 space-y-4">
+        <div className="flex items-center justify-between border-b border-border/40 pb-4">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-36 rounded-md" />
+            <Skeleton className="h-6 w-64 rounded-sm" />
           </div>
-        ))}
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-9 w-32 rounded-lg" />
+            <Skeleton className="h-9 w-24 rounded-lg" />
+          </div>
+        </div>
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-3.5 w-80" />
+          <div className="w-48 grid grid-cols-5 gap-1">
+            {[0, 1, 2, 3, 4].map((idx) => (
+              <Skeleton key={idx} className="h-1.5 rounded-[2px]" />
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Pain / Gain row */}
-      <div className="grid grid-cols-2 gap-3 mt-3">
-        {['Pains', 'Gains'].map((label) => (
-          <div key={label} className="rounded-xl border border-border bg-surface p-4 space-y-2">
-            <Skeleton className="h-4 w-16" />
-            <SkeletonText lines={2} />
+      {/* Canvas Grid Placeholder */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[0, 1, 2, 3].map((idx) => (
+          <div key={idx} className="rounded-xl border border-border/60 bg-surface p-5 space-y-3">
+            <Skeleton className="h-4 w-32" />
+            <SkeletonText lines={3} />
           </div>
         ))}
       </div>
     </div>
   )
+}
+
+export function SkeletonEmpathyMap({ className }: { className?: string }) {
+  return <SkeletonWorkspace className={className} />
 }

@@ -122,7 +122,7 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
       error: null,
     }),
 
-  // ─── Async Database Actions ────────────────────────────────────────────────
+  // - Async Database Actions -
 
   fetchUserProjects: async () => {
     set({ loading: true, error: null })

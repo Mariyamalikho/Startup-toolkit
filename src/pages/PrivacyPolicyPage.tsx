@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/Button'
 export function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-[#12161f] text-foreground font-sans selection:bg-primary/30 flex flex-col justify-between">
-      {/* ── Top Header ─────────────────────────────────────────────── */}
+      {/* - Top Header - */}
       <header className="sticky top-0 z-40 h-16 bg-[#181d27]/90 backdrop-blur-md border-b border-border/40 px-4 sm:px-8 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2.5">
           <div className="h-9 w-9 rounded-lg bg-slate-900 border border-sky-400/50 flex items-center justify-center">
@@ -46,7 +46,7 @@ export function PrivacyPolicyPage() {
         </Link>
       </header>
 
-      {/* ── Privacy Policy Content ──────────────────────────────────── */}
+      {/* - Privacy Policy Content - */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-12 space-y-10">
         {/* Title Header */}
         <div className="space-y-3 text-center sm:text-left border-b border-border/40 pb-8">
@@ -201,7 +201,7 @@ export function PrivacyPolicyPage() {
         </div>
       </main>
 
-      {/* ── Footer ──────────────────────────────────────────────────── */}
+      {/* - Footer - */}
       <footer className="border-t border-border/40 bg-[#181d27]/50 py-6 px-4 text-center text-xs text-muted-foreground space-y-1.5">
         <p className="text-xs sm:text-sm text-slate-200 font-medium">
           Built with precision by{' '}

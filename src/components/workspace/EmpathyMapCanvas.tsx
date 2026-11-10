@@ -202,7 +202,7 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
         onDrop={(e) => handleDrop(e, key, handleMoveNote)}
         className={`bg-surface border rounded-2xl p-5 shadow-lg space-y-4 flex flex-col justify-between min-h-[280px] transition-all duration-200 ${
           isOver
-            ? 'border-sky-400 bg-sky-400/10 shadow-[0_0_20px_rgba(56,189,248,0.25)] ring-2 ring-sky-400/40 scale-[1.01]'
+            ? 'border-sky-400 bg-sky-400/10 ring-2 ring-sky-400/40 scale-[1.01]'
             : 'border-border/60'
         }`}
       >
