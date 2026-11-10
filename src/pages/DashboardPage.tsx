@@ -82,7 +82,7 @@ export function DashboardPage() {
             Startup Ventures Dashboard
           </h1>
           <p className="text-xs text-muted-foreground">
-            Manage your methodology canvases, empathy maps, and investor pitch decks.
+            Pick a venture to keep working, or start a new one.
           </p>
         </div>
 

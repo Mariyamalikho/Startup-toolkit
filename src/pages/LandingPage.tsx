@@ -125,7 +125,7 @@ export function LandingPage() {
           </div>
 
           <div className="bg-[#181d27] p-2 rounded-lg border border-slate-800">
-            <ChevronStepperRibbon currentStageId="bmc" />
+            <ChevronStepperRibbon currentStageId="canvas" preview />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

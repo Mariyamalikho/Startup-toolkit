@@ -122,7 +122,7 @@ export function AppRoutes() {
             path="/workspace/:projectId"
             element={
               <Suspense fallback={<WorkspaceLoadingFallback />}>
-                <WorkspacePage initialTab="brainstorm" />
+                <WorkspacePage />
               </Suspense>
             }
           />
@@ -130,7 +130,7 @@ export function AppRoutes() {
             path="/empathy-map"
             element={
               <Suspense fallback={<WorkspaceLoadingFallback />}>
-                <WorkspacePage initialTab="empathy" />
+                <WorkspacePage />
               </Suspense>
             }
           />
@@ -138,7 +138,7 @@ export function AppRoutes() {
             path="/business-model-canvas"
             element={
               <Suspense fallback={<WorkspaceLoadingFallback />}>
-                <WorkspacePage initialTab="canvas" />
+                <WorkspacePage />
               </Suspense>
             }
           />
@@ -146,7 +146,7 @@ export function AppRoutes() {
             path="/prototype"
             element={
               <Suspense fallback={<WorkspaceLoadingFallback />}>
-                <WorkspacePage initialTab="roadmap" />
+                <WorkspacePage />
               </Suspense>
             }
           />
@@ -154,7 +154,7 @@ export function AppRoutes() {
             path="/experiments"
             element={
               <Suspense fallback={<WorkspaceLoadingFallback />}>
-                <WorkspacePage initialTab="experiments" />
+                <WorkspacePage />
               </Suspense>
             }
           />
