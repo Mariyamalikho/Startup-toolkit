@@ -68,7 +68,7 @@ const CATEGORY_CONFIG: Record<
   { label: string; icon: React.ReactNode; color: string; defaultNoteColor: NoteColor }
 > = {
   ideation: {
-    label: 'Ideation',
+    label: 'Ideas',
     icon: <Lightbulb className="h-3.5 w-3.5 text-amber-400" />,
     color: 'bg-amber-400/10 text-amber-300 border-amber-400/30',
     defaultNoteColor: 'yellow',
@@ -163,15 +163,8 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
       {/* Top Banner & Category Filter Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
         <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <span>Freeform Brainstorming Board</span>
-            <span className="text-[10px] font-mono font-bold uppercase bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded-full">
-              Ideation Sandbox
-            </span>
-          </h2>
-          <p className="text-xs text-muted-foreground pt-0.5">
-            Organize raw ideas, feature backlogs, growth channels, and risk factors with 3D post-it
-            notes.
+          <p className="text-xs text-muted-foreground">
+            Dump raw ideas, features, growth channels and risks. Sort them later.
           </p>
         </div>
 

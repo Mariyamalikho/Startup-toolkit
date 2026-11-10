@@ -333,13 +333,7 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
       {/* Top Banner */}
       <div className="flex items-center justify-between bg-surface/70 border border-border/40 p-4 rounded-2xl">
         <div>
-          <h2 className="text-base font-bold text-foreground flex items-center gap-2">
-            <span>Business Model Canvas (9-Box Grid)</span>
-            <span className="text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">
-              Strategic Blueprint
-            </span>
-          </h2>
-          <p className="text-xs text-muted-foreground pt-0.5">
+          <p className="text-xs text-muted-foreground">
             Osterwalder&apos;s 9 building blocks mapping your value proposition, infrastructure,
             customers, and finances.
           </p>

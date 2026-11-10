@@ -11,10 +11,6 @@ import { useProjectStore } from '@/store/projectStore'
 import {
   LayoutDashboard,
   Kanban,
-  Users,
-  Grid,
-  Calendar,
-  FileText,
   Settings,
   Layers,
   ChevronLeft,
@@ -22,6 +18,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { StageProgressSegments } from '@/components/ui/Skeleton'
+import { isStagePath } from '@/lib/stages'
 
 export interface SidebarProps {
   isOpen: boolean
@@ -36,15 +33,15 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
 
   const projectId = activeProject?.id || 'demo-proj-1'
 
+  // Stages live in the workspace stage nav; the sidebar only lists top-level pages.
   const navigationItems = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { label: 'Ideation Canvas', icon: Kanban, path: `/workspace/${projectId}` },
-    { label: 'Empathy Map', icon: Users, path: '/empathy-map' },
-    { label: 'Business Model Canvas', icon: Grid, path: '/business-model-canvas' },
-    { label: 'Prototype Roadmap', icon: Calendar, path: '/prototype' },
-    { label: 'Pitch Deck', icon: FileText, path: '/pitch-deck' },
+    { label: 'Workspace', icon: Kanban, path: `/workspace/${projectId}` },
     { label: 'Settings', icon: Settings, path: '/settings' },
   ]
+
+  const isItemActive = (path: string) =>
+    path.startsWith('/workspace') ? isStagePath(location.pathname) : location.pathname === path
 
   return (
     <>
@@ -56,9 +53,7 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
         <div className="p-3 space-y-4">
           <div className="space-y-1">
             {navigationItems.map((item) => {
-              const isActive =
-                location.pathname === item.path ||
-                (item.path.startsWith('/workspace') && location.pathname.startsWith('/workspace'))
+              const isActive = isItemActive(item.path)
               const Icon = item.icon
 
               return (
@@ -141,7 +136,7 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
             </div>
 
             {navigationItems.map((item) => {
-              const isActive = location.pathname === item.path
+              const isActive = isItemActive(item.path)
               const Icon = item.icon
 
               return (

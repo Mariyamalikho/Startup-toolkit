@@ -8,6 +8,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useProjectStore } from '@/store/projectStore'
 import { PitchDeckSlides } from '@/components/pitch/PitchDeckSlides'
+import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibbon'
 import { EmptyError } from '@/components/ui/EmptyState'
 
 export function PitchDeckPage() {
@@ -27,6 +28,7 @@ export function PitchDeckPage() {
 
   return (
     <div className="space-y-6">
+      <ChevronStepperRibbon />
       <PitchDeckSlides project={project} />
     </div>
   )

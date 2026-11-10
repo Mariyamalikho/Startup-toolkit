@@ -1,135 +1,76 @@
 /**
  * ChevronStepperRibbon.tsx
  *
- * Methodology Stepper Ribbon for Startup Toolkit.
- * Renders stages: 1. IDEATION -> 2. EMPATHY MAP -> 3. BUSINESS MODEL CANVAS -> 4. PROTOTYPE -> 5. PITCH DECK
+ * The one place workspace stages are listed. Rendered at the top of the
+ * workspace and pitch deck pages; the URL decides which stage is active.
  */
 
-import * as React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useProjectStore } from '@/store/projectStore'
-import { Check, Lightbulb, Users, Grid, Layout, FileText, ChevronRight } from 'lucide-react'
-
-export interface StageStep {
-  id: string
-  number: number
-  title: string
-  path: string
-  icon: React.ElementType
-}
+import { STAGES, stageFromPath, type StageId } from '@/lib/stages'
+import { cn } from '@/lib/utils'
 
 interface ChevronStepperRibbonProps {
-  currentStageId?: string
-  onStageChange?: (stageId: string) => void
-  completedStages?: string[]
+  /** Overrides the URL-derived stage, e.g. for static previews. */
+  currentStageId?: StageId
+  /** Renders a non-interactive preview (used on the landing page). */
+  preview?: boolean
 }
 
 export function ChevronStepperRibbon({
   currentStageId,
-  onStageChange,
-  completedStages = [],
+  preview = false,
 }: ChevronStepperRibbonProps) {
   const navigate = useNavigate()
   const location = useLocation()
   const { activeProject } = useProjectStore()
 
   const projectId = activeProject?.id || 'demo-proj-1'
-
-  const stages: StageStep[] = [
-    {
-      id: 'ideation',
-      number: 1,
-      title: 'IDEATION',
-      path: `/workspace/${projectId}`,
-      icon: Lightbulb,
-    },
-    { id: 'empathy', number: 2, title: 'EMPATHY MAP', path: '/empathy-map', icon: Users },
-    {
-      id: 'bmc',
-      number: 3,
-      title: 'BUSINESS MODEL CANVAS',
-      path: '/business-model-canvas',
-      icon: Grid,
-    },
-    { id: 'prototype', number: 4, title: 'PROTOTYPE', path: '/prototype', icon: Layout },
-    { id: 'pitch', number: 5, title: 'PITCH DECK', path: '/pitch-deck', icon: FileText },
-  ]
-
-  const getActiveStageId = () => {
-    if (currentStageId) return currentStageId
-    if (location.pathname.startsWith('/workspace')) return 'ideation'
-    if (location.pathname === '/empathy-map') return 'empathy'
-    if (location.pathname === '/business-model-canvas') return 'bmc'
-    if (location.pathname === '/prototype') return 'prototype'
-    if (location.pathname === '/pitch-deck') return 'pitch'
-    return 'ideation'
-  }
-
-  const activeStageId = getActiveStageId()
-
-  const handleStageClick = (stage: StageStep) => {
-    if (onStageChange) onStageChange(stage.id)
-    navigate(stage.path)
-  }
+  const activeId = currentStageId ?? stageFromPath(location.pathname)
+  const activeIndex = STAGES.findIndex((s) => s.id === activeId)
 
   return (
-    <nav
-      aria-label="Startup Methodology Stepper Ribbon"
-      className="w-full overflow-x-auto py-1.5 px-1 scrollbar-none"
-    >
-      <div className="flex items-center min-w-max space-x-1.5 sm:space-x-2">
-        {stages.map((stage, index) => {
-          const isActive = activeStageId === stage.id
-          const isCompleted = completedStages.includes(stage.id)
+    <nav aria-label="Workspace stages" className="w-full overflow-x-auto scrollbar-none">
+      <ol className="flex min-w-max border-b border-border/60">
+        {STAGES.map((stage, index) => {
+          const isActive = stage.id === activeId
+          const isDone = index < activeIndex
           const Icon = stage.icon
 
           return (
-            <React.Fragment key={stage.id}>
+            <li key={stage.id}>
               <button
                 type="button"
-                onClick={() => handleStageClick(stage)}
-                className={`group relative flex items-center h-9 px-3.5 transition-colors duration-150 cursor-pointer select-none rounded-lg text-xs font-mono uppercase tracking-wider font-bold border ${
+                disabled={preview}
+                onClick={() => navigate(stage.path(projectId))}
+                aria-current={isActive ? 'step' : undefined}
+                className={cn(
+                  '-mb-px flex items-center gap-2 h-10 px-4 border-b-2 text-xs font-semibold whitespace-nowrap transition-colors',
                   isActive
-                    ? 'bg-sky-400/15 border-sky-400 text-sky-300'
-                    : isCompleted
-                      ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400 hover:border-emerald-400'
-                      : 'bg-[#1c222e] border-border/60 text-muted-foreground hover:text-white hover:border-sky-400/50 hover:bg-[#222938]'
-                }`}
+                    ? 'border-sky-400 text-foreground'
+                    : 'border-transparent text-muted-foreground hover:text-foreground',
+                  preview && 'cursor-default',
+                )}
               >
-                <div className="flex items-center space-x-2">
-                  <span
-                    className={`flex items-center justify-center h-5 w-5 rounded text-[11px] font-bold ${
-                      isActive
-                        ? 'bg-sky-400 text-slate-950 font-extrabold'
-                        : isCompleted
-                          ? 'bg-emerald-500 text-slate-950'
-                          : 'bg-muted/40 text-muted-foreground group-hover:text-foreground'
-                    }`}
-                  >
-                    {isCompleted ? <Check className="h-3 w-3 stroke-[3]" /> : stage.number}
-                  </span>
-
-                  <Icon
-                    className={`h-3.5 w-3.5 ${
-                      isActive
-                        ? 'text-sky-400'
-                        : isCompleted
-                          ? 'text-emerald-400'
-                          : 'text-muted-foreground group-hover:text-sky-300'
-                    }`}
-                  />
-
-                  <span className="whitespace-nowrap">{stage.title}</span>
-                </div>
+                <span
+                  className={cn(
+                    'font-mono text-[11px]',
+                    isActive
+                      ? 'text-sky-400'
+                      : isDone
+                        ? 'text-emerald-400'
+                        : 'text-muted-foreground/70',
+                  )}
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <Icon className="h-3.5 w-3.5" />
+                <span>{stage.label}</span>
               </button>
-
-              {index < stages.length - 1 && (
-                <ChevronRight className="h-3.5 w-3.5 text-slate-600 shrink-0" />
-              )}
-            </React.Fragment>
+            </li>
           )
         })}
-      </div>
+      </ol>
     </nav>
   )
 }

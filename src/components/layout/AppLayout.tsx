@@ -10,7 +10,6 @@ import * as React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar'
-import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibbon'
 import { useNetworkStatus } from '@/hooks/useNetworkStatus'
 import { WifiOff, Wifi } from 'lucide-react'
 
@@ -63,14 +62,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
         {/* Scrollable Main Content Viewport Container */}
         <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-background flex flex-col justify-between space-y-6">
-          <div className="space-y-6">
-            {/* Interlocking Chevron Stepper Ribbon */}
-            <div className="bg-surface/80 border border-border/60 p-2.5 rounded-2xl backdrop-blur shadow-sm">
-              <ChevronStepperRibbon />
-            </div>
-
-            {children ? children : <Outlet />}
-          </div>
+          <div className="space-y-6">{children ? children : <Outlet />}</div>
 
           {/* Workspace Footer Credit */}
           <footer className="pt-6 mt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">

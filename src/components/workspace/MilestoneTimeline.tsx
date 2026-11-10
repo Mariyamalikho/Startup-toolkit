@@ -247,13 +247,7 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
       {/* Top Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
         <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <span>Prototype Roadmap & Milestone Timeline</span>
-            <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full">
-              Gantt Planning
-            </span>
-          </h2>
-          <p className="text-xs text-muted-foreground pt-0.5">
+          <p className="text-xs text-muted-foreground">
             Track product engineering milestones from discovery through prototype, alpha, beta, and
             public launch.
           </p>

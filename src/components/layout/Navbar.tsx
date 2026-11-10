@@ -128,7 +128,7 @@ export function Navbar({ onToggleSidebar, mobileMenuOpen, onToggleMobileMenu }: 
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search canvas tools, metrics, AI..."
+          placeholder="Search ventures..."
           className="pl-9 pr-12 h-8 text-xs bg-background border-border/40 focus:border-sky-400"
         />
         <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground bg-muted/20 border border-border/40 rounded">

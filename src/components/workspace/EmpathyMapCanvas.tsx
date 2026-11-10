@@ -271,13 +271,7 @@ export function EmpathyMapCanvas({ project }: EmpathyMapCanvasProps) {
       {/* Top Description Banner */}
       <div className="flex items-center justify-between bg-surface/70 border border-border/40 p-4 rounded-2xl">
         <div>
-          <h2 className="text-base font-bold text-foreground flex items-center gap-2">
-            <span>Empathy Map Canvas</span>
-            <span className="text-[10px] font-mono font-bold uppercase bg-sky-400/20 text-sky-300 px-2 py-0.5 rounded-full">
-              User Research Phase
-            </span>
-          </h2>
-          <p className="text-xs text-muted-foreground pt-0.5">
+          <p className="text-xs text-muted-foreground">
             Capture qualitative user research insights across 4 key human behaviors to uncover unmet
             customer needs.
           </p>

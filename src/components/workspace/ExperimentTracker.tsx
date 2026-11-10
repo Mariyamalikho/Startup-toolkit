@@ -49,7 +49,8 @@ const DEFAULT_EXPERIMENTS: ExperimentItem[] = [
   {
     id: 'exp-1',
     title: 'Landing Page Hero Value Prop Test',
-    hypothesis: 'If we highlight 1000ms cloud autosave, then 25% of visitors will click "Get Started Free".',
+    hypothesis:
+      'If we highlight 1000ms cloud autosave, then 25% of visitors will click "Get Started Free".',
     metricCriterion: 'Minimum 25% conversion rate on 200 unique landing visitors',
     status: 'validated',
     decision: 'persevere',
@@ -59,17 +60,20 @@ const DEFAULT_EXPERIMENTS: ExperimentItem[] = [
   {
     id: 'exp-2',
     title: 'Paid Search Customer Acquisition Test',
-    hypothesis: 'If we spend $100 on Google Ads, then CAC will remain under $15 per active founder.',
+    hypothesis:
+      'If we spend $100 on Google Ads, then CAC will remain under $15 per active founder.',
     metricCriterion: 'CAC <= $15 per registered workspace user',
     status: 'invalidated',
     decision: 'pivot',
-    learnings: 'CPC was too high ($4.50). Shift focus to organic Product Hunt and Twitter build-in-public.',
+    learnings:
+      'CPC was too high ($4.50). Shift focus to organic Product Hunt and Twitter build-in-public.',
     createdAt: new Date().toISOString(),
   },
   {
     id: 'exp-3',
     title: 'Interactive 3D Post-it Note Usability',
-    hypothesis: 'If founders can drag post-it notes across quadrants, workspace retention will increase by 40%.',
+    hypothesis:
+      'If founders can drag post-it notes across quadrants, workspace retention will increase by 40%.',
     metricCriterion: 'Average session duration > 8 minutes',
     status: 'in_progress',
     decision: 'iterate',
@@ -172,20 +176,15 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
   const validatedCount = experiments.filter((e) => e.status === 'validated').length
   const invalidatedCount = experiments.filter((e) => e.status === 'invalidated').length
   const totalCompleted = validatedCount + invalidatedCount
-  const validationRate = totalCompleted > 0 ? Math.round((validatedCount / totalCompleted) * 100) : 0
+  const validationRate =
+    totalCompleted > 0 ? Math.round((validatedCount / totalCompleted) * 100) : 0
 
   return (
     <div className="space-y-6">
       {/* Top Summary Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
         <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <span>Lean Validation Experiment Tracker</span>
-            <span className="text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full">
-              Hypothesis Testing
-            </span>
-          </h2>
-          <p className="text-xs text-muted-foreground pt-0.5">
+          <p className="text-xs text-muted-foreground">
             Test business model assumptions with real data before building full product features.
           </p>
         </div>
@@ -316,7 +315,9 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
             {exp.learnings && (
               <div className="pt-1 text-xs text-muted-foreground flex items-center gap-1.5 border-t border-border/20">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                <span><strong className="text-slate-200">Learnings:</strong> {exp.learnings}</span>
+                <span>
+                  <strong className="text-slate-200">Learnings:</strong> {exp.learnings}
+                </span>
               </div>
             )}
           </div>
@@ -324,7 +325,9 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
 
         {experiments.length === 0 && (
           <div className="border-2 border-dashed border-border/40 rounded-2xl p-12 text-center text-muted-foreground text-xs space-y-3">
-            <p className="text-sm font-semibold text-slate-300">No validation experiments logged yet.</p>
+            <p className="text-sm font-semibold text-slate-300">
+              No validation experiments logged yet.
+            </p>
             <Button
               onClick={handleOpenCreateModal}
               className="bg-sky-400 text-slate-950 font-bold text-xs"

@@ -9,44 +9,20 @@ import { BrainstormBoard } from '@/components/workspace/BrainstormBoard'
 import { ExperimentTracker } from '@/components/workspace/ExperimentTracker'
 import { MilestoneTimeline } from '@/components/workspace/MilestoneTimeline'
 import { PrintableReportModal } from '@/components/export/PrintableReportModal'
-import { DataSyncBanner } from '@/components/workspace/DataSyncBanner'
 import { ToolNavigationFooter } from '@/components/workspace/ToolNavigationFooter'
-import { Heart, Grid, Lightbulb, FlaskConical, Calendar } from 'lucide-react'
 import { EmptyError } from '@/components/ui/EmptyState'
+import { stageFromPath } from '@/lib/stages'
 
-export type WorkspaceTab = 'brainstorm' | 'empathy' | 'canvas' | 'experiments' | 'roadmap'
-
-interface WorkspacePageProps {
-  initialTab?: WorkspaceTab
-}
-
-function getTabFromPathname(pathname: string, fallback: WorkspaceTab): WorkspaceTab {
-  if (pathname === '/empathy-map') return 'empathy'
-  if (pathname === '/business-model-canvas') return 'canvas'
-  if (pathname === '/prototype') return 'roadmap'
-  if (pathname === '/experiments') return 'experiments'
-  return fallback
-}
-
-export function WorkspacePage({ initialTab = 'brainstorm' }: WorkspacePageProps) {
+export function WorkspacePage() {
   const { projectId } = useParams<{ projectId: string }>()
   const navigate = useNavigate()
   const location = useLocation()
   const { projects, activeProject, setActiveProject } = useProjectStore()
-
-  const [activeTab, setActiveTab] = useState<WorkspaceTab>(() =>
-    getTabFromPathname(location.pathname, initialTab),
-  )
-  const [prevPathname, setPrevPathname] = useState(location.pathname)
   const [isPrintReportOpen, setIsPrintReportOpen] = useState(false)
 
-  // Synchronize activeTab when route pathname changes (e.g., clicking Sidebar or ChevronStepperRibbon)
-  if (location.pathname !== prevPathname) {
-    setPrevPathname(location.pathname)
-    setActiveTab(getTabFromPathname(location.pathname, initialTab))
-  }
+  // The URL is the single source of truth for the active tool.
+  const activeStage = stageFromPath(location.pathname)
 
-  // Find project by param or fallback to active project
   const project = React.useMemo(() => {
     if (!projectId) return activeProject || projects[0]
     return projects.find((p) => p.id === projectId) || activeProject || projects[0]
@@ -67,130 +43,35 @@ export function WorkspacePage({ initialTab = 'brainstorm' }: WorkspacePageProps)
     )
   }
 
-  const currentStageId =
-    activeTab === 'empathy'
-      ? 'empathy'
-      : activeTab === 'canvas'
-        ? 'bmc'
-        : activeTab === 'roadmap'
-          ? 'prototype'
-          : 'ideation'
-
   return (
     <div className="space-y-6">
-      {/* - Active Workspace Header Banner - */}
       <WorkspaceHeader
         project={project}
         onExport={() => setIsPrintReportOpen(true)}
         onShare={() => alert(`Share link: ${window.location.href}`)}
       />
 
-      {/* - Interconnected Cross-Tool Data Sync Banner - */}
-      <DataSyncBanner project={project} />
-
-      {/* - Printable Report Modal Exporter - */}
       <PrintableReportModal
         open={isPrintReportOpen}
         onOpenChange={setIsPrintReportOpen}
         project={project}
       />
 
-      {/* - Interlocking Chevron Stage Stepper Ribbon & Tab Switcher - */}
-      <div className="bg-[#181d27]/60 border border-border/40 p-3 rounded-2xl backdrop-blur shadow-sm space-y-3">
-        <ChevronStepperRibbon
-          currentStageId={currentStageId}
-          onStageChange={(stageId) => {
-            if (stageId === 'ideation') setActiveTab('brainstorm')
-            else if (stageId === 'empathy') setActiveTab('empathy')
-            else if (stageId === 'bmc') setActiveTab('canvas')
-            else if (stageId === 'prototype') setActiveTab('roadmap')
-          }}
-        />
+      <ChevronStepperRibbon />
 
-        {/* Tab Buttons */}
-        <div className="flex flex-wrap items-center gap-2 border-t border-border/40 pt-3">
-          <button
-            type="button"
-            onClick={() => setActiveTab('brainstorm')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
-              activeTab === 'brainstorm'
-                ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-500/20'
-                : 'bg-[#1c222e] text-muted-foreground hover:text-white'
-            }`}
-          >
-            <Lightbulb className="h-3.5 w-3.5" />
-            <span>Brainstorming Board</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('empathy')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
-              activeTab === 'empathy'
-                ? 'bg-sky-400 text-slate-950 shadow-md shadow-sky-500/20'
-                : 'bg-[#1c222e] text-muted-foreground hover:text-white'
-            }`}
-          >
-            <Heart className="h-3.5 w-3.5" />
-            <span>Empathy Map</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('canvas')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
-              activeTab === 'canvas'
-                ? 'bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20'
-                : 'bg-[#1c222e] text-muted-foreground hover:text-white'
-            }`}
-          >
-            <Grid className="h-3.5 w-3.5" />
-            <span>Business Model Canvas (9-Box)</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('experiments')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
-              activeTab === 'experiments'
-                ? 'bg-teal-400 text-slate-950 shadow-md shadow-teal-500/20'
-                : 'bg-[#1c222e] text-muted-foreground hover:text-white'
-            }`}
-          >
-            <FlaskConical className="h-3.5 w-3.5" />
-            <span>Experiment Tracker</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('roadmap')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all ${
-              activeTab === 'roadmap'
-                ? 'bg-blue-400 text-slate-950 shadow-md shadow-blue-500/20'
-                : 'bg-[#1c222e] text-muted-foreground hover:text-white'
-            }`}
-          >
-            <Calendar className="h-3.5 w-3.5" />
-            <span>Prototype Roadmap</span>
-          </button>
-        </div>
-      </div>
-
-      {/* - Active Methodology Canvas Tool - */}
-      {activeTab === 'brainstorm' ? (
-        <BrainstormBoard project={project} />
-      ) : activeTab === 'empathy' ? (
+      {activeStage === 'empathy' ? (
         <EmpathyMapCanvas project={project} />
-      ) : activeTab === 'canvas' ? (
+      ) : activeStage === 'canvas' ? (
         <BusinessModelCanvas project={project} />
-      ) : activeTab === 'experiments' ? (
+      ) : activeStage === 'experiments' ? (
         <ExperimentTracker project={project} />
-      ) : (
+      ) : activeStage === 'roadmap' ? (
         <MilestoneTimeline project={project} />
+      ) : (
+        <BrainstormBoard project={project} />
       )}
 
-      {/* - Tool Navigation Footer (Prev / Next Stepper Controls) - */}
-      <ToolNavigationFooter activeTab={activeTab} onSelectTab={setActiveTab} />
+      <ToolNavigationFooter activeStage={activeStage} projectId={project.id} />
     </div>
   )
 }
