@@ -25,7 +25,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-primary/30">
-      {/* ── Offline Network Recovery Alert Banner ─────────────────── */}
+      {/* - Offline Network Recovery Alert Banner - */}
       {!isOnline && (
         <div className="bg-amber-500/15 border-b border-amber-500/30 text-amber-400 text-xs font-semibold px-4 py-2 flex items-center justify-center space-x-2 animate-in fade-in">
           <WifiOff className="h-4 w-4 animate-pulse" />
@@ -43,7 +43,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
       )}
 
-      {/* ── Top Navbar Header ─────────────────────────────────────────── */}
+      {/* - Top Navbar Header - */}
       <Navbar
         isSidebarOpen={sidebarOpen}
         onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
@@ -51,7 +51,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
       />
 
-      {/* ── Sidebar & Main Body Viewport ─────────────────────────────── */}
+      {/* - Sidebar & Main Body Viewport - */}
       <div className="flex-1 flex overflow-hidden">
         {/* Workspace Sidebar Navigation */}
         <Sidebar

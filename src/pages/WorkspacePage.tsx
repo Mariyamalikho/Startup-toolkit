@@ -78,24 +78,24 @@ export function WorkspacePage({ initialTab = 'brainstorm' }: WorkspacePageProps)
 
   return (
     <div className="space-y-6">
-      {/* ── Active Workspace Header Banner ──────────────────────────── */}
+      {/* - Active Workspace Header Banner - */}
       <WorkspaceHeader
         project={project}
         onExport={() => setIsPrintReportOpen(true)}
         onShare={() => alert(`Share link: ${window.location.href}`)}
       />
 
-      {/* ── Interconnected Cross-Tool Data Sync Banner ──────────────── */}
+      {/* - Interconnected Cross-Tool Data Sync Banner - */}
       <DataSyncBanner project={project} />
 
-      {/* ── Printable Report Modal Exporter ─────────────────────────── */}
+      {/* - Printable Report Modal Exporter - */}
       <PrintableReportModal
         open={isPrintReportOpen}
         onOpenChange={setIsPrintReportOpen}
         project={project}
       />
 
-      {/* ── Interlocking Chevron Stage Stepper Ribbon & Tab Switcher ─ */}
+      {/* - Interlocking Chevron Stage Stepper Ribbon & Tab Switcher - */}
       <div className="bg-[#181d27]/60 border border-border/40 p-3 rounded-2xl backdrop-blur shadow-sm space-y-3">
         <ChevronStepperRibbon
           currentStageId={currentStageId}
@@ -176,7 +176,7 @@ export function WorkspacePage({ initialTab = 'brainstorm' }: WorkspacePageProps)
         </div>
       </div>
 
-      {/* ── Active Methodology Canvas Tool ──────────────────────────── */}
+      {/* - Active Methodology Canvas Tool - */}
       {activeTab === 'brainstorm' ? (
         <BrainstormBoard project={project} />
       ) : activeTab === 'empathy' ? (
@@ -189,7 +189,7 @@ export function WorkspacePage({ initialTab = 'brainstorm' }: WorkspacePageProps)
         <MilestoneTimeline project={project} />
       )}
 
-      {/* ── Tool Navigation Footer (Prev / Next Stepper Controls) ──── */}
+      {/* - Tool Navigation Footer (Prev / Next Stepper Controls) - */}
       <ToolNavigationFooter activeTab={activeTab} onSelectTab={setActiveTab} />
     </div>
   )

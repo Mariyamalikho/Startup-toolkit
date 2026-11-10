@@ -270,7 +270,7 @@ export function BusinessModelCanvas({ project }: BusinessModelCanvasProps) {
         onDrop={(e) => handleDrop(e, key, handleMoveNote)}
         className={`bg-surface border rounded-2xl p-4 shadow-lg space-y-3 flex flex-col justify-between min-h-[220px] transition-all duration-200 ${
           isOver
-            ? 'border-emerald-400 bg-emerald-400/10 shadow-[0_0_20px_rgba(52,211,153,0.25)] ring-2 ring-emerald-400/40 scale-[1.01]'
+            ? 'border-emerald-400 bg-emerald-400/10 ring-2 ring-emerald-400/40 scale-[1.01]'
             : 'border-border/60'
         } ${extraClasses}`}
       >

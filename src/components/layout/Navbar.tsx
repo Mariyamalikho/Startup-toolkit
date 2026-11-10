@@ -62,7 +62,7 @@ export function Navbar({ onToggleSidebar, mobileMenuOpen, onToggleMobileMenu }: 
 
   return (
     <header className="sticky top-0 z-40 h-16 bg-surface/90 backdrop-blur-md border-b border-border/40 px-4 sm:px-6 flex items-center justify-between">
-      {/* ── Left Brand & Venture Selector Section ─────────────────── */}
+      {/* - Left Brand & Venture Selector Section - */}
       <div className="flex items-center space-x-4">
         {/* Toggle Sidebar Button (Desktop) */}
         {onToggleSidebar && (
@@ -121,7 +121,7 @@ export function Navbar({ onToggleSidebar, mobileMenuOpen, onToggleMobileMenu }: 
         )}
       </div>
 
-      {/* ── Middle Global Search Bar ──────────────────────────────── */}
+      {/* - Middle Global Search Bar - */}
       <div className="hidden lg:flex items-center relative w-72">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
         <Input
@@ -136,7 +136,7 @@ export function Navbar({ onToggleSidebar, mobileMenuOpen, onToggleMobileMenu }: 
         </kbd>
       </div>
 
-      {/* ── Right Actions & Profile Menu ───────────────────────────── */}
+      {/* - Right Actions & Profile Menu - */}
       <div className="flex items-center space-x-3" ref={dropdownRef}>
         {/* Autosave Database Status Badge */}
         <div className="hidden sm:flex items-center space-x-1.5 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">

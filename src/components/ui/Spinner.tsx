@@ -1,23 +1,14 @@
 /**
  * Spinner.tsx
  *
- * Reusable spinner and inline loading state components.
- * Built with pure CSS animations (no Framer Motion overhead)
- * for maximum performance on low-end devices.
- *
- * Components:
- *   - <Spinner />         → standalone animated spinner
- *   - <LoadingDots />     → three bouncing dots (for text contexts)
- *   - <LoadingOverlay />  → full-area overlay with centered spinner
- *   - <LoadingButton />   → button that shows spinner when loading
- *   - <InlineLoader />    → icon + text inline loader (e.g. "Saving…")
+ * Minimal loading indicators and button loading wrapper.
  */
 
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
-
-// ─── Spinner ──────────────────────────────────────────────────────────────────
+import { Button, type ButtonProps } from '@/components/ui/Button'
+import { TopLoadingBar } from '@/components/ui/Skeleton'
 
 type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 type SpinnerVariant = 'default' | 'primary' | 'muted' | 'white'
@@ -26,15 +17,15 @@ interface SpinnerProps {
   size?: SpinnerSize
   variant?: SpinnerVariant
   className?: string
-  label?: string // aria-label text
+  label?: string
 }
 
 const sizeMap: Record<SpinnerSize, string> = {
   xs: 'h-3 w-3',
-  sm: 'h-4 w-4',
-  md: 'h-5 w-5',
-  lg: 'h-7 w-7',
-  xl: 'h-10 w-10',
+  sm: 'h-3.5 w-3.5',
+  md: 'h-4 w-4',
+  lg: 'h-5 w-5',
+  xl: 'h-6 w-6',
 }
 
 const variantMap: Record<SpinnerVariant, string> = {
@@ -48,7 +39,7 @@ export function Spinner({
   size = 'md',
   variant = 'muted',
   className,
-  label = 'Loading…',
+  label = 'Loading',
 }: SpinnerProps) {
   return (
     <Loader2
@@ -59,8 +50,6 @@ export function Spinner({
   )
 }
 
-// ─── Loading Dots ─────────────────────────────────────────────────────────────
-
 interface LoadingDotsProps {
   className?: string
   variant?: SpinnerVariant
@@ -70,29 +59,21 @@ export function LoadingDots({ className, variant = 'muted' }: LoadingDotsProps) 
   return (
     <span
       role="status"
-      aria-label="Loading…"
-      className={cn('inline-flex items-center gap-1', variantMap[variant], className)}
+      aria-label="Loading"
+      className={cn(
+        'inline-flex items-center gap-1 font-mono text-xs',
+        variantMap[variant],
+        className,
+      )}
     >
-      {[0, 1, 2].map((i) => (
-        <span
-          key={i}
-          className="h-1.5 w-1.5 rounded-full bg-current animate-bounce"
-          style={{ animationDelay: `${i * 150}ms`, animationDuration: '0.8s' }}
-        />
-      ))}
-      <span className="sr-only">Loading…</span>
+      <span>...</span>
     </span>
   )
 }
 
-// ─── Loading Overlay ──────────────────────────────────────────────────────────
-
 interface LoadingOverlayProps {
-  /** Show/hide the overlay */
   visible?: boolean
-  /** Optional message below the spinner */
   message?: string
-  /** Whether the overlay covers the full viewport or just its parent (parent must be relative) */
   fullscreen?: boolean
   className?: string
 }
@@ -109,24 +90,21 @@ export function LoadingOverlay({
     <div
       role="status"
       aria-live="polite"
-      aria-label={message ?? 'Loading…'}
+      aria-label={message ?? 'Loading'}
       className={cn(
-        'flex flex-col items-center justify-center gap-3',
-        'bg-background/80 backdrop-blur-sm z-50',
+        'flex flex-col items-center justify-center gap-2.5 bg-background z-50',
         fullscreen ? 'fixed inset-0' : 'absolute inset-0 rounded-inherit',
         className,
       )}
     >
-      <Spinner size="lg" variant="default" />
-      {message && (
-        <p className="text-sm text-muted-foreground font-medium animate-pulse">{message}</p>
-      )}
+      <TopLoadingBar />
+      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/60 bg-surface text-xs font-mono text-muted-foreground">
+        <Spinner size="sm" variant="default" />
+        <span>{message || 'Loading workspace...'}</span>
+      </div>
     </div>
   )
 }
-
-// ─── Inline Loader ────────────────────────────────────────────────────────────
-// Use inside a card or section to show a subtle "Saving…" state.
 
 interface InlineLoaderProps {
   message?: string
@@ -134,23 +112,25 @@ interface InlineLoaderProps {
   className?: string
 }
 
-export function InlineLoader({ message = 'Loading…', size = 'sm', className }: InlineLoaderProps) {
+export function InlineLoader({
+  message = 'Loading...',
+  size = 'sm',
+  className,
+}: InlineLoaderProps) {
   return (
     <span
       role="status"
       aria-label={message}
-      className={cn('inline-flex items-center gap-2 text-muted-foreground', className)}
+      className={cn(
+        'inline-flex items-center gap-2 text-muted-foreground font-mono text-xs',
+        className,
+      )}
     >
       <Spinner size={size} variant="muted" />
-      <span className="text-sm">{message}</span>
+      <span>{message}</span>
     </span>
   )
 }
-
-// ─── Loading Button (wrapper) ─────────────────────────────────────────────────
-// A utility wrapper that adds a spinner to any button-like element when loading.
-
-import { Button, type ButtonProps } from '@/components/ui/Button'
 
 interface LoadingButtonProps extends ButtonProps {
   isLoading?: boolean

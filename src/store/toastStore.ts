@@ -33,7 +33,7 @@ export type ToastInput = Omit<ToastItem, 'id' | 'addedAt' | 'duration'> & {
 
 type Listener = (toasts: ToastItem[]) => void
 
-// ─── Singleton Store ──────────────────────────────────────────────────────────
+// - Singleton Store -
 
 class ToastStore {
   private _toasts: ToastItem[] = []

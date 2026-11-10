@@ -11,8 +11,7 @@ import { ProtectedRoute } from './ProtectedRoute'
 import { AppLayout } from '@/components/layout/AppLayout'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { EmptyError } from '@/components/ui/EmptyState'
-import { SkeletonDashboard } from '@/components/ui/Skeleton'
-import { Spinner } from '@/components/ui/Spinner'
+import { SkeletonDashboard, SkeletonWorkspace, TopLoadingBar } from '@/components/ui/Skeleton'
 
 // Code-split page components with React.lazy
 const LandingPage = lazy(() =>
@@ -38,7 +37,7 @@ function LoginPage() {
   const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-8 shadow-xl">
+      <div className="w-full max-w-md rounded-xl border border-border bg-surface p-8 shadow-xl">
         <AuthForm initialMode="login" onSuccess={() => navigate('/dashboard')} />
       </div>
     </div>
@@ -49,7 +48,7 @@ function SignupPage() {
   const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-8 shadow-xl">
+      <div className="w-full max-w-md rounded-xl border border-border bg-surface p-8 shadow-xl">
         <AuthForm initialMode="signup" onSuccess={() => navigate('/dashboard')} />
       </div>
     </div>
@@ -69,7 +68,7 @@ function NotFoundPage() {
   )
 }
 
-function RouteLoadingFallback() {
+function DashboardLoadingFallback() {
   return (
     <div className="p-6">
       <SkeletonDashboard count={3} />
@@ -77,10 +76,18 @@ function RouteLoadingFallback() {
   )
 }
 
+function WorkspaceLoadingFallback() {
+  return (
+    <div className="p-6">
+      <SkeletonWorkspace />
+    </div>
+  )
+}
+
 function GlobalPageFallback() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6">
-      <Spinner size="lg" className="text-sky-400" />
+    <div className="min-h-screen bg-background">
+      <TopLoadingBar />
     </div>
   )
 }
@@ -106,7 +113,7 @@ export function AppRoutes() {
           <Route
             path="/dashboard"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<DashboardLoadingFallback />}>
                 <DashboardPage />
               </Suspense>
             }
@@ -114,7 +121,7 @@ export function AppRoutes() {
           <Route
             path="/workspace/:projectId"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<WorkspaceLoadingFallback />}>
                 <WorkspacePage initialTab="brainstorm" />
               </Suspense>
             }
@@ -122,7 +129,7 @@ export function AppRoutes() {
           <Route
             path="/empathy-map"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<WorkspaceLoadingFallback />}>
                 <WorkspacePage initialTab="empathy" />
               </Suspense>
             }
@@ -130,7 +137,7 @@ export function AppRoutes() {
           <Route
             path="/business-model-canvas"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<WorkspaceLoadingFallback />}>
                 <WorkspacePage initialTab="canvas" />
               </Suspense>
             }
@@ -138,7 +145,7 @@ export function AppRoutes() {
           <Route
             path="/prototype"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<WorkspaceLoadingFallback />}>
                 <WorkspacePage initialTab="roadmap" />
               </Suspense>
             }
@@ -146,7 +153,7 @@ export function AppRoutes() {
           <Route
             path="/experiments"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<WorkspaceLoadingFallback />}>
                 <WorkspacePage initialTab="experiments" />
               </Suspense>
             }
@@ -154,7 +161,7 @@ export function AppRoutes() {
           <Route
             path="/pitch-deck"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<WorkspaceLoadingFallback />}>
                 <PitchDeckPage />
               </Suspense>
             }
@@ -162,7 +169,7 @@ export function AppRoutes() {
           <Route
             path="/settings"
             element={
-              <Suspense fallback={<RouteLoadingFallback />}>
+              <Suspense fallback={<WorkspaceLoadingFallback />}>
                 <SettingsPage />
               </Suspense>
             }

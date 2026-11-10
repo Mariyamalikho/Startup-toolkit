@@ -95,8 +95,14 @@ const CATEGORY_CONFIG: Record<
 
 export function BrainstormBoard({ project }: BrainstormBoardProps) {
   const { updateUserProject } = useProjectStore()
-  const { activeDropzone, handleDragStart, handleDragOver, handleDragLeave, handleDrop, handleDragEnd } =
-    useDragAndDrop()
+  const {
+    activeDropzone,
+    handleDragStart,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleDragEnd,
+  } = useDragAndDrop()
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [notes, setNotes] = useState<BrainstormNoteItem[]>(() => {
@@ -164,7 +170,8 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
             </span>
           </h2>
           <p className="text-xs text-muted-foreground pt-0.5">
-            Organize raw ideas, feature backlogs, growth channels, and risk factors with 3D post-it notes.
+            Organize raw ideas, feature backlogs, growth channels, and risk factors with 3D post-it
+            notes.
           </p>
         </div>
 
@@ -199,14 +206,20 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
                 }`}
               >
                 {config.icon}
-                <span className="capitalize">{config.label} ({count})</span>
+                <span className="capitalize">
+                  {config.label} ({count})
+                </span>
               </button>
             )
           })}
 
           <button
             type="button"
-            onClick={() => handleAddNote(selectedCategory === 'all' ? 'ideation' : (selectedCategory as CategoryTag))}
+            onClick={() =>
+              handleAddNote(
+                selectedCategory === 'all' ? 'ideation' : (selectedCategory as CategoryTag),
+              )
+            }
             className="px-3 py-1.5 rounded-xl bg-sky-400 text-slate-950 hover:bg-sky-300 font-extrabold text-xs flex items-center space-x-1 shadow-md shadow-sky-500/20"
           >
             <Plus className="h-4 w-4 stroke-[3]" />
@@ -217,12 +230,16 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
 
       {/* Freeform Board Dropzone Container */}
       <div
-        onDragOver={(e) => handleDragOver(e, selectedCategory === 'all' ? 'ideation' : selectedCategory)}
+        onDragOver={(e) =>
+          handleDragOver(e, selectedCategory === 'all' ? 'ideation' : selectedCategory)
+        }
         onDragLeave={handleDragLeave}
-        onDrop={(e) => handleDrop(e, selectedCategory === 'all' ? 'ideation' : selectedCategory, handleMoveNote)}
+        onDrop={(e) =>
+          handleDrop(e, selectedCategory === 'all' ? 'ideation' : selectedCategory, handleMoveNote)
+        }
         className={`bg-[#181d27] border rounded-3xl p-6 min-h-[420px] transition-all duration-200 ${
           activeDropzone
-            ? 'border-sky-400 bg-sky-400/10 shadow-[0_0_24px_rgba(56,189,248,0.25)] ring-2 ring-sky-400/40'
+            ? 'border-sky-400 bg-sky-400/10 ring-1 ring-sky-400/40'
             : 'border-border/60'
         }`}
       >
@@ -243,10 +260,16 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
 
           {filteredNotes.length === 0 && (
             <div className="col-span-full border-2 border-dashed border-border/40 rounded-2xl p-12 text-center text-muted-foreground text-xs space-y-3">
-              <p className="text-sm font-semibold text-slate-300">No brainstorming notes in this category yet.</p>
+              <p className="text-sm font-semibold text-slate-300">
+                No brainstorming notes in this category yet.
+              </p>
               <button
                 type="button"
-                onClick={() => handleAddNote(selectedCategory === 'all' ? 'ideation' : (selectedCategory as CategoryTag))}
+                onClick={() =>
+                  handleAddNote(
+                    selectedCategory === 'all' ? 'ideation' : (selectedCategory as CategoryTag),
+                  )
+                }
                 className="px-4 py-2 rounded-xl bg-sky-400/10 border border-sky-400/30 text-sky-400 font-bold hover:bg-sky-400/20 transition-colors"
               >
                 + Add your first sticky note

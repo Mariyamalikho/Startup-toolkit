@@ -18,7 +18,7 @@ import { AlertTriangle, RefreshCw, Home, ChevronDown, ChevronUp } from 'lucide-r
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// - Types -
 
 interface ErrorBoundaryState {
   hasError: boolean
@@ -43,7 +43,7 @@ export interface ErrorFallbackProps {
   inline?: boolean
 }
 
-// ─── ErrorFallback UI ─────────────────────────────────────────────────────────
+// - ErrorFallback UI -
 
 export function ErrorFallback({ error, errorInfo, resetError, inline }: ErrorFallbackProps) {
   const [showDetails, setShowDetails] = React.useState(false)
@@ -136,7 +136,7 @@ export function ErrorFallback({ error, errorInfo, resetError, inline }: ErrorFal
   )
 }
 
-// ─── ErrorBoundary Class ──────────────────────────────────────────────────────
+// - ErrorBoundary Class -
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
@@ -183,7 +183,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 }
 
-// ─── Higher-Order Component ───────────────────────────────────────────────────
+// - Higher-Order Component -
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function withErrorBoundary<P extends object>(
@@ -204,7 +204,7 @@ export function withErrorBoundary<P extends object>(
   return WrappedComponent
 }
 
-// ─── useErrorBoundary hook ────────────────────────────────────────────────────
+// - useErrorBoundary hook -
 // Lets any functional component programmatically throw into the nearest boundary.
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -220,7 +220,7 @@ export function useErrorBoundary() {
   return { throwError }
 }
 
-// ─── Inline ErrorBoundary ─────────────────────────────────────────────────────
+// - Inline ErrorBoundary -
 // Convenience export for wrapping individual sections.
 
 export function InlineErrorBoundary({

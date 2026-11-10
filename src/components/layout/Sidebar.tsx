@@ -2,8 +2,8 @@
  * Sidebar.tsx
  *
  * Expandable/collapsible workspace sidebar navigation component for Startup Toolkit.
- * Features desaturated dark theme (#181d27), smooth width transitions, active route badges,
- * active venture status summary card, and responsive mobile overlay menu support.
+ * Features dark slate theme, active route indicators, active venture summary card,
+ * and responsive mobile menu support.
  */
 
 import { Link, useLocation } from 'react-router-dom'
@@ -21,6 +21,7 @@ import {
   ChevronRight,
   Zap,
 } from 'lucide-react'
+import { StageProgressSegments } from '@/components/ui/Skeleton'
 
 export interface SidebarProps {
   isOpen: boolean
@@ -47,14 +48,12 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
 
   return (
     <>
-      {/* ── Desktop Sidebar Container ───────────────────────────────── */}
       <aside
         className={`bg-surface border-r border-border/40 transition-all duration-300 flex flex-col justify-between select-none ${
           isOpen ? 'w-64' : 'w-16'
         } hidden md:flex`}
       >
         <div className="p-3 space-y-4">
-          {/* Navigation Links Group */}
           <div className="space-y-1">
             {navigationItems.map((item) => {
               const isActive =
@@ -66,9 +65,9 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
                 <Link
                   key={item.label}
                   to={item.path}
-                  className={`flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all relative group ${
+                  className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all relative group ${
                     isActive
-                      ? 'bg-sky-400/10 text-sky-400 border border-sky-400/30 shadow-sm'
+                      ? 'bg-sky-400/10 text-sky-400 border border-sky-400/30'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/20'
                   }`}
                   title={!isOpen ? item.label : undefined}
@@ -78,7 +77,6 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
                   />
                   {isOpen && <span className="truncate">{item.label}</span>}
 
-                  {/* Tooltip hint when sidebar is collapsed */}
                   {!isOpen && (
                     <div className="absolute left-14 z-50 hidden group-hover:block bg-surface text-foreground text-[11px] font-medium px-2.5 py-1 rounded-md border border-border/60 shadow-xl whitespace-nowrap pointer-events-none">
                       {item.label}
@@ -90,11 +88,9 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
           </div>
         </div>
 
-        {/* Bottom Section: Active Venture Summary Card & Toggle Button */}
         <div className="p-3 space-y-3 border-t border-border/40">
-          {/* Active Venture Summary Card (when sidebar is open) */}
           {isOpen && activeProject && (
-            <div className="p-3.5 rounded-xl border border-border/40 bg-muted/30 space-y-2">
+            <div className="p-3.5 rounded-xl border border-border/40 bg-muted/20 space-y-2.5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-sky-400 flex items-center gap-1">
                   <Layers className="h-3 w-3" />
@@ -112,21 +108,14 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
                 </p>
               </div>
 
-              {/* Progress bar line */}
-              <div className="w-full h-1.5 rounded-full bg-muted/30 overflow-hidden">
-                <div
-                  className="h-full bg-sky-400 rounded-full transition-all duration-500"
-                  style={{ width: `${activeProject.progress}%` }}
-                />
-              </div>
+              <StageProgressSegments progress={activeProject.progress} />
             </div>
           )}
 
-          {/* Sidebar Collapse Toggle Button */}
           <button
             type="button"
             onClick={onToggle}
-            className="w-full flex items-center justify-center p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/20 border border-transparent hover:border-border/40 transition-colors text-xs font-medium"
+            className="w-full flex items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/20 border border-transparent hover:border-border/40 transition-colors text-xs font-medium"
             title={isOpen ? 'Collapse Sidebar' : 'Expand Sidebar'}
           >
             {isOpen ? (
@@ -141,7 +130,6 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
         </div>
       </aside>
 
-      {/* ── Mobile Navigation Drawer Overlay ────────────────────────── */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-md md:hidden pt-16 flex flex-col">
           <div className="bg-surface border-b border-border/40 p-4 space-y-2 flex-1">
@@ -161,7 +149,7 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
                   key={item.label}
                   to={item.path}
                   onClick={onCloseMobileMenu}
-                  className={`flex items-center space-x-3 p-3 rounded-xl text-sm font-semibold transition-all ${
+                  className={`flex items-center space-x-3 p-3 rounded-lg text-sm font-semibold transition-all ${
                     isActive
                       ? 'bg-sky-400/10 text-sky-400 border border-sky-400/30'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/20'
@@ -173,9 +161,8 @@ export function Sidebar({ isOpen, onToggle, mobileMenuOpen, onCloseMobileMenu }:
               )
             })}
 
-            {/* Mobile Active Venture Highlight */}
             {activeProject && (
-              <div className="mt-6 p-4 rounded-xl border border-border/40 bg-muted/30 space-y-1.5">
+              <div className="mt-6 p-4 rounded-xl border border-border/40 bg-muted/20 space-y-1.5">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-sky-400 flex items-center gap-1">
                   <Layers className="h-3 w-3" />
                   Active Project Context

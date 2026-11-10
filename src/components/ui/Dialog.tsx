@@ -5,7 +5,7 @@ import { AlertTriangle, Info, Trash2, CheckCircle2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+// - Types -
 
 type DialogVariant = 'default' | 'destructive' | 'warning' | 'success'
 
@@ -14,7 +14,7 @@ interface DialogContextType {
   setOpen: (open: boolean) => void
 }
 
-// ─── Context ──────────────────────────────────────────────────────────────────
+// - Context -
 
 const DialogContext = createContext<DialogContextType | undefined>(undefined)
 
@@ -25,7 +25,7 @@ export function useDialog() {
   return ctx
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
+// - Root -
 
 interface DialogProps {
   open?: boolean
@@ -46,7 +46,7 @@ export function Dialog({ open: controlledOpen, onOpenChange, children }: DialogP
   return <DialogContext.Provider value={{ open, setOpen }}>{children}</DialogContext.Provider>
 }
 
-// ─── Trigger ──────────────────────────────────────────────────────────────────
+// - Trigger -
 
 export function DialogTrigger({
   children,
@@ -71,7 +71,7 @@ export function DialogTrigger({
   return <span onClick={() => setOpen(true)}>{children}</span>
 }
 
-// ─── Icon map ─────────────────────────────────────────────────────────────────
+// - Icon map -
 
 const variantConfig: Record<
   DialogVariant,
@@ -99,7 +99,7 @@ const variantConfig: Record<
   },
 }
 
-// ─── Content ──────────────────────────────────────────────────────────────────
+// - Content -
 
 interface DialogContentProps {
   title: string

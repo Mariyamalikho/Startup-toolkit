@@ -3,7 +3,7 @@
  *
  * Workspace Header Banner Component for Startup Toolkit.
  * Displays active venture title, industry badge, last autosaved status,
- * methodology progress percentage bar, and quick export/share action triggers.
+ * 5-segment methodology stage indicator, and quick export/share action triggers.
  */
 
 import React, { useState } from 'react'
@@ -16,12 +16,12 @@ import {
   Download,
   Settings,
   ArrowLeft,
-  TrendingUp,
   Sliders,
 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Link } from 'react-router-dom'
 import { AIGeneratorModal } from '@/components/tools/AIGeneratorModal'
+import { StageProgressSegments } from '@/components/ui/Skeleton'
 
 interface WorkspaceHeaderProps {
   project: Project
@@ -135,27 +135,21 @@ export function WorkspaceHeader({ project, onExport, onShare, onSettings }: Work
       {/* Strategy Builder Modal Trigger */}
       <AIGeneratorModal open={aiModalOpen} onOpenChange={setAiModalOpen} project={project} />
 
-      {/* Description & Progress Bar Footer */}
+      {/* Description & Segmented Stage Indicator Footer */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
         <p className="text-muted-foreground line-clamp-1 flex-1">
           {project.description ||
             'No description set. Edit venture details in settings to add founder goals.'}
         </p>
 
-        {/* Methodology Progress Bar */}
-        <div className="flex items-center space-x-3 sm:w-72 shrink-0">
+        {/* 5-Stage Segmented Indicator */}
+        <div className="flex items-center space-x-3 sm:w-64 shrink-0">
           <div className="flex items-center space-x-1.5 text-muted-foreground font-mono text-[11px] shrink-0">
-            <TrendingUp className="h-3.5 w-3.5 text-sky-400" />
-            <span>Score:</span>
+            <span>Readiness:</span>
             <span className="font-bold text-sky-400">{progress}%</span>
           </div>
 
-          <div className="flex-1 h-2 rounded-sm bg-muted overflow-hidden border border-border/40">
-            <div
-              className="h-full bg-sky-400 transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+          <StageProgressSegments progress={progress} className="flex-1" />
         </div>
       </div>
     </div>
