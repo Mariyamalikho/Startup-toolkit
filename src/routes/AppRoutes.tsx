@@ -12,6 +12,7 @@ import { AppLayout } from '@/components/layout/AppLayout'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { EmptyError } from '@/components/ui/EmptyState'
 import { SkeletonDashboard, SkeletonWorkspace, TopLoadingBar } from '@/components/ui/Skeleton'
+import { usePageMetadata } from '@/hooks/usePageMetadata'
 
 // Code-split page components with React.lazy
 const LandingPage = lazy(() =>
@@ -35,6 +36,12 @@ const SettingsPage = lazy(() =>
 
 function LoginPage() {
   const navigate = useNavigate()
+  usePageMetadata({
+    title: 'Sign In to Founder Workspace',
+    description: 'Sign in to access your lean venture workspace, canvases, and pitch decks.',
+    canonicalPath: '/login',
+  })
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md rounded-xl border border-border bg-surface p-8 shadow-xl">
@@ -46,6 +53,13 @@ function LoginPage() {
 
 function SignupPage() {
   const navigate = useNavigate()
+  usePageMetadata({
+    title: 'Create Founder Account',
+    description:
+      'Create a free founder account on Startup Toolkit to validate and scale your venture ideas.',
+    canonicalPath: '/signup',
+  })
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md rounded-xl border border-border bg-surface p-8 shadow-xl">
@@ -56,6 +70,11 @@ function SignupPage() {
 }
 
 function NotFoundPage() {
+  usePageMetadata({
+    title: 'Page Not Found (404)',
+    description: 'The requested workspace route or page does not exist on Startup Toolkit.',
+  })
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <EmptyError
