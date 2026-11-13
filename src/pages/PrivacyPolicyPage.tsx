@@ -30,15 +30,15 @@ export function PrivacyPolicyPage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#12161f] text-foreground font-sans selection:bg-primary/30 flex flex-col justify-between">
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/30 flex flex-col justify-between">
       {/* - Top Header - */}
-      <header className="sticky top-0 z-40 h-16 bg-[#181d27]/90 backdrop-blur-md border-b border-border/40 px-4 sm:px-8 flex items-center justify-between">
+      <header className="sticky top-0 z-40 h-16 bg-surface/90 backdrop-blur-md border-b border-border px-4 sm:px-8 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2.5">
-          <div className="h-9 w-9 rounded-lg bg-slate-900 border border-sky-400/50 flex items-center justify-center">
-            <Rocket className="h-5 w-5 text-sky-400" />
+          <div className="h-9 w-9 rounded-lg bg-sky-500/10 border border-sky-400/50 flex items-center justify-center">
+            <Rocket className="h-5 w-5 text-sky-500 dark:text-sky-400" />
           </div>
-          <span className="font-bold text-lg tracking-tight text-white">
-            Startup<span className="text-sky-400">Toolkit</span>
+          <span className="font-bold text-lg tracking-tight text-foreground">
+            Startup<span className="text-sky-500 dark:text-sky-400">Toolkit</span>
           </span>
         </Link>
 
@@ -46,7 +46,7 @@ export function PrivacyPolicyPage() {
           <Button
             variant="outline"
             size="sm"
-            className="text-xs font-semibold bg-[#181d27] border-slate-700 text-slate-100 hover:bg-slate-800 hover:text-white"
+            className="text-xs font-semibold border-border text-foreground hover:bg-muted"
           >
             <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
             Back to Home
@@ -57,13 +57,13 @@ export function PrivacyPolicyPage() {
       {/* - Privacy Policy Content - */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-12 space-y-10">
         {/* Title Header */}
-        <div className="space-y-3 text-center sm:text-left border-b border-border/40 pb-8">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-300 text-xs font-semibold">
-            <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
+        <div className="space-y-3 text-center sm:text-left border-b border-border pb-8">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-600 dark:text-sky-300 text-xs font-semibold">
+            <ShieldCheck className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
             <span>Privacy & Security Commitments</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
@@ -72,82 +72,82 @@ export function PrivacyPolicyPage() {
         </div>
 
         {/* Policy Content Sections */}
-        <div className="space-y-8 text-sm leading-relaxed text-slate-300">
+        <div className="space-y-8 text-sm leading-relaxed text-muted-foreground">
           {/* Section 1 */}
-          <section className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <UserCheck className="h-5 w-5 text-sky-400" />
+          <section className="p-6 rounded-2xl bg-surface border border-border space-y-3 shadow-sm">
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <UserCheck className="h-5 w-5 text-sky-500 dark:text-sky-400" />
               1. Information We Collect
             </h2>
             <p className="text-xs text-muted-foreground leading-relaxed">
               When you use Startup Toolkit, we collect minimal data required to provide seamless
               venture creation:
             </p>
-            <ul className="list-disc list-inside text-xs text-slate-300 space-y-1.5 pl-2">
+            <ul className="list-disc list-inside text-xs text-foreground/80 space-y-1.5 pl-2">
               <li>
-                <strong className="text-white">Account Information:</strong> Email address provided
-                during sign-up via Supabase Authentication.
+                <strong className="text-foreground">Account Information:</strong> Email address
+                provided during sign-up via Supabase Authentication.
               </li>
               <li>
-                <strong className="text-white">Venture & Canvas Data:</strong> Project titles,
+                <strong className="text-foreground">Venture & Canvas Data:</strong> Project titles,
                 descriptions, empathy maps, business model canvas notes, and methodology progress.
               </li>
               <li>
-                <strong className="text-white">Usage Preferences:</strong> Selected active venture
-                ID and theme display mode (Dark/Light).
+                <strong className="text-foreground">Usage Preferences:</strong> Selected active
+                venture ID and theme display mode (Dark/Light).
               </li>
             </ul>
           </section>
 
           {/* Section 2 */}
-          <section className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Lock className="h-5 w-5 text-indigo-400" />
+          <section className="p-6 rounded-2xl bg-surface border border-border space-y-3 shadow-sm">
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <Lock className="h-5 w-5 text-indigo-500 dark:text-indigo-400" />
               2. Data Protection & Row Level Security (RLS)
             </h2>
             <p className="text-xs text-muted-foreground leading-relaxed">
               We treat your startup intellectual property with utmost security:
             </p>
-            <ul className="list-disc list-inside text-xs text-slate-300 space-y-1.5 pl-2">
+            <ul className="list-disc list-inside text-xs text-foreground/80 space-y-1.5 pl-2">
               <li>
-                <strong className="text-white">PostgreSQL RLS Policies:</strong> All Supabase
+                <strong className="text-foreground">PostgreSQL RLS Policies:</strong> All Supabase
                 database tables enforce Row Level Security. Only your authenticated user account can
                 access or modify your project records.
               </li>
               <li>
-                <strong className="text-white">Encrypted Connections:</strong> All API communication
-                between your browser and Supabase backend is encrypted over HTTPS using SSL/TLS
-                protocols.
+                <strong className="text-foreground">Encrypted Connections:</strong> All API
+                communication between your browser and Supabase backend is encrypted over HTTPS
+                using SSL/TLS protocols.
               </li>
             </ul>
           </section>
 
           {/* Section 3 */}
-          <section className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Database className="h-5 w-5 text-emerald-400" />
+          <section className="p-6 rounded-2xl bg-surface border border-border space-y-3 shadow-sm">
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <Database className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
               3. Debounced Autosave & Local Storage
             </h2>
             <p className="text-xs text-muted-foreground leading-relaxed">
               To prevent data loss while you type into canvas fields:
             </p>
-            <ul className="list-disc list-inside text-xs text-slate-300 space-y-1.5 pl-2">
+            <ul className="list-disc list-inside text-xs text-foreground/80 space-y-1.5 pl-2">
               <li>
-                <strong className="text-white">1000ms Debounced Sync:</strong> Changes auto-save to
-                Supabase 1 second after typing stops.
+                <strong className="text-foreground">1000ms Debounced Sync:</strong> Changes
+                auto-save to Supabase 1 second after typing stops.
               </li>
               <li>
-                <strong className="text-white">Local Storage Usage:</strong> Browser local storage
-                stores transient UI states (active tab, theme) without tracking cookies or
+                <strong className="text-foreground">Local Storage Usage:</strong> Browser local
+                storage stores transient UI states (active tab, theme) without tracking cookies or
                 third-party ad pixels.
               </li>
             </ul>
           </section>
 
           {/* Section 4 */}
-          <section className="p-6 rounded-2xl bg-[#181d27] border border-border/40 space-y-3">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <HardDrive className="h-5 w-5 text-purple-400" />
+          <section className="p-6 rounded-2xl bg-surface border border-border space-y-3 shadow-sm">
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <HardDrive className="h-5 w-5 text-purple-500 dark:text-purple-400" />
               4. Your Rights & Data Deletion
             </h2>
             <p className="text-xs text-muted-foreground leading-relaxed">
@@ -158,7 +158,7 @@ export function PrivacyPolicyPage() {
           </section>
 
           {/* Section 5: Founder & Engineering Contact */}
-          <section className="p-6 rounded-2xl bg-[#1c222e] border border-sky-400/30 space-y-4">
+          <section className="p-6 rounded-2xl bg-muted/40 border border-sky-400/30 space-y-4">
             <div className="flex items-center space-x-3">
               <div className="h-10 w-10 rounded-lg bg-sky-400 text-slate-950 flex items-center justify-center font-bold text-sm">
                 MA
@@ -169,7 +169,7 @@ export function PrivacyPolicyPage() {
               </div>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-foreground/80 leading-relaxed">
               If you have any questions or feedback regarding privacy or data security in Startup
               Toolkit, feel free to connect directly through my personal platforms:
             </p>
@@ -179,9 +179,9 @@ export function PrivacyPolicyPage() {
                 href="https://mariyamalikhokhar.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-border/60 hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-400 transition-colors"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-surface border border-border hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-500 transition-colors shadow-sm"
               >
-                <Globe className="h-3.5 w-3.5 text-sky-400" />
+                <Globe className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
                 <span>mariyamalikhokhar.com</span>
               </a>
 
@@ -189,9 +189,9 @@ export function PrivacyPolicyPage() {
                 href="https://github.com/Mariyamalikho"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-border/60 hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-400 transition-colors"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-surface border border-border hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-500 transition-colors shadow-sm"
               >
-                <GithubIcon className="h-3.5 w-3.5 text-sky-400" />
+                <GithubIcon className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
                 <span>GitHub (@Mariyamalikho)</span>
               </a>
 
@@ -199,9 +199,9 @@ export function PrivacyPolicyPage() {
                 href="https://www.linkedin.com/in/mariyamali-khokhar/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#181d27] border border-border/60 hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-400 transition-colors"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-surface border border-border hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-500 transition-colors shadow-sm"
               >
-                <LinkedinIcon className="h-3.5 w-3.5 text-sky-400" />
+                <LinkedinIcon className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
                 <span>LinkedIn</span>
               </a>
             </div>
@@ -210,14 +210,14 @@ export function PrivacyPolicyPage() {
       </main>
 
       {/* - Footer - */}
-      <footer className="border-t border-border/40 bg-[#181d27]/50 py-6 px-4 text-center text-xs text-muted-foreground space-y-1.5">
-        <p className="text-xs sm:text-sm text-slate-200 font-medium">
+      <footer className="border-t border-border bg-surface/50 py-6 px-4 text-center text-xs text-muted-foreground space-y-1.5">
+        <p className="text-xs sm:text-sm text-foreground font-medium">
           Built with precision by{' '}
           <a
             href="https://mariyamalikhokhar.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-bold text-sky-400 hover:text-sky-300 underline decoration-sky-400/40 underline-offset-4 transition-colors"
+            className="font-bold text-sky-500 dark:text-sky-400 hover:text-sky-600 underline decoration-sky-400/40 underline-offset-4 transition-colors"
           >
             Mariyam Ali K.
           </a>

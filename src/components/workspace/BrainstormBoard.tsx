@@ -161,7 +161,7 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
   return (
     <div className="space-y-6">
       {/* Top Banner & Category Filter Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl">
         <div>
           <p className="text-xs text-muted-foreground">
             Dump raw ideas, features, growth channels and risks. Sort them later.
@@ -177,7 +177,7 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               selectedCategory === 'all'
                 ? 'bg-sky-400 text-slate-950 shadow-sm'
-                : 'bg-[#1c222e] text-muted-foreground hover:text-white border border-border/60'
+                : 'bg-muted/50 text-muted-foreground hover:text-foreground border border-border'
             }`}
           >
             All Notes ({notes.length})
@@ -195,7 +195,7 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center space-x-1.5 transition-all ${
                   selectedCategory === cat
                     ? 'bg-sky-400 text-slate-950 border-sky-400 shadow-sm'
-                    : `bg-[#1c222e] ${config.color}`
+                    : `bg-muted/50 border-border ${config.color}`
                 }`}
               >
                 {config.icon}
@@ -230,10 +230,8 @@ export function BrainstormBoard({ project }: BrainstormBoardProps) {
         onDrop={(e) =>
           handleDrop(e, selectedCategory === 'all' ? 'ideation' : selectedCategory, handleMoveNote)
         }
-        className={`bg-[#181d27] border rounded-3xl p-6 min-h-[420px] transition-all duration-200 ${
-          activeDropzone
-            ? 'border-sky-400 bg-sky-400/10 ring-1 ring-sky-400/40'
-            : 'border-border/60'
+        className={`bg-surface border rounded-3xl p-6 min-h-[420px] transition-all duration-200 ${
+          activeDropzone ? 'border-sky-400 bg-sky-400/10 ring-1 ring-sky-400/40' : 'border-border'
         }`}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-start">

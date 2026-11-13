@@ -111,11 +111,11 @@ export function SettingsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-12">
       {/* Header Banner */}
-      <div className="bg-[#181d27]/70 border border-border/40 p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-surface border border-border p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
         <div>
-          <h1 className="text-xl font-extrabold text-white flex items-center gap-2">
+          <h1 className="text-xl font-extrabold text-foreground flex items-center gap-2">
             <span>Account Settings & Profile</span>
-            <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full">
+            <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-600 dark:text-sky-300 px-2 py-0.5 rounded-full">
               Founder Portal
             </span>
           </h1>
@@ -124,10 +124,13 @@ export function SettingsPage() {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 bg-[#12161f] border border-border/40 px-3 py-1.5 rounded-xl text-xs">
-          <ShieldCheck className="h-4 w-4 text-emerald-400" />
+        <div className="flex items-center space-x-2 bg-muted/40 border border-border px-3 py-1.5 rounded-xl text-xs">
+          <ShieldCheck className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
           <span className="text-muted-foreground font-mono">
-            Status: <strong className="text-emerald-400 font-bold">Active Session</strong>
+            Status:{' '}
+            <strong className="text-emerald-600 dark:text-emerald-400 font-bold">
+              Active Session
+            </strong>
           </span>
         </div>
       </div>
@@ -135,10 +138,10 @@ export function SettingsPage() {
       {/* Main Settings Form */}
       <form onSubmit={handleSaveProfile} className="space-y-6">
         {/* Profile Card */}
-        <div className="bg-[#181d27] border border-border/60 p-6 rounded-2xl shadow-xl space-y-6">
-          <div className="border-b border-border/40 pb-4">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <User className="h-4 w-4 text-sky-400" />
+        <div className="bg-surface border border-border p-6 rounded-2xl shadow-sm space-y-6">
+          <div className="border-b border-border pb-4">
+            <h2 className="text-base font-bold text-foreground flex items-center gap-2">
+              <User className="h-4 w-4 text-sky-500 dark:text-sky-400" />
               <span>Founder Profile Information</span>
             </h2>
           </div>
@@ -160,35 +163,35 @@ export function SettingsPage() {
 
             <div className="space-y-3 flex-1 w-full">
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-slate-200">Avatar Image URL</Label>
+                <Label className="text-xs font-bold text-foreground">Avatar Image URL</Label>
                 <Input
                   type="url"
                   placeholder="https://example.com/avatar.jpg"
                   value={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
-                  className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+                  className="bg-background border-border text-foreground text-xs focus:border-sky-400"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-bold text-slate-200">Founder Display Name</Label>
+                  <Label className="text-xs font-bold text-foreground">Founder Display Name</Label>
                   <Input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+                    className="bg-background border-border text-foreground text-xs focus:border-sky-400"
                     required
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-bold text-slate-200">Email Address</Label>
+                  <Label className="text-xs font-bold text-foreground">Email Address</Label>
                   <Input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+                    className="bg-background border-border text-foreground text-xs focus:border-sky-400"
                     required
                   />
                 </div>
@@ -198,10 +201,10 @@ export function SettingsPage() {
         </div>
 
         {/* Preferences Card */}
-        <div className="bg-[#181d27] border border-border/60 p-6 rounded-2xl shadow-xl space-y-6">
-          <div className="border-b border-border/40 pb-4">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <Sun className="h-4 w-4 text-amber-400" />
+        <div className="bg-surface border border-border p-6 rounded-2xl shadow-sm space-y-6">
+          <div className="border-b border-border pb-4">
+            <h2 className="text-base font-bold text-foreground flex items-center gap-2">
+              <Sun className="h-4 w-4 text-amber-500 dark:text-amber-400" />
               <span>Theme & Interface Preferences</span>
             </h2>
           </div>
@@ -213,8 +216,8 @@ export function SettingsPage() {
               onClick={() => setTheme('dark')}
               className={`p-4 rounded-xl border flex items-center space-x-3 transition-all ${
                 theme === 'dark'
-                  ? 'bg-sky-400/10 border-sky-400 text-sky-400 shadow-md shadow-sky-500/20'
-                  : 'bg-[#1c222e] border-border/60 text-muted-foreground hover:text-white'
+                  ? 'bg-sky-400/10 border-sky-400 text-sky-500 dark:text-sky-400 shadow-md shadow-sky-500/20'
+                  : 'bg-muted/40 border-border text-muted-foreground hover:text-foreground'
               }`}
             >
               <Moon className="h-5 w-5 shrink-0" />
@@ -230,8 +233,8 @@ export function SettingsPage() {
               onClick={() => setTheme('light')}
               className={`p-4 rounded-xl border flex items-center space-x-3 transition-all ${
                 theme === 'light'
-                  ? 'bg-sky-400/10 border-sky-400 text-sky-400 shadow-md shadow-sky-500/20'
-                  : 'bg-[#1c222e] border-border/60 text-muted-foreground hover:text-white'
+                  ? 'bg-sky-400/10 border-sky-400 text-sky-500 dark:text-sky-400 shadow-md shadow-sky-500/20'
+                  : 'bg-muted/40 border-border text-muted-foreground hover:text-foreground'
               }`}
             >
               <Sun className="h-5 w-5 shrink-0" />
@@ -247,8 +250,8 @@ export function SettingsPage() {
               onClick={() => setTheme('system')}
               className={`p-4 rounded-xl border flex items-center space-x-3 transition-all ${
                 theme === 'system'
-                  ? 'bg-sky-400/10 border-sky-400 text-sky-400 shadow-md shadow-sky-500/20'
-                  : 'bg-[#1c222e] border-border/60 text-muted-foreground hover:text-white'
+                  ? 'bg-sky-400/10 border-sky-400 text-sky-500 dark:text-sky-400 shadow-md shadow-sky-500/20'
+                  : 'bg-muted/40 border-border text-muted-foreground hover:text-foreground'
               }`}
             >
               <Monitor className="h-5 w-5 shrink-0" />
@@ -276,42 +279,42 @@ export function SettingsPage() {
       {/* Security Credentials Section */}
       <form
         onSubmit={handleUpdatePassword}
-        className="bg-[#181d27] border border-border/60 p-6 rounded-2xl shadow-xl space-y-6"
+        className="bg-surface border border-border p-6 rounded-2xl shadow-sm space-y-6"
       >
-        <div className="border-b border-border/40 pb-4">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Lock className="h-4 w-4 text-purple-400" />
+        <div className="border-b border-border pb-4">
+          <h2 className="text-base font-bold text-foreground flex items-center gap-2">
+            <Lock className="h-4 w-4 text-purple-500 dark:text-purple-400" />
             <span>Security Credentials & Password</span>
           </h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-slate-200">New Password</Label>
+            <Label className="text-xs font-bold text-foreground">New Password</Label>
             <Input
               type="password"
               placeholder="••••••••••••"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="bg-[#1c222e] border-border/60 text-xs focus:border-purple-400"
+              className="bg-background border-border text-foreground text-xs focus:border-purple-400"
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-slate-200">Confirm New Password</Label>
+            <Label className="text-xs font-bold text-foreground">Confirm New Password</Label>
             <Input
               type="password"
               placeholder="••••••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="bg-[#1c222e] border-border/60 text-xs focus:border-purple-400"
+              className="bg-background border-border text-foreground text-xs focus:border-purple-400"
             />
           </div>
         </div>
 
         <div className="flex items-center justify-between pt-2">
           <span className="text-[11px] text-muted-foreground flex items-center gap-1 font-mono">
-            <Key className="h-3.5 w-3.5 text-purple-400" />
+            <Key className="h-3.5 w-3.5 text-purple-500 dark:text-purple-400" />
             Password must be at least 8 characters.
           </span>
 

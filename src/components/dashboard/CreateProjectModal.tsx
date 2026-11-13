@@ -84,28 +84,34 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
 
   return (
     <Modal open={open} onOpenChange={onOpenChange}>
-      <ModalContent className="max-w-lg bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+      <ModalContent className="max-w-lg bg-surface border-border p-6 rounded-2xl shadow-2xl space-y-6">
         <ModalHeader className="space-y-2">
-          <div className="flex items-center space-x-2 text-sky-400">
+          <div className="flex items-center space-x-2 text-sky-500 dark:text-sky-400">
             <div className="h-8 w-8 rounded-xl bg-sky-400/10 border border-sky-400/30 flex items-center justify-center">
               <Rocket className="h-4 w-4" />
             </div>
-            <span className="font-mono text-xs font-bold uppercase tracking-wider">New Venture</span>
+            <span className="font-mono text-xs font-bold uppercase tracking-wider">
+              New Venture
+            </span>
           </div>
 
-          <ModalTitle className="text-xl font-bold text-white">
+          <ModalTitle className="text-xl font-bold text-foreground">
             Create Startup Venture
           </ModalTitle>
           <ModalDescription className="text-xs text-muted-foreground">
-            Initialize a new methodology workspace with empathy mapping, business model canvas, and pitch deck.
+            Initialize a new methodology workspace with empathy mapping, business model canvas, and
+            pitch deck.
           </ModalDescription>
         </ModalHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title Field */}
           <div className="space-y-1.5">
-            <Label htmlFor="project-title" className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-              <Layers className="h-3.5 w-3.5 text-sky-400" />
+            <Label
+              htmlFor="project-title"
+              className="text-xs font-bold text-foreground flex items-center gap-1.5"
+            >
+              <Layers className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
               Project Title *
             </Label>
             <Input
@@ -117,32 +123,39 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
                 setTitle(e.target.value)
                 if (validationError) setValidationError('')
               }}
-              className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+              className="bg-background border-border text-foreground text-xs focus:border-sky-400"
               autoFocus
             />
             {validationError && (
-              <p className="text-[11px] font-semibold text-red-400">{validationError}</p>
+              <p className="text-[11px] font-semibold text-red-500 dark:text-red-400">
+                {validationError}
+              </p>
             )}
           </div>
 
           {/* Industry Preset Select */}
           <div className="space-y-1.5">
-            <Label htmlFor="project-industry" className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-              <Tag className="h-3.5 w-3.5 text-indigo-400" />
+            <Label
+              htmlFor="project-industry"
+              className="text-xs font-bold text-foreground flex items-center gap-1.5"
+            >
+              <Tag className="h-3.5 w-3.5 text-indigo-500 dark:text-indigo-400" />
               Industry Sector
             </Label>
             <select
               id="project-industry"
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
-              className="w-full h-10 bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-sky-400 cursor-pointer"
+              className="w-full h-10 bg-background border border-border text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-sky-400 cursor-pointer"
             >
               {INDUSTRY_PRESETS.map((ind) => (
-                <option key={ind} value={ind} className="bg-[#1c222e]">
+                <option key={ind} value={ind} className="bg-surface text-foreground">
                   {ind}
                 </option>
               ))}
-              <option value="Other" className="bg-[#1c222e]">Other (Custom)</option>
+              <option value="Other" className="bg-surface text-foreground">
+                Other (Custom)
+              </option>
             </select>
           </div>
 
@@ -154,15 +167,18 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
                 placeholder="Specify custom industry..."
                 value={customIndustry}
                 onChange={(e) => setCustomIndustry(e.target.value)}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+                className="bg-background border-border text-foreground text-xs focus:border-sky-400"
               />
             </div>
           )}
 
           {/* Description Textarea */}
           <div className="space-y-1.5">
-            <Label htmlFor="project-description" className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-              <FileText className="h-3.5 w-3.5 text-purple-400" />
+            <Label
+              htmlFor="project-description"
+              className="text-xs font-bold text-foreground flex items-center gap-1.5"
+            >
+              <FileText className="h-3.5 w-3.5 text-purple-500 dark:text-purple-400" />
               Short Description (Optional)
             </Label>
             <Textarea
@@ -171,16 +187,16 @@ export function CreateProjectModal({ open, onOpenChange }: CreateProjectModalPro
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400 resize-none"
+              className="bg-background border-border text-foreground text-xs focus:border-sky-400 resize-none"
             />
           </div>
 
-          <ModalFooter className="pt-4 border-t border-border/40 flex items-center justify-end space-x-3">
+          <ModalFooter className="pt-4 border-t border-border flex items-center justify-end space-x-3">
             <Button
               type="button"
               variant="outline"
               onClick={handleClose}
-              className="text-xs font-semibold border-border/60"
+              className="text-xs font-semibold border-border"
             >
               Cancel
             </Button>
