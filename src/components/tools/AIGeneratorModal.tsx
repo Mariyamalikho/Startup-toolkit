@@ -140,10 +140,10 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
 
   return (
     <Modal open={open} onOpenChange={onOpenChange}>
-      <ModalContent className="max-w-2xl bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+      <ModalContent className="max-w-2xl bg-surface border-border p-6 rounded-2xl shadow-2xl space-y-6">
         <ModalHeader className="space-y-2">
-          <div className="flex items-center space-x-2 text-sky-400">
-            <div className="h-8 w-8 rounded-xl bg-sky-400/10 border border-sky-400/30 flex items-center justify-center text-sky-400">
+          <div className="flex items-center space-x-2 text-sky-500 dark:text-sky-400">
+            <div className="h-8 w-8 rounded-xl bg-sky-400/10 border border-sky-400/30 flex items-center justify-center text-sky-500 dark:text-sky-400">
               <Zap className="h-4 w-4 fill-sky-400/20" />
             </div>
             <span className="font-mono text-xs font-bold uppercase tracking-wider">
@@ -151,7 +151,7 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
             </span>
           </div>
 
-          <ModalTitle className="text-xl font-bold text-white">
+          <ModalTitle className="text-xl font-bold text-foreground">
             Problem & Value Prop Generator
           </ModalTitle>
           <ModalDescription className="text-xs text-muted-foreground">
@@ -161,9 +161,9 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
         </ModalHeader>
 
         {/* Form Inputs */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#12161f] p-4 rounded-xl border border-border/40">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-muted/40 p-4 rounded-xl border border-border">
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-slate-200">Industry Sector</Label>
+            <Label className="text-xs font-bold text-foreground">Industry Sector</Label>
             <select
               value={industry}
               onChange={(e) => {
@@ -175,22 +175,30 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
                   setGeneratedValueProps(preset.valueProps)
                 }
               }}
-              className="w-full h-10 bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-sky-400 cursor-pointer"
+              className="w-full h-10 bg-background border border-border text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-sky-400 cursor-pointer"
             >
-              <option value="SaaS">SaaS / B2B</option>
-              <option value="AI">AI / Developer Tools</option>
-              <option value="Sustainability">Sustainability / ESG</option>
-              <option value="Fintech">Fintech / Financial Planning</option>
+              <option value="SaaS" className="bg-surface text-foreground">
+                SaaS / B2B
+              </option>
+              <option value="AI" className="bg-surface text-foreground">
+                AI / Developer Tools
+              </option>
+              <option value="Sustainability" className="bg-surface text-foreground">
+                Sustainability / ESG
+              </option>
+              <option value="Fintech" className="bg-surface text-foreground">
+                Fintech / Financial Planning
+              </option>
             </select>
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-slate-200">Target Customer Persona</Label>
+            <Label className="text-xs font-bold text-foreground">Target Customer Persona</Label>
             <Input
               type="text"
               value={targetAudience}
               onChange={(e) => setTargetAudience(e.target.value)}
-              className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+              className="bg-background border-border text-foreground text-xs focus:border-sky-400"
             />
           </div>
         </div>
@@ -198,28 +206,30 @@ export function AIGeneratorModal({ open, onOpenChange, project }: AIGeneratorMod
         {/* Generated Output Preview */}
         <div className="space-y-4">
           {/* Problem Statement Card */}
-          <div className="p-4 rounded-xl bg-[#1c222e] border border-sky-400/30 space-y-2">
+          <div className="p-4 rounded-xl bg-muted/40 border border-sky-400/30 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-[11px] font-mono font-bold text-sky-500 dark:text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
                 <Lightbulb className="h-3.5 w-3.5" />
                 1-Sentence Problem Formula
               </span>
               <span className="text-[10px] text-muted-foreground font-mono">Mad-Libs Standard</span>
             </div>
-            <p className="text-xs text-white leading-relaxed font-medium">"{generatedProblem}"</p>
+            <p className="text-xs text-foreground leading-relaxed font-medium">
+              "{generatedProblem}"
+            </p>
           </div>
 
           {/* Value Propositions Card */}
-          <div className="p-4 rounded-xl bg-[#1c222e] border border-emerald-400/30 space-y-2">
-            <span className="text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+          <div className="p-4 rounded-xl bg-muted/40 border border-emerald-400/30 space-y-2">
+            <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
               <Bot className="h-3.5 w-3.5" />
               Core Value Propositions
             </span>
 
             <ul className="space-y-2 pt-1">
               {generatedValueProps.map((vp, idx) => (
-                <li key={idx} className="flex items-start space-x-2 text-xs text-slate-200">
-                  <ArrowRight className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start space-x-2 text-xs text-foreground">
+                  <ArrowRight className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
                   <span>{vp}</span>
                 </li>
               ))}

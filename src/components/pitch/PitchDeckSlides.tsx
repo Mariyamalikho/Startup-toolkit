@@ -444,21 +444,21 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
   return (
     <div className="space-y-6">
       {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl shadow-sm">
         <div className="flex items-center space-x-3">
           <Link to={`/workspace/${project.id}`}>
             <Button
               variant="outline"
               size="sm"
-              className="h-9 px-2.5 border-border/60 text-muted-foreground hover:text-white"
+              className="h-9 px-2.5 border-border text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
           <div>
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <h2 className="text-base font-bold text-foreground flex items-center gap-2">
               <span>{customTitle} - Investor Pitch Deck</span>
-              <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-md">
+              <span className="text-[10px] font-mono font-bold uppercase bg-sky-500/20 text-sky-600 dark:text-sky-300 px-2 py-0.5 rounded-md">
                 {themeConfig.name}
               </span>
             </h2>
@@ -474,9 +474,9 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
             variant="outline"
             size="sm"
             onClick={() => setIsThemeModalOpen(true)}
-            className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20"
+            className="h-9 px-3 text-xs font-semibold border-border hover:bg-muted/40"
           >
-            <Palette className="mr-1.5 h-3.5 w-3.5 text-sky-400" />
+            <Palette className="mr-1.5 h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
             Deck Theme
           </Button>
 
@@ -484,9 +484,9 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
             variant="outline"
             size="sm"
             onClick={() => setIsEditModalOpen(true)}
-            className="h-9 px-3 text-xs font-semibold border-border/60 hover:bg-muted/20"
+            className="h-9 px-3 text-xs font-semibold border-border hover:bg-muted/40"
           >
-            <Edit3 className="mr-1.5 h-3.5 w-3.5 text-indigo-400" />
+            <Edit3 className="mr-1.5 h-3.5 w-3.5 text-indigo-500 dark:text-indigo-400" />
             Edit Cover
           </Button>
 
@@ -569,11 +569,11 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
 
       {/* Deck Theme Selector Modal */}
       <Modal open={isThemeModalOpen} onOpenChange={setIsThemeModalOpen}>
-        <ModalContent className="max-w-md bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+        <ModalContent className="max-w-md bg-surface border-border p-6 rounded-2xl shadow-2xl space-y-6">
           <ModalHeader className="space-y-1">
-            <div className="flex items-center space-x-2 text-sky-400">
+            <div className="flex items-center space-x-2 text-sky-500 dark:text-sky-400">
               <Sliders className="h-5 w-5" />
-              <ModalTitle className="text-xl font-bold text-white">
+              <ModalTitle className="text-xl font-bold text-foreground">
                 Select Pitch Deck Theme
               </ModalTitle>
             </div>
@@ -598,8 +598,8 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
                   }}
                   className={`w-full p-4 rounded-xl border flex items-center justify-between transition-all ${
                     isSelected
-                      ? 'bg-sky-400/10 border-sky-400 text-white shadow-lg'
-                      : 'bg-[#12161f] border-border/40 text-slate-300 hover:border-sky-400/40'
+                      ? 'bg-sky-400/10 border-sky-400 text-sky-600 dark:text-white shadow-lg'
+                      : 'bg-muted/40 border-border text-foreground hover:border-sky-400/40'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -607,13 +607,13 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
                     <span className="text-xs font-bold">{cfg.name}</span>
                   </div>
 
-                  {isSelected && <Check className="h-4 w-4 text-sky-400" />}
+                  {isSelected && <Check className="h-4 w-4 text-sky-500 dark:text-sky-400" />}
                 </button>
               )
             })}
           </div>
 
-          <ModalFooter className="pt-4 border-t border-border/40 flex justify-end">
+          <ModalFooter className="pt-4 border-t border-border flex justify-end">
             <Button
               type="button"
               onClick={() => setIsThemeModalOpen(false)}
@@ -627,11 +627,11 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
 
       {/* Edit Cover Slide Modal */}
       <Modal open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
-        <ModalContent className="max-w-md bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+        <ModalContent className="max-w-md bg-surface border-border p-6 rounded-2xl shadow-2xl space-y-6">
           <ModalHeader className="space-y-1">
-            <div className="flex items-center space-x-2 text-indigo-400">
+            <div className="flex items-center space-x-2 text-indigo-500 dark:text-indigo-400">
               <Edit3 className="h-5 w-5" />
-              <ModalTitle className="text-xl font-bold text-white">
+              <ModalTitle className="text-xl font-bold text-foreground">
                 Edit Pitch Deck Title
               </ModalTitle>
             </div>
@@ -642,32 +642,32 @@ export function PitchDeckSlides({ project }: PitchDeckSlidesProps) {
 
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Venture Title</label>
+              <label className="text-xs font-bold text-foreground">Venture Title</label>
               <Input
                 type="text"
                 value={customTitle}
                 onChange={(e) => setCustomTitle(e.target.value)}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400"
+                className="bg-background border-border text-foreground text-xs focus:border-indigo-400"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Tagline / Subtitle</label>
+              <label className="text-xs font-bold text-foreground">Tagline / Subtitle</label>
               <Textarea
                 value={customSubtitle}
                 onChange={(e) => setCustomSubtitle(e.target.value)}
                 rows={3}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400 resize-none"
+                className="bg-background border-border text-foreground text-xs focus:border-indigo-400 resize-none"
               />
             </div>
           </div>
 
-          <ModalFooter className="pt-4 border-t border-border/40 flex justify-end space-x-2">
+          <ModalFooter className="pt-4 border-t border-border flex justify-end space-x-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => setIsEditModalOpen(false)}
-              className="text-xs font-semibold border-border/60"
+              className="text-xs font-semibold border-border"
             >
               Cancel
             </Button>

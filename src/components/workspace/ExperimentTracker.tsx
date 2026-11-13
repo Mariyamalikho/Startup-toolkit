@@ -182,7 +182,7 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
   return (
     <div className="space-y-6">
       {/* Top Summary Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl">
         <div>
           <p className="text-xs text-muted-foreground">
             Test business model assumptions with real data before building full product features.
@@ -200,24 +200,38 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
 
       {/* Summary KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-border/40 space-y-1">
+        <div className="p-4 rounded-2xl bg-surface border border-border space-y-1">
           <span className="text-[11px] font-semibold text-muted-foreground">Total Experiments</span>
-          <div className="text-2xl font-extrabold text-white font-mono">{experiments.length}</div>
+          <div className="text-2xl font-extrabold text-foreground font-mono">
+            {experiments.length}
+          </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-emerald-500/30 space-y-1">
-          <span className="text-[11px] font-semibold text-emerald-400">Validated</span>
-          <div className="text-2xl font-extrabold text-emerald-400 font-mono">{validatedCount}</div>
+        <div className="p-4 rounded-2xl bg-surface border border-emerald-500/30 space-y-1">
+          <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+            Validated
+          </span>
+          <div className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">
+            {validatedCount}
+          </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-rose-500/30 space-y-1">
-          <span className="text-[11px] font-semibold text-rose-400">Invalidated</span>
-          <div className="text-2xl font-extrabold text-rose-400 font-mono">{invalidatedCount}</div>
+        <div className="p-4 rounded-2xl bg-surface border border-rose-500/30 space-y-1">
+          <span className="text-[11px] font-semibold text-rose-600 dark:text-rose-400">
+            Invalidated
+          </span>
+          <div className="text-2xl font-extrabold text-rose-600 dark:text-rose-400 font-mono">
+            {invalidatedCount}
+          </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-sky-400/30 space-y-1">
-          <span className="text-[11px] font-semibold text-sky-400">Validation Rate</span>
-          <div className="text-2xl font-extrabold text-sky-400 font-mono">{validationRate}%</div>
+        <div className="p-4 rounded-2xl bg-surface border border-sky-400/30 space-y-1">
+          <span className="text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+            Validation Rate
+          </span>
+          <div className="text-2xl font-extrabold text-sky-600 dark:text-sky-400 font-mono">
+            {validationRate}%
+          </div>
         </div>
       </div>
 
@@ -226,44 +240,44 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
         {experiments.map((exp) => (
           <div
             key={exp.id}
-            className="p-5 rounded-2xl bg-[#181d27] border border-border/60 shadow-lg space-y-3 hover:border-sky-400/40 transition-all"
+            className="p-5 rounded-2xl bg-surface border border-border shadow-sm hover:shadow-md space-y-3 hover:border-sky-400/40 transition-all"
           >
             {/* Header Row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/40 pb-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
               <div className="flex items-center space-x-2">
-                <FlaskConical className="h-4 w-4 text-sky-400" />
-                <h3 className="text-sm font-bold text-white">{exp.title}</h3>
+                <FlaskConical className="h-4 w-4 text-sky-500 dark:text-sky-400" />
+                <h3 className="text-sm font-bold text-foreground">{exp.title}</h3>
               </div>
 
               <div className="flex items-center space-x-2">
                 {/* Status Badge */}
                 {exp.status === 'validated' && (
-                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold">
                     <CheckCircle2 className="h-3 w-3" />
                     <span>Validated</span>
                   </span>
                 )}
                 {exp.status === 'invalidated' && (
-                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[11px] font-bold">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-[11px] font-bold">
                     <XCircle className="h-3 w-3" />
                     <span>Invalidated</span>
                   </span>
                 )}
                 {exp.status === 'in_progress' && (
-                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-400 text-[11px] font-bold">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-sky-400/10 border border-sky-400/30 text-sky-600 dark:text-sky-400 text-[11px] font-bold">
                     <Clock className="h-3 w-3 animate-spin" />
                     <span>In Progress</span>
                   </span>
                 )}
                 {exp.status === 'draft' && (
-                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-muted/30 text-muted-foreground text-[11px] font-semibold">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-muted/40 border border-border text-muted-foreground text-[11px] font-semibold">
                     <span>Draft</span>
                   </span>
                 )}
 
                 {/* Decision Badge */}
                 {exp.decision && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold uppercase">
+                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 font-mono text-[10px] font-bold uppercase">
                     {exp.decision}
                   </span>
                 )}
@@ -272,7 +286,7 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
                 <button
                   type="button"
                   onClick={() => handleOpenEditModal(exp)}
-                  className="p-1 rounded-lg text-muted-foreground hover:text-white hover:bg-muted/30 transition-colors"
+                  className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
                   title="Edit Experiment"
                 >
                   <Edit2 className="h-3.5 w-3.5" />
@@ -280,7 +294,7 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
                 <button
                   type="button"
                   onClick={() => handleDelete(exp.id)}
-                  className="p-1 rounded-lg text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                  className="p-1 rounded-lg text-muted-foreground hover:text-red-500 hover:bg-red-500/10 transition-colors"
                   title="Delete Experiment"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -291,21 +305,21 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
             {/* Hypothesis & Criteria Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div className="space-y-1">
-                <span className="text-[11px] font-mono font-bold text-slate-400 flex items-center gap-1">
-                  <FileText className="h-3 w-3 text-sky-400" />
+                <span className="text-[11px] font-mono font-bold text-muted-foreground flex items-center gap-1">
+                  <FileText className="h-3 w-3 text-sky-500 dark:text-sky-400" />
                   Hypothesis Statement:
                 </span>
-                <p className="text-slate-200 leading-relaxed bg-[#12161f] p-3 rounded-xl border border-border/40 font-medium">
+                <p className="text-foreground leading-relaxed bg-muted/40 p-3 rounded-xl border border-border font-medium">
                   "{exp.hypothesis}"
                 </p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[11px] font-mono font-bold text-slate-400 flex items-center gap-1">
-                  <Target className="h-3 w-3 text-amber-400" />
+                <span className="text-[11px] font-mono font-bold text-muted-foreground flex items-center gap-1">
+                  <Target className="h-3 w-3 text-amber-500 dark:text-amber-400" />
                   Success Metric Criterion:
                 </span>
-                <p className="text-slate-200 leading-relaxed bg-[#12161f] p-3 rounded-xl border border-border/40 font-medium">
+                <p className="text-foreground leading-relaxed bg-muted/40 p-3 rounded-xl border border-border font-medium">
                   {exp.metricCriterion || 'No metric criterion specified.'}
                 </p>
               </div>
@@ -313,10 +327,10 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
 
             {/* Learnings Note */}
             {exp.learnings && (
-              <div className="pt-1 text-xs text-muted-foreground flex items-center gap-1.5 border-t border-border/20">
-                <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+              <div className="pt-1 text-xs text-muted-foreground flex items-center gap-1.5 border-t border-border">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400 shrink-0" />
                 <span>
-                  <strong className="text-slate-200">Learnings:</strong> {exp.learnings}
+                  <strong className="text-foreground">Learnings:</strong> {exp.learnings}
                 </span>
               </div>
             )}
@@ -324,8 +338,8 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
         ))}
 
         {experiments.length === 0 && (
-          <div className="border-2 border-dashed border-border/40 rounded-2xl p-12 text-center text-muted-foreground text-xs space-y-3">
-            <p className="text-sm font-semibold text-slate-300">
+          <div className="border-2 border-dashed border-border rounded-2xl p-12 text-center text-muted-foreground text-xs space-y-3">
+            <p className="text-sm font-semibold text-foreground">
               No validation experiments logged yet.
             </p>
             <Button
@@ -340,95 +354,109 @@ export function ExperimentTracker({ project }: ExperimentTrackerProps) {
 
       {/* Create / Edit Experiment Modal */}
       <Modal open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <ModalContent className="max-w-lg bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+        <ModalContent className="max-w-lg bg-surface border-border p-6 rounded-2xl shadow-2xl space-y-6">
           <ModalHeader className="space-y-1">
-            <ModalTitle className="text-xl font-bold text-white">
+            <ModalTitle className="text-xl font-bold text-foreground">
               {editingItem ? 'Edit Experiment' : 'New Validation Experiment'}
             </ModalTitle>
           </ModalHeader>
 
           <form onSubmit={handleSave} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Experiment Title *</label>
+              <label className="text-xs font-bold text-foreground">Experiment Title *</label>
               <Input
                 type="text"
                 placeholder="e.g. Hero Copy Conversion Rate Test"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+                className="bg-background border-border text-foreground text-xs focus:border-sky-400"
                 required
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Hypothesis Statement *</label>
+              <label className="text-xs font-bold text-foreground">Hypothesis Statement *</label>
               <Textarea
                 placeholder="If we build X, then Y% of users will do Z..."
                 value={hypothesis}
                 onChange={(e) => setHypothesis(e.target.value)}
                 rows={3}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400 resize-none"
+                className="bg-background border-border text-foreground text-xs focus:border-sky-400 resize-none"
                 required
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Success Metric Criterion</label>
+              <label className="text-xs font-bold text-foreground">Success Metric Criterion</label>
               <Input
                 type="text"
                 placeholder="e.g. Conversion rate >= 20% on 100 trials"
                 value={metricCriterion}
                 onChange={(e) => setMetricCriterion(e.target.value)}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400"
+                className="bg-background border-border text-foreground text-xs focus:border-sky-400"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-200">Status</label>
+                <label className="text-xs font-bold text-foreground">Status</label>
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as ExperimentStatus)}
-                  className="w-full h-10 bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none cursor-pointer"
+                  className="w-full h-10 bg-background border border-border text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-sky-400 cursor-pointer"
                 >
-                  <option value="draft">Draft</option>
-                  <option value="in_progress">In Progress</option>
-                  <option value="validated">Validated</option>
-                  <option value="invalidated">Invalidated</option>
+                  <option value="draft" className="bg-surface text-foreground">
+                    Draft
+                  </option>
+                  <option value="in_progress" className="bg-surface text-foreground">
+                    In Progress
+                  </option>
+                  <option value="validated" className="bg-surface text-foreground">
+                    Validated
+                  </option>
+                  <option value="invalidated" className="bg-surface text-foreground">
+                    Invalidated
+                  </option>
                 </select>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-200">Decision Outcome</label>
+                <label className="text-xs font-bold text-foreground">Decision Outcome</label>
                 <select
                   value={decision}
                   onChange={(e) => setDecision(e.target.value as ExperimentDecision)}
-                  className="w-full h-10 bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none cursor-pointer"
+                  className="w-full h-10 bg-background border border-border text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-sky-400 cursor-pointer"
                 >
-                  <option value="persevere">Persevere</option>
-                  <option value="pivot">Pivot</option>
-                  <option value="iterate">Iterate</option>
+                  <option value="persevere" className="bg-surface text-foreground">
+                    Persevere
+                  </option>
+                  <option value="pivot" className="bg-surface text-foreground">
+                    Pivot
+                  </option>
+                  <option value="iterate" className="bg-surface text-foreground">
+                    Iterate
+                  </option>
                 </select>
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Key Learnings (Optional)</label>
+              <label className="text-xs font-bold text-foreground">Key Learnings (Optional)</label>
               <Textarea
                 placeholder="Document key customer feedback or quantitative results..."
                 value={learnings}
                 onChange={(e) => setLearnings(e.target.value)}
                 rows={2}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-sky-400 resize-none"
+                className="bg-background border-border text-foreground text-xs focus:border-sky-400 resize-none"
               />
             </div>
 
-            <ModalFooter className="pt-4 border-t border-border/40 flex items-center justify-end space-x-3">
+            <ModalFooter className="pt-4 border-t border-border flex items-center justify-end space-x-3">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsModalOpen(false)}
-                className="text-xs font-semibold border-border/60"
+                className="text-xs font-semibold border-border"
               >
                 Cancel
               </Button>

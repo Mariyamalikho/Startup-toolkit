@@ -245,7 +245,7 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
   return (
     <div className="space-y-6">
       {/* Top Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#181d27]/70 border border-border/40 p-4 rounded-2xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface border border-border p-4 rounded-2xl">
         <div>
           <p className="text-xs text-muted-foreground">
             Track product engineering milestones from discovery through prototype, alpha, beta, and
@@ -264,41 +264,53 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
 
       {/* KPI Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-border/40 space-y-1">
+        <div className="p-4 rounded-2xl bg-surface border border-border space-y-1">
           <span className="text-[11px] font-semibold text-muted-foreground">Total Milestones</span>
-          <div className="text-2xl font-extrabold text-white font-mono">{milestones.length}</div>
+          <div className="text-2xl font-extrabold text-foreground font-mono">
+            {milestones.length}
+          </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-emerald-500/30 space-y-1">
-          <span className="text-[11px] font-semibold text-emerald-400">Completed</span>
-          <div className="text-2xl font-extrabold text-emerald-400 font-mono">{completedCount}</div>
+        <div className="p-4 rounded-2xl bg-surface border border-emerald-500/30 space-y-1">
+          <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+            Completed
+          </span>
+          <div className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">
+            {completedCount}
+          </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-sky-500/30 space-y-1">
-          <span className="text-[11px] font-semibold text-sky-400">In Progress</span>
-          <div className="text-2xl font-extrabold text-sky-400 font-mono">{inProgressCount}</div>
+        <div className="p-4 rounded-2xl bg-surface border border-sky-500/30 space-y-1">
+          <span className="text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+            In Progress
+          </span>
+          <div className="text-2xl font-extrabold text-sky-600 dark:text-sky-400 font-mono">
+            {inProgressCount}
+          </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#181d27] border border-indigo-500/30 space-y-1">
-          <span className="text-[11px] font-semibold text-indigo-400">Overall Progress</span>
-          <div className="text-2xl font-extrabold text-indigo-400 font-mono">
+        <div className="p-4 rounded-2xl bg-surface border border-indigo-500/30 space-y-1">
+          <span className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">
+            Overall Progress
+          </span>
+          <div className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono">
             {completionPercentage}%
           </div>
         </div>
       </div>
 
       {/* Gantt Timeline View */}
-      <div className="bg-[#181d27] border border-border/60 rounded-2xl p-5 shadow-xl space-y-4 overflow-x-auto">
+      <div className="bg-surface border border-border rounded-2xl p-5 shadow-sm space-y-4 overflow-x-auto">
         <div className="min-w-[700px] space-y-4">
           {/* Gantt Header Columns */}
-          <div className="grid grid-cols-12 gap-2 text-xs font-mono font-bold text-slate-400 border-b border-border/40 pb-3">
+          <div className="grid grid-cols-12 gap-2 text-xs font-mono font-bold text-muted-foreground border-b border-border pb-3">
             <div className="col-span-5 flex items-center gap-1.5">
-              <Flag className="h-3.5 w-3.5 text-sky-400" />
+              <Flag className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
               <span>Milestone & Deliverable</span>
             </div>
             <div className="col-span-7 grid grid-cols-6 text-center">
               {MONTH_LABELS.map((m) => (
-                <div key={m} className="border-l border-border/20 py-1 text-[11px]">
+                <div key={m} className="border-l border-border/40 py-1 text-[11px]">
                   {m}
                 </div>
               ))}
@@ -317,12 +329,12 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
               return (
                 <div
                   key={item.id}
-                  className="grid grid-cols-12 gap-2 items-center p-3 rounded-xl bg-[#131720] border border-border/40 hover:border-sky-400/40 transition-all group"
+                  className="grid grid-cols-12 gap-2 items-center p-3 rounded-xl bg-muted/40 border border-border hover:border-sky-400/40 transition-all group"
                 >
                   {/* Left Metadata Info */}
                   <div className="col-span-5 space-y-1 pr-2">
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold text-white leading-tight group-hover:text-sky-300 transition-colors">
+                      <span className="text-xs font-bold text-foreground leading-tight group-hover:text-sky-500 dark:group-hover:text-sky-300 transition-colors">
                         {item.title}
                       </span>
                     </div>
@@ -432,113 +444,131 @@ export function MilestoneTimeline({ project }: MilestoneTimelineProps) {
 
       {/* Add / Edit Milestone Modal */}
       <Modal open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <ModalContent className="max-w-lg bg-[#181d27] border-border/60 p-6 rounded-2xl shadow-2xl space-y-6">
+        <ModalContent className="max-w-lg bg-surface border-border p-6 rounded-2xl shadow-2xl space-y-6">
           <ModalHeader className="space-y-1">
-            <ModalTitle className="text-xl font-bold text-white">
+            <ModalTitle className="text-xl font-bold text-foreground">
               {editingItem ? 'Edit Roadmap Milestone' : 'Add New Milestone'}
             </ModalTitle>
           </ModalHeader>
 
           <form onSubmit={handleSave} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Milestone Title *</label>
+              <label className="text-xs font-bold text-foreground">Milestone Title *</label>
               <Input
                 type="text"
                 placeholder="e.g. Closed Beta Testing & Feedback"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400"
+                className="bg-background border-border text-foreground text-xs focus:border-indigo-400"
                 required
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-200">Phase</label>
+                <label className="text-xs font-bold text-foreground">Phase</label>
                 <select
                   value={phase}
                   onChange={(e) => setPhase(e.target.value as MilestonePhase)}
-                  className="w-full h-10 bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none cursor-pointer"
+                  className="w-full h-10 bg-background border border-border text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-indigo-400 cursor-pointer"
                 >
-                  <option value="discovery">Discovery</option>
-                  <option value="prototype">Prototype</option>
-                  <option value="alpha">Alpha</option>
-                  <option value="beta">Beta</option>
-                  <option value="launch">Launch</option>
+                  <option value="discovery" className="bg-surface text-foreground">
+                    Discovery
+                  </option>
+                  <option value="prototype" className="bg-surface text-foreground">
+                    Prototype
+                  </option>
+                  <option value="alpha" className="bg-surface text-foreground">
+                    Alpha
+                  </option>
+                  <option value="beta" className="bg-surface text-foreground">
+                    Beta
+                  </option>
+                  <option value="launch" className="bg-surface text-foreground">
+                    Launch
+                  </option>
                 </select>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-200">Status</label>
+                <label className="text-xs font-bold text-foreground">Status</label>
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as MilestoneStatus)}
-                  className="w-full h-10 bg-[#1c222e] border border-border/60 text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none cursor-pointer"
+                  className="w-full h-10 bg-background border border-border text-xs font-semibold text-foreground px-3 rounded-xl focus:outline-none focus:border-indigo-400 cursor-pointer"
                 >
-                  <option value="planned">Planned</option>
-                  <option value="in_progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                  <option value="delayed">Delayed</option>
+                  <option value="planned" className="bg-surface text-foreground">
+                    Planned
+                  </option>
+                  <option value="in_progress" className="bg-surface text-foreground">
+                    In Progress
+                  </option>
+                  <option value="completed" className="bg-surface text-foreground">
+                    Completed
+                  </option>
+                  <option value="delayed" className="bg-surface text-foreground">
+                    Delayed
+                  </option>
                 </select>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-200">Start Month (1-6)</label>
+                <label className="text-xs font-bold text-foreground">Start Month (1-6)</label>
                 <Input
                   type="number"
                   min={1}
                   max={6}
                   value={startMonth}
                   onChange={(e) => setStartMonth(parseInt(e.target.value) || 1)}
-                  className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400"
+                  className="bg-background border-border text-foreground text-xs focus:border-indigo-400"
                   required
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-200">Duration (Months)</label>
+                <label className="text-xs font-bold text-foreground">Duration (Months)</label>
                 <Input
                   type="number"
                   min={1}
                   max={6}
                   value={durationMonths}
                   onChange={(e) => setDurationMonths(parseInt(e.target.value) || 1)}
-                  className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400"
+                  className="bg-background border-border text-foreground text-xs focus:border-indigo-400"
                   required
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Owner / Lead Responsible</label>
+              <label className="text-xs font-bold text-foreground">Owner / Lead Responsible</label>
               <Input
                 type="text"
                 placeholder="e.g. Lead Engineer or Founder"
                 value={owner}
                 onChange={(e) => setOwner(e.target.value)}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400"
+                className="bg-background border-border text-foreground text-xs focus:border-indigo-400"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-200">Key Deliverables & Output</label>
+              <label className="text-xs font-bold text-foreground">Key Deliverables & Output</label>
               <Textarea
                 placeholder="Describe key artifacts, code, or target metric outputs..."
                 value={deliverables}
                 onChange={(e) => setDeliverables(e.target.value)}
                 rows={2}
-                className="bg-[#1c222e] border-border/60 text-xs focus:border-indigo-400 resize-none"
+                className="bg-background border-border text-foreground text-xs focus:border-indigo-400 resize-none"
               />
             </div>
 
-            <ModalFooter className="pt-4 border-t border-border/40 flex items-center justify-end space-x-3">
+            <ModalFooter className="pt-4 border-t border-border flex items-center justify-end space-x-3">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsModalOpen(false)}
-                className="text-xs font-semibold border-border/60"
+                className="text-xs font-semibold border-border"
               >
                 Cancel
               </Button>
