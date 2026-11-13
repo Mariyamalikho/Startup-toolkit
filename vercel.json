@@ -11,11 +11,54 @@
       ]
     },
     {
-      "source": "/favicon.svg",
+      "source": "/(favicon.svg|og-image.svg)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Content-Type",
+          "value": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/site.webmanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json; charset=utf-8"
         }
       ]
     },
@@ -47,7 +90,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/|favicon.svg|og-image.svg|sitemap.xml|robots.txt|site.webmanifest).*)",
       "destination": "/index.html"
     }
   ]

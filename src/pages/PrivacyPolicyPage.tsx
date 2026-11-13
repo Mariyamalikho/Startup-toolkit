@@ -19,8 +19,16 @@ import {
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/SocialIcons'
 import { Button } from '@/components/ui/Button'
+import { usePageMetadata } from '@/hooks/usePageMetadata'
 
 export function PrivacyPolicyPage() {
+  usePageMetadata({
+    title: 'Privacy Policy & Data Security',
+    description:
+      'Learn how Startup Toolkit protects your founder intellectual property with Supabase Row Level Security (RLS) and zero third-party telemetry.',
+    canonicalPath: '/privacy-policy',
+  })
+
   return (
     <div className="min-h-screen bg-[#12161f] text-foreground font-sans selection:bg-primary/30 flex flex-col justify-between">
       {/* - Top Header - */}

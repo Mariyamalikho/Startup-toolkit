@@ -12,6 +12,16 @@ import { PrintableReportModal } from '@/components/export/PrintableReportModal'
 import { ToolNavigationFooter } from '@/components/workspace/ToolNavigationFooter'
 import { EmptyError } from '@/components/ui/EmptyState'
 import { stageFromPath } from '@/lib/stages'
+import { usePageMetadata } from '@/hooks/usePageMetadata'
+
+const STAGE_LABELS: Record<string, string> = {
+  brainstorm: 'Ideation Board',
+  empathy: 'Empathy Map Canvas',
+  canvas: 'Business Model Canvas',
+  experiments: 'Validation Experiments',
+  roadmap: 'Prototype Roadmap',
+  pitch: 'Pitch Deck',
+}
 
 export function WorkspacePage() {
   const { projectId } = useParams<{ projectId: string }>()
@@ -27,6 +37,16 @@ export function WorkspacePage() {
     if (!projectId) return activeProject || projects[0]
     return projects.find((p) => p.id === projectId) || activeProject || projects[0]
   }, [projectId, projects, activeProject])
+
+  const stageName = STAGE_LABELS[activeStage] || 'Workspace'
+
+  usePageMetadata({
+    title: project ? `${project.title} - ${stageName}` : `${stageName} Workspace`,
+    description: project
+      ? `Interactive ${stageName} for ${project.title}. Track assumptions, hypothesis testing, and venture progress.`
+      : `Interactive ${stageName} workspace for lean startup validation.`,
+    canonicalPath: location.pathname,
+  })
 
   useEffect(() => {
     if (project && activeProject?.id !== project.id) {

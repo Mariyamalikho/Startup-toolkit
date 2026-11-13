@@ -18,8 +18,16 @@ import { Input } from '@/components/ui/Input'
 import { ProjectGrid } from '@/components/dashboard/ProjectGrid'
 import { CreateProjectModal } from '@/components/dashboard/CreateProjectModal'
 import { DeleteProjectDialog } from '@/components/dashboard/DeleteProjectDialog'
+import { usePageMetadata } from '@/hooks/usePageMetadata'
 
 export function DashboardPage() {
+  usePageMetadata({
+    title: 'Founder Ventures Dashboard',
+    description:
+      'Manage, track, and validate all your startup venture stages, progress metrics, and live workspaces.',
+    canonicalPath: '/dashboard',
+  })
+
   const { projects, activeProject, loading, fetchUserProjects } = useProjectStore()
 
   const [createModalOpen, setCreateModalOpen] = useState(false)

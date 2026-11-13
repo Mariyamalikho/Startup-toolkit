@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://startup-toolkit-three.vercel.app/sitemap.xml
+Host: https://startup-toolkit-three.vercel.app

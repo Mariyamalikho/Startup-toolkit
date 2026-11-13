@@ -1,0 +1,17 @@
+{
+  "name": "Startup Toolkit | Lean Venture Workspace",
+  "short_name": "StartupToolkit",
+  "description": "Structured lean startup workspace for ideation, Empathy Mapping, 9-Box Business Model Canvas, validation experiments, and investor pitch deck export.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f17",
+  "theme_color": "#0b0f17",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

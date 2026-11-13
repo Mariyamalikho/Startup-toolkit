@@ -14,8 +14,16 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
 import { useToast } from '@/components/ui/Toast'
+import { usePageMetadata } from '@/hooks/usePageMetadata'
 
 export function SettingsPage() {
+  usePageMetadata({
+    title: 'Founder Account Settings',
+    description:
+      'Configure your founder profile, avatar, workspace preferences, and security credentials.',
+    canonicalPath: '/settings',
+  })
+
   const { user } = useAuth()
   const { toast } = useToast()
 
