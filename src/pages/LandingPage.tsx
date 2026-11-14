@@ -269,177 +269,66 @@ export function LandingPage() {
         </section>
       </main>
 
-      {/* ── Public Footer & Internal Linking ───────────────────────── */}
-      <footer className="border-t border-slate-800 bg-[#12161f] py-12 px-4 sm:px-6 lg:px-8 text-xs text-slate-300">
-        <div className="max-w-6xl mx-auto space-y-10">
-          {/* Top Footer Navigation Columns */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {/* Col 1: Brand Info */}
-            <div className="col-span-2 md:col-span-1 space-y-3">
-              <div className="flex items-center space-x-2">
-                <Rocket className="h-4 w-4 text-sky-400" />
-                <span className="font-bold text-white text-base">Startup Toolkit</span>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Integrated venture validation workspace for early-stage founders and product teams.
-              </p>
-              <p className="text-xs text-slate-300 font-medium">
-                Built with precision by{' '}
-                <a
-                  href="https://mariyamalikhokhar.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-bold text-sky-400 hover:text-sky-300 underline decoration-sky-400/40 underline-offset-4 transition-colors"
-                >
-                  Mariyam Ali K.
-                </a>
-              </p>
+      {/* ── Public Footer ───────────────────────────────────────────── */}
+      <footer className="border-t border-border bg-surface py-8 px-4 sm:px-6 text-xs text-muted-foreground">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-1.5 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start space-x-2">
+              <Rocket className="h-4 w-4 text-sky-500 dark:text-sky-400" />
+              <span className="font-bold text-foreground text-sm">Startup Toolkit</span>
+              <span className="text-muted-foreground">© {new Date().getFullYear()}</span>
             </div>
-
-            {/* Col 2: Methodology Tools */}
-            <div className="space-y-3">
-              <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
-                Methodology
-              </h4>
-              <ul className="space-y-2 text-xs">
-                <li>
-                  <Link
-                    to="/workspace/demo-proj-1"
-                    className="hover:text-sky-400 transition-colors"
-                  >
-                    Ideation Board
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/empathy-map" className="hover:text-sky-400 transition-colors">
-                    Customer Empathy Map
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/business-model-canvas"
-                    className="hover:text-sky-400 transition-colors"
-                  >
-                    9-Box Business Model
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/experiments" className="hover:text-sky-400 transition-colors">
-                    Validation Experiments
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/prototype" className="hover:text-sky-400 transition-colors">
-                    Prototype Roadmap
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 3: Resources & Product */}
-            <div className="space-y-3">
-              <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
-                Resources
-              </h4>
-              <ul className="space-y-2 text-xs">
-                <li>
-                  <Link to="/pitch-deck" className="hover:text-sky-400 transition-colors">
-                    Investor Pitch Deck
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/workspace/demo-proj-1"
-                    className="hover:text-sky-400 transition-colors"
-                  >
-                    Live Demo Workspace
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/dashboard" className="hover:text-sky-400 transition-colors">
-                    Founder Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/privacy-policy" className="hover:text-sky-400 transition-colors">
-                    Privacy Policy &amp; Security
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    href="/sitemap.xml"
-                    className="hover:text-sky-400 transition-colors font-mono text-[11px]"
-                  >
-                    Sitemap XML
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 4: Founder Social Links */}
-            <div className="space-y-3">
-              <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
-                Connect
-              </h4>
-              <div className="flex flex-col space-y-2 text-xs">
-                <a
-                  href="https://mariyamalikhokhar.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-1.5 hover:text-sky-300 transition-colors"
-                >
-                  <Globe className="h-3.5 w-3.5 text-sky-400" />
-                  <span>mariyamalikhokhar.com</span>
-                </a>
-
-                <a
-                  href="https://github.com/Mariyamalikho"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-1.5 hover:text-sky-300 transition-colors"
-                >
-                  <GithubIcon className="h-3.5 w-3.5 text-sky-400" />
-                  <span>GitHub (@Mariyamalikho)</span>
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/mariyamali-khokhar/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-1.5 hover:text-sky-300 transition-colors"
-                >
-                  <LinkedinIcon className="h-3.5 w-3.5 text-sky-400" />
-                  <span>LinkedIn Profile</span>
-                </a>
-
-                <Link
-                  to="/privacy-policy"
-                  className="inline-flex items-center space-x-1.5 hover:text-emerald-400 transition-colors pt-1"
-                >
-                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                  <span>Security &amp; RLS Verified</span>
-                </Link>
-              </div>
-            </div>
+            <p className="text-xs sm:text-sm text-foreground font-medium">
+              Built with precision by{' '}
+              <a
+                href="https://mariyamalikhokhar.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-sky-600 dark:text-sky-400 hover:underline decoration-sky-400/40 underline-offset-4 transition-colors"
+              >
+                Mariyam Ali K.
+              </a>
+            </p>
           </div>
 
-          {/* Bottom Copyright Strip */}
-          <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
-            <span>
-              © {new Date().getFullYear()} Startup Toolkit. Engineered with lean venture
-              methodology.
-            </span>
-            <div className="flex items-center space-x-4">
-              <Link to="/privacy-policy" className="hover:text-slate-200 transition-colors">
-                Privacy
-              </Link>
-              <Link to="/login" className="hover:text-slate-200 transition-colors">
-                Sign In
-              </Link>
-              <Link to="/signup" className="hover:text-slate-200 transition-colors">
-                Sign Up
-              </Link>
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            <a
+              href="https://mariyamalikhokhar.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-background border border-border hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-600 dark:hover:text-sky-300 transition-colors"
+            >
+              <Globe className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
+              <span>Website</span>
+            </a>
+
+            <a
+              href="https://github.com/Mariyamalikho"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-background border border-border hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-600 dark:hover:text-sky-300 transition-colors"
+            >
+              <GithubIcon className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
+              <span>GitHub</span>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/mariyamali-khokhar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-background border border-border hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-600 dark:hover:text-sky-300 transition-colors"
+            >
+              <LinkedinIcon className="h-3.5 w-3.5 text-sky-500 dark:text-sky-400" />
+              <span>LinkedIn</span>
+            </a>
+
+            <Link
+              to="/privacy-policy"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-background border border-border hover:border-sky-400 text-xs font-semibold text-foreground hover:text-sky-600 dark:hover:text-sky-300 transition-colors"
+            >
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400" />
+              <span>Privacy Policy</span>
+            </Link>
           </div>
         </div>
       </footer>
