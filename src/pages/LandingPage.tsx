@@ -6,7 +6,6 @@
  * internal linking, and fast perceived loading.
  */
 
-import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   Rocket,
@@ -20,13 +19,6 @@ import {
   CheckCircle2,
   Globe,
   ShieldCheck,
-  Menu,
-  X,
-  ChevronDown,
-  Sparkles,
-  Calendar,
-  FlaskConical,
-  HelpCircle,
   Sun,
   Moon,
 } from 'lucide-react'
@@ -36,44 +28,9 @@ import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibb
 import { usePageMetadata } from '@/hooks/usePageMetadata'
 import { useTheme } from '@/hooks/useTheme'
 
-interface FAQItem {
-  question: string
-  answer: string
-}
-
-const FAQS: FAQItem[] = [
-  {
-    question: 'What frameworks are included in Startup Toolkit?',
-    answer:
-      'Startup Toolkit incorporates essential lean startup frameworks: a freeform raw ideation board, qualitative customer persona empathy mapping, Alexander Osterwalder’s 9-Box Business Model Canvas, a lean hypothesis experiment tracker, a 6-month engineering roadmap, and an automated 10-slide investor pitch deck.',
-  },
-  {
-    question: 'Do I need a credit card or paid subscription to use it?',
-    answer:
-      'No. Startup Toolkit is completely free and includes an instant demo workspace that runs in your browser with local persistence. You can draft business models, test hypotheses, and export pitch decks immediately without signing up.',
-  },
-  {
-    question: 'How does real-time data sync across tools in the workspace?',
-    answer:
-      'Customer personas and value propositions established in your empathy map or ideation board automatically sync across the Business Model Canvas, experiment tracker, and investor pitch deck slides, preventing manual re-entry.',
-  },
-  {
-    question: 'Can I export my business model canvas and pitch deck to PDF?',
-    answer:
-      'Yes. The built-in client-side PDF export engine compiles your empathy insights, 9-box canvas blocks, validation metrics, and milestone roadmap into an executive PDF report formatted for stakeholder reviews and investor presentations.',
-  },
-  {
-    question: 'How is my venture data secured?',
-    answer:
-      'When connected to Supabase, all tables enforce PostgreSQL Row Level Security (RLS) policies scoped strictly to your authenticated user account. When running offline or in demo mode, data remains isolated inside your browser’s local storage.',
-  },
-]
-
 export function LandingPage() {
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
 
   usePageMetadata({
     title: 'Lean Venture Ideation & Validation Workspace',
@@ -82,161 +39,67 @@ export function LandingPage() {
     canonicalPath: '/',
   })
 
-  const toggleFaq = (index: number) => {
-    setOpenFaqIndex(openFaqIndex === index ? null : index)
-  }
-
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-sky-400/30 flex flex-col justify-between transition-colors">
       {/* ── Top Public Header & Navigation ──────────────────────────── */}
-      <header className="sticky top-0 z-40 h-16 bg-surface/95 backdrop-blur-md border-b border-border px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        <Link
-          to="/"
-          className="flex items-center space-x-2.5 focus:outline-none focus:ring-2 focus:ring-sky-400 rounded-lg"
-        >
-          <div className="h-9 w-9 rounded-lg bg-background border border-sky-500/40 flex items-center justify-center">
-            <Rocket className="h-4 w-4 text-sky-500 dark:text-sky-400" />
+      <header className="sticky top-0 z-40 h-16 bg-surface/95 backdrop-blur-md border-b border-border">
+        <div className="max-w-6xl w-full h-full mx-auto px-4 sm:px-6 flex items-center justify-between">
+          <Link
+            to="/"
+            className="flex items-center space-x-2.5 focus:outline-none focus:ring-2 focus:ring-sky-400 rounded-lg"
+          >
+            <div className="h-9 w-9 rounded-lg bg-background border border-sky-500/40 flex items-center justify-center">
+              <Rocket className="h-4 w-4 text-sky-500 dark:text-sky-400" />
+            </div>
+            <span className="font-bold text-lg tracking-tight text-foreground">
+              Startup<span className="text-sky-500 dark:text-sky-400">Toolkit</span>
+            </span>
+          </Link>
+
+          {/* Action Buttons & Theme Toggle */}
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="h-8 w-8 rounded-lg border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted/40 flex items-center justify-center transition-colors"
+            >
+              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+
+            <Link to="/login">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs font-semibold text-foreground hover:bg-muted/40"
+              >
+                Sign In
+              </Button>
+            </Link>
+
+            <Link to="/signup">
+              <Button
+                size="sm"
+                className="text-xs font-bold bg-sky-400 text-slate-950 hover:bg-sky-300 rounded-lg"
+              >
+                Get Started
+              </Button>
+            </Link>
           </div>
-          <span className="font-bold text-lg tracking-tight text-foreground">
-            Startup<span className="text-sky-500 dark:text-sky-400">Toolkit</span>
-          </span>
-        </Link>
-
-        {/* Desktop Navigation Links */}
-        <nav
-          aria-label="Main Navigation"
-          className="hidden md:flex items-center space-x-6 text-xs font-semibold text-muted-foreground"
-        >
-          <a href="#features" className="hover:text-foreground transition-colors">
-            Features
-          </a>
-          <a href="#methodology" className="hover:text-foreground transition-colors">
-            Methodology
-          </a>
-          <Link
-            to="/workspace/demo-proj-1"
-            className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors"
-          >
-            Live Demo
-          </Link>
-          <Link
-            to="/pitch-deck"
-            className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors"
-          >
-            Pitch Deck
-          </Link>
-          <a href="#faq" className="hover:text-foreground transition-colors">
-            FAQ
-          </a>
-        </nav>
-
-        {/* Action Buttons & Mobile Toggle */}
-        <div className="flex items-center space-x-2 sm:space-x-3">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="h-8 w-8 rounded-lg border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted/40 flex items-center justify-center transition-colors"
-          >
-            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
-
-          <Link to="/login">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs font-semibold text-foreground hover:bg-muted/40"
-            >
-              Sign In
-            </Button>
-          </Link>
-
-          <Link to="/signup" className="hidden sm:inline-block">
-            <Button
-              size="sm"
-              className="text-xs font-bold bg-sky-400 text-slate-950 hover:bg-sky-300 rounded-lg"
-            >
-              Get Started
-            </Button>
-          </Link>
-
-          {/* Mobile Menu Toggle Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/40 focus:outline-none focus:ring-2 focus:ring-sky-400"
-            aria-label="Toggle navigation menu"
-            aria-expanded={mobileMenuOpen}
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
         </div>
       </header>
 
-      {/* Mobile Navigation Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-surface border-b border-border px-4 py-4 space-y-3 animate-in fade-in slide-in-from-top-2">
-          <nav
-            aria-label="Mobile Navigation"
-            className="flex flex-col space-y-2 text-sm font-semibold text-foreground"
-          >
-            <a
-              href="#features"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors"
-            >
-              Features
-            </a>
-            <a
-              href="#methodology"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors"
-            >
-              Methodology Flow
-            </a>
-            <Link
-              to="/workspace/demo-proj-1"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-sky-500 dark:text-sky-400 hover:bg-muted/40 transition-colors"
-            >
-              Inspect Live Demo Canvas
-            </Link>
-            <Link
-              to="/pitch-deck"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-sky-500 dark:text-sky-400 hover:bg-muted/40 transition-colors"
-            >
-              View Investor Pitch Deck
-            </Link>
-            <a
-              href="#faq"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors"
-            >
-              FAQ
-            </a>
-            <Link
-              to="/signup"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg bg-sky-400 text-slate-950 font-bold text-center mt-2"
-            >
-              Get Started Free
-            </Link>
-          </nav>
-        </div>
-      )}
-
       {/* ── Main Landing Body ───────────────────────────────────────── */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-20">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-12 md:py-16 space-y-14">
         {/* ── Hero Section ──────────────────────────────────────────── */}
         <section aria-labelledby="hero-heading" className="max-w-3xl space-y-5">
           <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
-            Lean Startup Methodology &amp; Venture Strategy
+            Venture Ideation &amp; Validation Workspace
           </p>
 
           <h1
             id="hero-heading"
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.15]"
+            className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground leading-tight"
           >
             Structured frameworks for building and validating early-stage ventures.
           </h1>
@@ -248,11 +111,11 @@ export function LandingPage() {
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <Button
               size="lg"
               onClick={() => navigate('/signup')}
-              className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold px-6 rounded-lg text-sm h-11 w-full sm:w-auto justify-center shadow-sm"
+              className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold px-6 rounded-lg text-sm"
             >
               Open New Workspace
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -262,51 +125,23 @@ export function LandingPage() {
               variant="outline"
               size="lg"
               onClick={() => navigate('/workspace/demo-proj-1')}
-              className="bg-surface border-border text-foreground hover:bg-muted/40 hover:border-sky-400/70 rounded-lg text-sm font-semibold px-6 h-11 w-full sm:w-auto justify-center"
+              className="bg-surface border-border text-foreground hover:bg-muted/40 hover:border-sky-400/70 rounded-lg text-sm font-semibold px-6"
             >
               Inspect Live Canvas
             </Button>
-
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => navigate('/pitch-deck')}
-              className="bg-background border-border text-muted-foreground hover:bg-muted/40 hover:text-foreground rounded-lg text-sm font-semibold px-5 h-11 w-full sm:w-auto justify-center"
-            >
-              Sample Pitch Deck
-            </Button>
-          </div>
-
-          {/* Value Highlights */}
-          <div className="flex flex-wrap items-center gap-4 pt-3 text-xs text-muted-foreground font-medium">
-            <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
-              <span>Zero-friction instant demo</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
-              <span>100% Client-side privacy fallback</span>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
-              <span>Printable PDF export engine</span>
-            </div>
           </div>
         </section>
 
         {/* ── Interactive Workspace Preview Card ────────────────────── */}
         <section
           aria-label="Interactive Workspace Preview"
-          className="rounded-2xl border border-border bg-surface p-5 sm:p-6 space-y-5 shadow-sm"
+          className="rounded-xl border border-border bg-surface p-4 sm:p-6 space-y-5 shadow-sm"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
-            <div className="space-y-0.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border pb-4">
+            <div className="flex items-center space-x-2">
               <span className="font-mono text-xs font-semibold text-foreground">
                 Active Venture: EcoPack Innovation
               </span>
-              <p className="text-[11px] text-muted-foreground">
-                Sustainable food packaging venture model in discovery phase
-              </p>
             </div>
 
             <div className="flex items-center gap-2">
@@ -318,9 +153,9 @@ export function LandingPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => navigate('/workspace/demo-proj-1')}
-                className="h-8 px-3 text-xs font-semibold bg-background border-border text-foreground hover:bg-muted/40 hover:border-sky-400/60"
+                className="h-7 px-3 text-xs font-semibold bg-background border-border text-foreground hover:bg-muted/40 hover:border-sky-400/60"
               >
-                Open Full Canvas
+                Open Demo
               </Button>
             </div>
           </div>
@@ -328,7 +163,7 @@ export function LandingPage() {
           <ChevronStepperRibbon currentStageId="canvas" preview />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <article className="p-4 rounded-xl bg-background border border-border space-y-2">
+            <article className="p-4 rounded-lg bg-background border border-border space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
                   <Kanban className="h-3.5 w-3.5" />
@@ -342,7 +177,7 @@ export function LandingPage() {
               </p>
             </article>
 
-            <article className="p-4 rounded-xl bg-background border border-border space-y-2">
+            <article className="p-4 rounded-lg bg-background border border-border space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
                   <Users className="h-3.5 w-3.5" />
@@ -358,182 +193,11 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* ── 5-Step Methodology Flow Section ───────────────────────── */}
-        <section id="methodology" aria-labelledby="methodology-heading" className="space-y-6">
-          <div className="border-b border-border pb-4">
-            <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
-              End-to-End Founder Lifecycle
-            </p>
-            <h2
-              id="methodology-heading"
-              className="text-xl sm:text-2xl font-bold text-foreground mt-1"
-            >
-              The 5-Stage Venture Validation Process
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              A continuous, interconnected workflow taking founders from raw concept to
-              investor-ready presentation.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Step 1 */}
-            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
-                    STAGE 01
-                  </span>
-                  <Sparkles className="h-4 w-4 text-sky-500 dark:text-sky-400" />
-                </div>
-                <h3 className="text-base font-bold text-foreground">Raw Ideation</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Capture unstructured startup concepts, feature brainstorms, growth hacks, and
-                  operational risks on a flexible post-it canvas.
-                </p>
-              </div>
-              <Link
-                to="/workspace/demo-proj-1"
-                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
-              >
-                <span>Explore Ideation Tool</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            </article>
-
-            {/* Step 2 */}
-            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
-                    STAGE 02
-                  </span>
-                  <Users className="h-4 w-4 text-sky-500 dark:text-sky-400" />
-                </div>
-                <h3 className="text-base font-bold text-foreground">Customer Empathy Mapping</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Organize customer interview observations across Thinks &amp; Feels, Hears, Sees,
-                  and Says &amp; Does to expose real buyer pain points.
-                </p>
-              </div>
-              <Link
-                to="/empathy-map"
-                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
-              >
-                <span>Open Empathy Canvas</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            </article>
-
-            {/* Step 3 */}
-            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
-                    STAGE 03
-                  </span>
-                  <Grid className="h-4 w-4 text-sky-500 dark:text-sky-400" />
-                </div>
-                <h3 className="text-base font-bold text-foreground">9-Box Business Model</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Map Osterwalder’s 9 building blocks: value propositions, key partners, channels,
-                  customer segments, cost structures, and revenue streams.
-                </p>
-              </div>
-              <Link
-                to="/business-model-canvas"
-                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
-              >
-                <span>Launch 9-Box Canvas</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            </article>
-
-            {/* Step 4 */}
-            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
-                    STAGE 04
-                  </span>
-                  <FlaskConical className="h-4 w-4 text-sky-500 dark:text-sky-400" />
-                </div>
-                <h3 className="text-base font-bold text-foreground">Lean Experiments</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Translate critical business assumptions into rapid falsifiable tests with
-                  measurable success thresholds before writing code.
-                </p>
-              </div>
-              <Link
-                to="/experiments"
-                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
-              >
-                <span>Track Experiments</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            </article>
-
-            {/* Step 5 */}
-            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
-                    STAGE 05
-                  </span>
-                  <Calendar className="h-4 w-4 text-sky-500 dark:text-sky-400" />
-                </div>
-                <h3 className="text-base font-bold text-foreground">Prototype Roadmap</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Sequence product engineering milestones across Discovery, Prototype, Alpha, Beta,
-                  and Launch on a 6-month visual Gantt timeline.
-                </p>
-              </div>
-              <Link
-                to="/prototype"
-                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
-              >
-                <span>View Roadmap</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            </article>
-
-            {/* Pitch Deck Synthesis */}
-            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
-                    OUTPUT
-                  </span>
-                  <FileText className="h-4 w-4 text-sky-500 dark:text-sky-400" />
-                </div>
-                <h3 className="text-base font-bold text-foreground">Investor Pitch Deck</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Automatically compile all canvas insights into a 10-slide investor pitch deck with
-                  theme customization and printable PDF reports.
-                </p>
-              </div>
-              <Link
-                to="/pitch-deck"
-                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
-              >
-                <span>Preview Pitch Deck</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            </article>
-          </div>
-        </section>
-
-        {/* ── Architectural Capabilities Matrix Section ───────────── */}
+        {/* ── Core Methodology & Infrastructure ─────────────────────── */}
         <section id="features" aria-labelledby="features-heading" className="space-y-6">
           <div className="border-b border-border pb-4">
-            <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
-              Engineering Architecture
-            </p>
-            <h2
-              id="features-heading"
-              className="text-xl sm:text-2xl font-bold text-foreground mt-1"
-            >
-              Core Technical Infrastructure
+            <h2 id="features-heading" className="text-xl sm:text-2xl font-bold text-foreground">
+              Core Methodology &amp; Infrastructure
             </h2>
             <p className="text-sm text-muted-foreground mt-1">
               Engineered for low-latency editing, strict tenant isolation, and clean document
@@ -601,92 +265,6 @@ export function LandingPage() {
                 </p>
               </div>
             </article>
-          </div>
-        </section>
-
-        {/* ── Frequently Asked Questions (FAQ) Section ──────────────── */}
-        <section id="faq" aria-labelledby="faq-heading" className="space-y-6">
-          <div className="border-b border-border pb-4">
-            <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
-              Knowledge Base
-            </p>
-            <h2 id="faq-heading" className="text-xl sm:text-2xl font-bold text-foreground mt-1">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              Everything you need to know about using Startup Toolkit for venture validation.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            {FAQS.map((faq, index) => {
-              const isOpen = openFaqIndex === index
-
-              return (
-                <div
-                  key={index}
-                  className="rounded-xl border border-border bg-surface overflow-hidden transition-colors"
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleFaq(index)}
-                    className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 text-sm font-bold text-foreground hover:text-sky-500 dark:hover:text-sky-400 focus:outline-none"
-                    aria-expanded={isOpen}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <HelpCircle className="h-4 w-4 text-sky-500 dark:text-sky-400 shrink-0" />
-                      <span>{faq.question}</span>
-                    </span>
-                    <ChevronDown
-                      className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-sky-500 dark:text-sky-400' : ''
-                      }`}
-                    />
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-5 pb-4 pt-1 text-xs text-muted-foreground leading-relaxed border-t border-border animate-in fade-in">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </section>
-
-        {/* ── Ready to Validate CTA Section ─────────────────────────── */}
-        <section
-          aria-labelledby="cta-heading"
-          className="rounded-2xl border border-sky-400/30 bg-surface p-8 sm:p-12 text-center space-y-4"
-        >
-          <h2
-            id="cta-heading"
-            className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight"
-          >
-            Ready to validate your startup idea?
-          </h2>
-          <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Start structuring your customer discovery interviews, business model blocks, and
-            investor pitch deck in minutes.
-          </p>
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button
-              size="lg"
-              onClick={() => navigate('/workspace/demo-proj-1')}
-              className="bg-sky-400 text-slate-950 hover:bg-sky-300 font-bold px-8 rounded-lg text-sm h-11 w-full sm:w-auto"
-            >
-              Start Free in Demo Mode
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => navigate('/signup')}
-              className="bg-background border-border text-foreground hover:bg-muted/40 rounded-lg text-sm font-semibold px-6 h-11 w-full sm:w-auto"
-            >
-              Create Account
-            </Button>
           </div>
         </section>
       </main>
