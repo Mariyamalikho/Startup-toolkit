@@ -30,7 +30,7 @@ import { useTheme } from '@/hooks/useTheme'
 
 export function LandingPage() {
   const navigate = useNavigate()
-  const { theme, toggleTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   usePageMetadata({
     title: 'Lean Venture Ideation & Validation Workspace',
@@ -60,7 +60,7 @@ export function LandingPage() {
           <div className="flex items-center space-x-2 sm:space-x-3">
             <button
               type="button"
-              onClick={toggleTheme}
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               className="h-8 w-8 rounded-lg border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted/40 flex items-center justify-center transition-colors"
             >
