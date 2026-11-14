@@ -27,11 +27,14 @@ import {
   Calendar,
   FlaskConical,
   HelpCircle,
+  Sun,
+  Moon,
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/SocialIcons'
 import { Button } from '@/components/ui/Button'
 import { ChevronStepperRibbon } from '@/components/navigation/ChevronStepperRibbon'
 import { usePageMetadata } from '@/hooks/usePageMetadata'
+import { useTheme } from '@/hooks/useTheme'
 
 interface FAQItem {
   question: string
@@ -68,6 +71,7 @@ const FAQS: FAQItem[] = [
 
 export function LandingPage() {
   const navigate = useNavigate()
+  const { theme, toggleTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
 
@@ -83,50 +87,65 @@ export function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0f17] text-slate-100 font-sans selection:bg-sky-400/30 flex flex-col justify-between">
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-sky-400/30 flex flex-col justify-between transition-colors">
       {/* ── Top Public Header & Navigation ──────────────────────────── */}
-      <header className="sticky top-0 z-40 h-16 bg-[#12161f]/95 backdrop-blur-md border-b border-slate-800 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <header className="sticky top-0 z-40 h-16 bg-surface/95 backdrop-blur-md border-b border-border px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <Link
           to="/"
           className="flex items-center space-x-2.5 focus:outline-none focus:ring-2 focus:ring-sky-400 rounded-lg"
         >
-          <div className="h-9 w-9 rounded-lg bg-slate-900 border border-sky-400/50 flex items-center justify-center">
-            <Rocket className="h-4 w-4 text-sky-400" />
+          <div className="h-9 w-9 rounded-lg bg-background border border-sky-500/40 flex items-center justify-center">
+            <Rocket className="h-4 w-4 text-sky-500 dark:text-sky-400" />
           </div>
-          <span className="font-bold text-lg tracking-tight text-white">
-            Startup<span className="text-sky-400">Toolkit</span>
+          <span className="font-bold text-lg tracking-tight text-foreground">
+            Startup<span className="text-sky-500 dark:text-sky-400">Toolkit</span>
           </span>
         </Link>
 
         {/* Desktop Navigation Links */}
         <nav
           aria-label="Main Navigation"
-          className="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-300"
+          className="hidden md:flex items-center space-x-6 text-xs font-semibold text-muted-foreground"
         >
-          <a href="#features" className="hover:text-white transition-colors">
+          <a href="#features" className="hover:text-foreground transition-colors">
             Features
           </a>
-          <a href="#methodology" className="hover:text-white transition-colors">
+          <a href="#methodology" className="hover:text-foreground transition-colors">
             Methodology
           </a>
-          <Link to="/workspace/demo-proj-1" className="hover:text-sky-400 transition-colors">
+          <Link
+            to="/workspace/demo-proj-1"
+            className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors"
+          >
             Live Demo
           </Link>
-          <Link to="/pitch-deck" className="hover:text-sky-400 transition-colors">
+          <Link
+            to="/pitch-deck"
+            className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors"
+          >
             Pitch Deck
           </Link>
-          <a href="#faq" className="hover:text-white transition-colors">
+          <a href="#faq" className="hover:text-foreground transition-colors">
             FAQ
           </a>
         </nav>
 
         {/* Action Buttons & Mobile Toggle */}
         <div className="flex items-center space-x-2 sm:space-x-3">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="h-8 w-8 rounded-lg border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted/40 flex items-center justify-center transition-colors"
+          >
+            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+
           <Link to="/login">
             <Button
               variant="ghost"
               size="sm"
-              className="text-xs font-semibold text-slate-100 hover:bg-slate-800 hover:text-white"
+              className="text-xs font-semibold text-foreground hover:bg-muted/40"
             >
               Sign In
             </Button>
@@ -145,7 +164,7 @@ export function LandingPage() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
+            className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/40 focus:outline-none focus:ring-2 focus:ring-sky-400"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -156,43 +175,43 @@ export function LandingPage() {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#12161f] border-b border-slate-800 px-4 py-4 space-y-3 animate-in fade-in slide-in-from-top-2">
+        <div className="md:hidden bg-surface border-b border-border px-4 py-4 space-y-3 animate-in fade-in slide-in-from-top-2">
           <nav
             aria-label="Mobile Navigation"
-            className="flex flex-col space-y-2 text-sm font-semibold text-slate-200"
+            className="flex flex-col space-y-2 text-sm font-semibold text-foreground"
           >
             <a
               href="#features"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors"
             >
               Features
             </a>
             <a
               href="#methodology"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors"
             >
               Methodology Flow
             </a>
             <Link
               to="/workspace/demo-proj-1"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-sky-400 hover:bg-slate-800 transition-colors"
+              className="px-3 py-2 rounded-lg text-sky-500 dark:text-sky-400 hover:bg-muted/40 transition-colors"
             >
               Inspect Live Demo Canvas
             </Link>
             <Link
               to="/pitch-deck"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-sky-400 hover:bg-slate-800 transition-colors"
+              className="px-3 py-2 rounded-lg text-sky-500 dark:text-sky-400 hover:bg-muted/40 transition-colors"
             >
               View Investor Pitch Deck
             </Link>
             <a
               href="#faq"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className="px-3 py-2 rounded-lg hover:bg-muted/40 transition-colors"
             >
               FAQ
             </a>
@@ -211,18 +230,18 @@ export function LandingPage() {
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-20">
         {/* ── Hero Section ──────────────────────────────────────────── */}
         <section aria-labelledby="hero-heading" className="max-w-3xl space-y-5">
-          <p className="font-mono text-xs uppercase tracking-widest text-sky-400 font-semibold">
+          <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
             Lean Startup Methodology &amp; Venture Strategy
           </p>
 
           <h1
             id="hero-heading"
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-[1.15]"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.15]"
           >
             Structured frameworks for building and validating early-stage ventures.
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl font-normal">
             Map customer discovery insights, model unit economics across a 9-box Business Model
             Canvas, track validation hypotheses, and export investor pitch decks from one unified
             workspace.
@@ -243,7 +262,7 @@ export function LandingPage() {
               variant="outline"
               size="lg"
               onClick={() => navigate('/workspace/demo-proj-1')}
-              className="bg-[#181d27] border-slate-700 text-white hover:bg-slate-800 hover:border-sky-400/70 hover:text-sky-300 rounded-lg text-sm font-semibold px-6 h-11 w-full sm:w-auto justify-center"
+              className="bg-surface border-border text-foreground hover:bg-muted/40 hover:border-sky-400/70 rounded-lg text-sm font-semibold px-6 h-11 w-full sm:w-auto justify-center"
             >
               Inspect Live Canvas
             </Button>
@@ -252,24 +271,24 @@ export function LandingPage() {
               variant="outline"
               size="lg"
               onClick={() => navigate('/pitch-deck')}
-              className="bg-[#12161f] border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg text-sm font-semibold px-5 h-11 w-full sm:w-auto justify-center"
+              className="bg-background border-border text-muted-foreground hover:bg-muted/40 hover:text-foreground rounded-lg text-sm font-semibold px-5 h-11 w-full sm:w-auto justify-center"
             >
               Sample Pitch Deck
             </Button>
           </div>
 
           {/* Value Highlights */}
-          <div className="flex flex-wrap items-center gap-4 pt-3 text-xs text-slate-400 font-medium">
+          <div className="flex flex-wrap items-center gap-4 pt-3 text-xs text-muted-foreground font-medium">
             <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
               <span>Zero-friction instant demo</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
               <span>100% Client-side privacy fallback</span>
             </div>
             <div className="flex items-center space-x-1.5">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
               <span>Printable PDF export engine</span>
             </div>
           </div>
@@ -278,11 +297,11 @@ export function LandingPage() {
         {/* ── Interactive Workspace Preview Card ────────────────────── */}
         <section
           aria-label="Interactive Workspace Preview"
-          className="rounded-2xl border border-slate-800 bg-[#12161f] p-4 sm:p-6 space-y-5"
+          className="rounded-2xl border border-border bg-surface p-5 sm:p-6 space-y-5 shadow-sm"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
             <div className="space-y-0.5">
-              <span className="font-mono text-xs font-semibold text-slate-200">
+              <span className="font-mono text-xs font-semibold text-foreground">
                 Active Venture: EcoPack Innovation
               </span>
               <p className="text-[11px] text-muted-foreground">
@@ -291,7 +310,7 @@ export function LandingPage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="flex items-center space-x-1.5 text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 font-mono">
+              <div className="flex items-center space-x-1.5 text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 font-mono">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 <span>Autosave Synced</span>
               </div>
@@ -299,41 +318,39 @@ export function LandingPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => navigate('/workspace/demo-proj-1')}
-                className="h-8 px-3 text-xs font-semibold bg-[#181d27] border-slate-700 text-slate-100 hover:bg-slate-800 hover:border-sky-400/60 hover:text-sky-300"
+                className="h-8 px-3 text-xs font-semibold bg-background border-border text-foreground hover:bg-muted/40 hover:border-sky-400/60"
               >
                 Open Full Canvas
               </Button>
             </div>
           </div>
 
-          <div className="bg-[#181d27] p-2 rounded-lg border border-slate-800 overflow-x-auto">
-            <ChevronStepperRibbon currentStageId="canvas" preview />
-          </div>
+          <ChevronStepperRibbon currentStageId="canvas" preview />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <article className="p-4 rounded-xl bg-[#181d27] border border-slate-800 space-y-2">
+            <article className="p-4 rounded-xl bg-background border border-border space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
                   <Kanban className="h-3.5 w-3.5" />
                   Value Propositions
                 </span>
-                <span className="font-mono text-[11px] text-slate-400">Block 04 / 09</span>
+                <span className="font-mono text-[11px] text-muted-foreground">Block 04 / 09</span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Compostable thermal packaging engineered for regional meal delivery operators at
                 parity unit cost with Expanded Polystyrene.
               </p>
             </article>
 
-            <article className="p-4 rounded-xl bg-[#181d27] border border-slate-800 space-y-2">
+            <article className="p-4 rounded-xl bg-background border border-border space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
                   <Users className="h-3.5 w-3.5" />
                   Customer Segments &amp; Revenue
                 </span>
-                <span className="font-mono text-[11px] text-slate-400">Block 07 / 09</span>
+                <span className="font-mono text-[11px] text-muted-foreground">Block 07 / 09</span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Direct B2B wholesale supply contracts with multi-location cloud kitchens and
                 regional grocery fulfillment centers.
               </p>
@@ -343,14 +360,17 @@ export function LandingPage() {
 
         {/* ── 5-Step Methodology Flow Section ───────────────────────── */}
         <section id="methodology" aria-labelledby="methodology-heading" className="space-y-6">
-          <div className="border-b border-slate-800 pb-4">
-            <p className="font-mono text-xs uppercase tracking-widest text-sky-400 font-semibold">
+          <div className="border-b border-border pb-4">
+            <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
               End-to-End Founder Lifecycle
             </p>
-            <h2 id="methodology-heading" className="text-xl sm:text-2xl font-bold text-white mt-1">
+            <h2
+              id="methodology-heading"
+              className="text-xl sm:text-2xl font-bold text-foreground mt-1"
+            >
               The 5-Stage Venture Validation Process
             </h2>
-            <p className="text-sm text-slate-300 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               A continuous, interconnected workflow taking founders from raw concept to
               investor-ready presentation.
             </p>
@@ -358,21 +378,23 @@ export function LandingPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Step 1 */}
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex flex-col justify-between space-y-4 hover:border-slate-700 transition-colors">
+            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-400">STAGE 01</span>
-                  <Sparkles className="h-4 w-4 text-sky-400" />
+                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
+                    STAGE 01
+                  </span>
+                  <Sparkles className="h-4 w-4 text-sky-500 dark:text-sky-400" />
                 </div>
-                <h3 className="text-base font-bold text-white">Raw Ideation</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <h3 className="text-base font-bold text-foreground">Raw Ideation</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Capture unstructured startup concepts, feature brainstorms, growth hacks, and
                   operational risks on a flexible post-it canvas.
                 </p>
               </div>
               <Link
                 to="/workspace/demo-proj-1"
-                className="text-xs font-semibold text-sky-400 hover:text-sky-300 inline-flex items-center space-x-1"
+                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
               >
                 <span>Explore Ideation Tool</span>
                 <ArrowRight className="h-3 w-3" />
@@ -380,21 +402,23 @@ export function LandingPage() {
             </article>
 
             {/* Step 2 */}
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex flex-col justify-between space-y-4 hover:border-slate-700 transition-colors">
+            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-400">STAGE 02</span>
-                  <Users className="h-4 w-4 text-sky-400" />
+                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
+                    STAGE 02
+                  </span>
+                  <Users className="h-4 w-4 text-sky-500 dark:text-sky-400" />
                 </div>
-                <h3 className="text-base font-bold text-white">Customer Empathy Mapping</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <h3 className="text-base font-bold text-foreground">Customer Empathy Mapping</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Organize customer interview observations across Thinks &amp; Feels, Hears, Sees,
                   and Says &amp; Does to expose real buyer pain points.
                 </p>
               </div>
               <Link
                 to="/empathy-map"
-                className="text-xs font-semibold text-sky-400 hover:text-sky-300 inline-flex items-center space-x-1"
+                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
               >
                 <span>Open Empathy Canvas</span>
                 <ArrowRight className="h-3 w-3" />
@@ -402,21 +426,23 @@ export function LandingPage() {
             </article>
 
             {/* Step 3 */}
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex flex-col justify-between space-y-4 hover:border-slate-700 transition-colors">
+            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-400">STAGE 03</span>
-                  <Grid className="h-4 w-4 text-sky-400" />
+                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
+                    STAGE 03
+                  </span>
+                  <Grid className="h-4 w-4 text-sky-500 dark:text-sky-400" />
                 </div>
-                <h3 className="text-base font-bold text-white">9-Box Business Model</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <h3 className="text-base font-bold text-foreground">9-Box Business Model</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Map Osterwalder’s 9 building blocks: value propositions, key partners, channels,
                   customer segments, cost structures, and revenue streams.
                 </p>
               </div>
               <Link
                 to="/business-model-canvas"
-                className="text-xs font-semibold text-sky-400 hover:text-sky-300 inline-flex items-center space-x-1"
+                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
               >
                 <span>Launch 9-Box Canvas</span>
                 <ArrowRight className="h-3 w-3" />
@@ -424,21 +450,23 @@ export function LandingPage() {
             </article>
 
             {/* Step 4 */}
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex flex-col justify-between space-y-4 hover:border-slate-700 transition-colors">
+            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-400">STAGE 04</span>
-                  <FlaskConical className="h-4 w-4 text-sky-400" />
+                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
+                    STAGE 04
+                  </span>
+                  <FlaskConical className="h-4 w-4 text-sky-500 dark:text-sky-400" />
                 </div>
-                <h3 className="text-base font-bold text-white">Lean Experiments</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <h3 className="text-base font-bold text-foreground">Lean Experiments</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Translate critical business assumptions into rapid falsifiable tests with
                   measurable success thresholds before writing code.
                 </p>
               </div>
               <Link
                 to="/experiments"
-                className="text-xs font-semibold text-sky-400 hover:text-sky-300 inline-flex items-center space-x-1"
+                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
               >
                 <span>Track Experiments</span>
                 <ArrowRight className="h-3 w-3" />
@@ -446,21 +474,23 @@ export function LandingPage() {
             </article>
 
             {/* Step 5 */}
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex flex-col justify-between space-y-4 hover:border-slate-700 transition-colors">
+            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-400">STAGE 05</span>
-                  <Calendar className="h-4 w-4 text-sky-400" />
+                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
+                    STAGE 05
+                  </span>
+                  <Calendar className="h-4 w-4 text-sky-500 dark:text-sky-400" />
                 </div>
-                <h3 className="text-base font-bold text-white">Prototype Roadmap</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <h3 className="text-base font-bold text-foreground">Prototype Roadmap</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Sequence product engineering milestones across Discovery, Prototype, Alpha, Beta,
                   and Launch on a 6-month visual Gantt timeline.
                 </p>
               </div>
               <Link
                 to="/prototype"
-                className="text-xs font-semibold text-sky-400 hover:text-sky-300 inline-flex items-center space-x-1"
+                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
               >
                 <span>View Roadmap</span>
                 <ArrowRight className="h-3 w-3" />
@@ -468,21 +498,23 @@ export function LandingPage() {
             </article>
 
             {/* Pitch Deck Synthesis */}
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex flex-col justify-between space-y-4 hover:border-slate-700 transition-colors">
+            <article className="p-5 rounded-xl bg-surface border border-border flex flex-col justify-between space-y-4 hover:border-sky-400/40 transition-colors">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-sky-400">OUTPUT</span>
-                  <FileText className="h-4 w-4 text-sky-400" />
+                  <span className="font-mono text-xs font-bold text-sky-600 dark:text-sky-400">
+                    OUTPUT
+                  </span>
+                  <FileText className="h-4 w-4 text-sky-500 dark:text-sky-400" />
                 </div>
-                <h3 className="text-base font-bold text-white">Investor Pitch Deck</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <h3 className="text-base font-bold text-foreground">Investor Pitch Deck</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Automatically compile all canvas insights into a 10-slide investor pitch deck with
                   theme customization and printable PDF reports.
                 </p>
               </div>
               <Link
                 to="/pitch-deck"
-                className="text-xs font-semibold text-sky-400 hover:text-sky-300 inline-flex items-center space-x-1"
+                className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center space-x-1"
               >
                 <span>Preview Pitch Deck</span>
                 <ArrowRight className="h-3 w-3" />
@@ -493,74 +525,77 @@ export function LandingPage() {
 
         {/* ── Architectural Capabilities Matrix Section ───────────── */}
         <section id="features" aria-labelledby="features-heading" className="space-y-6">
-          <div className="border-b border-slate-800 pb-4">
-            <p className="font-mono text-xs uppercase tracking-widest text-sky-400 font-semibold">
+          <div className="border-b border-border pb-4">
+            <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
               Engineering Architecture
             </p>
-            <h2 id="features-heading" className="text-xl sm:text-2xl font-bold text-white mt-1">
+            <h2
+              id="features-heading"
+              className="text-xl sm:text-2xl font-bold text-foreground mt-1"
+            >
               Core Technical Infrastructure
             </h2>
-            <p className="text-sm text-slate-300 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Engineered for low-latency editing, strict tenant isolation, and clean document
               exports.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
-              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+            <article className="p-5 rounded-xl bg-surface border border-border flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-background border border-border text-sky-500 dark:text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
                 <Grid className="h-4 w-4" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-sm font-bold text-foreground">
                   Empathy Map &amp; 9-Box Business Model Canvas
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Drag-and-drop sticky notes across customer discovery quadrants and business model
                   blocks with cross-tool state synchronization.
                 </p>
               </div>
             </article>
 
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
-              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+            <article className="p-5 rounded-xl bg-surface border border-border flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-background border border-border text-sky-500 dark:text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
                 <Database className="h-4 w-4" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-sm font-bold text-foreground">
                   Debounced Persistence &amp; Query Caching
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   1000ms debounced autosave with exponential backoff retry handling, in-memory TTL
                   query caching, and offline state recovery.
                 </p>
               </div>
             </article>
 
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
-              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+            <article className="p-5 rounded-xl bg-surface border border-border flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-background border border-border text-sky-500 dark:text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
                 <Lock className="h-4 w-4" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-sm font-bold text-foreground">
                   Row Level Security &amp; Input Sanitization
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   PostgreSQL Row Level Security policies enforce strict user-scoped access across
                   all tables and private storage buckets.
                 </p>
               </div>
             </article>
 
-            <article className="p-5 rounded-xl bg-[#12161f] border border-slate-800 flex items-start space-x-4">
-              <div className="h-9 w-9 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+            <article className="p-5 rounded-xl bg-surface border border-border flex items-start space-x-4">
+              <div className="h-9 w-9 rounded-lg bg-background border border-border text-sky-500 dark:text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
                 <FileText className="h-4 w-4" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-sm font-bold text-foreground">
                   Pitch Deck &amp; Printable PDF Reports
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Compile canvas insights, validation experiments, and 6-month roadmaps into
                   presentation slides and structured PDF documents.
                 </p>
@@ -571,14 +606,14 @@ export function LandingPage() {
 
         {/* ── Frequently Asked Questions (FAQ) Section ──────────────── */}
         <section id="faq" aria-labelledby="faq-heading" className="space-y-6">
-          <div className="border-b border-slate-800 pb-4">
-            <p className="font-mono text-xs uppercase tracking-widest text-sky-400 font-semibold">
+          <div className="border-b border-border pb-4">
+            <p className="font-mono text-xs uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold">
               Knowledge Base
             </p>
-            <h2 id="faq-heading" className="text-xl sm:text-2xl font-bold text-white mt-1">
+            <h2 id="faq-heading" className="text-xl sm:text-2xl font-bold text-foreground mt-1">
               Frequently Asked Questions
             </h2>
-            <p className="text-sm text-slate-300 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Everything you need to know about using Startup Toolkit for venture validation.
             </p>
           </div>
@@ -590,27 +625,27 @@ export function LandingPage() {
               return (
                 <div
                   key={index}
-                  className="rounded-xl border border-slate-800 bg-[#12161f] overflow-hidden transition-colors"
+                  className="rounded-xl border border-border bg-surface overflow-hidden transition-colors"
                 >
                   <button
                     type="button"
                     onClick={() => toggleFaq(index)}
-                    className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 text-sm font-bold text-white hover:text-sky-400 focus:outline-none focus:bg-slate-800/40"
+                    className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 text-sm font-bold text-foreground hover:text-sky-500 dark:hover:text-sky-400 focus:outline-none"
                     aria-expanded={isOpen}
                   >
                     <span className="flex items-center gap-2.5">
-                      <HelpCircle className="h-4 w-4 text-sky-400 shrink-0" />
+                      <HelpCircle className="h-4 w-4 text-sky-500 dark:text-sky-400 shrink-0" />
                       <span>{faq.question}</span>
                     </span>
                     <ChevronDown
-                      className={`h-4 w-4 text-slate-400 shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-sky-400' : ''
+                      className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${
+                        isOpen ? 'rotate-180 text-sky-500 dark:text-sky-400' : ''
                       }`}
                     />
                   </button>
 
                   {isOpen && (
-                    <div className="px-5 pb-4 pt-1 text-xs text-slate-300 leading-relaxed border-t border-slate-800/60 animate-in fade-in">
+                    <div className="px-5 pb-4 pt-1 text-xs text-muted-foreground leading-relaxed border-t border-border animate-in fade-in">
                       {faq.answer}
                     </div>
                   )}
@@ -623,15 +658,15 @@ export function LandingPage() {
         {/* ── Ready to Validate CTA Section ─────────────────────────── */}
         <section
           aria-labelledby="cta-heading"
-          className="rounded-2xl border border-sky-400/30 bg-[#12161f] p-8 sm:p-12 text-center space-y-4"
+          className="rounded-2xl border border-sky-400/30 bg-surface p-8 sm:p-12 text-center space-y-4"
         >
           <h2
             id="cta-heading"
-            className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight"
+            className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight"
           >
             Ready to validate your startup idea?
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
             Start structuring your customer discovery interviews, business model blocks, and
             investor pitch deck in minutes.
           </p>
@@ -648,7 +683,7 @@ export function LandingPage() {
               variant="outline"
               size="lg"
               onClick={() => navigate('/signup')}
-              className="bg-[#181d27] border-slate-700 text-white hover:bg-slate-800 rounded-lg text-sm font-semibold px-6 h-11 w-full sm:w-auto"
+              className="bg-background border-border text-foreground hover:bg-muted/40 rounded-lg text-sm font-semibold px-6 h-11 w-full sm:w-auto"
             >
               Create Account
             </Button>
